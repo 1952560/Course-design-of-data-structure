@@ -42,10 +42,11 @@ public:
   bool insert(T& item, int ind = 0);//²åÈë
   bool erase(T item);//É¾³ý
   ListNode<T>* begin()const { return this->_head->_next; }
+  ListNode<T>* end()const { return this->_head; }
   bool change(T newitem, ListNode<T>* itor);//ÐÞ¸Ä
   int size()const { return this->_len; }
   bool empty()const { return !(this->_len); }
-
+  void print()const;
 private:
   int _len;
   ListNode<T>* _head;
@@ -137,3 +138,14 @@ bool List<T>::change(T newitem, ListNode<T>* itor) {
   return true;
 }
 
+template<typename T>
+void List<T>::print()const {
+  if (this->empty()) {
+    std::cout << "NULL";
+    return;
+  }
+  ListNode<T>* itor = this->begin();
+  for (; itor != this->end(); itor = itor->_next) {
+    std::cout << itor->_data << ' ';
+  }
+}
