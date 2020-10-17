@@ -39,7 +39,7 @@ public:
   ListNode<T>* find(T item)const;
   void clear();//清除
   void push(const T& item);//后插
-  bool insert(T& item, int ind = 0);//插入
+  bool insert(T item, int ind = 0);//插入
   bool erase(T item);//删除
   ListNode<T>* begin()const { return this->_head->_next; }
   ListNode<T>* end()const { return this->_head; }
@@ -91,7 +91,7 @@ ListNode<T>* List<T>::find(T item)const {
 }
 
 template<typename T>
-bool List<T>::insert(T& item, int ind) {
+bool List<T>::insert(T item, int ind) {
   if (ind <= 0||ind>this->_len+1)
     return false;
   if (ind == this->_len + 1) {
@@ -100,7 +100,7 @@ bool List<T>::insert(T& item, int ind) {
     this->_len++;
     return true;
   }
-  ListNode<T> newnode = new ListNode<T>(item), * pmove = this->_head;
+  ListNode<T> *newnode = new ListNode<T>(item), * pmove = this->_head;
   for (int i = 1; i < ind; i++) {
     pmove = pmove->_next;
   }
@@ -132,7 +132,7 @@ bool List<T>::erase(T item) {
 
 template<typename T>
 bool List<T>::change(T newitem, ListNode<T>* itor) {
-  if (!itor)
+  if (!itor||itor==this->_head)
     return false;
   itor->setData(newitem);
   return true;
@@ -148,4 +148,5 @@ void List<T>::print()const {
   for (; itor != this->end(); itor = itor->_next) {
     std::cout << itor->_data << ' ';
   }
+  std::cout << '\n';
 }
