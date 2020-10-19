@@ -9,11 +9,11 @@ class ListNode
 {
 public:
   friend List<T>;
-  ListNode():_data(NULL),_next(NULL){}//构造函数
-  ListNode(const T&item,ListNode<T>* n=NULL)
+  ListNode():_data(NULL),_next(nullptr){}//构造函数
+  ListNode(const T& item,ListNode<T>* n=nullptr)
     :_data(item),_next(n){}
   ~ListNode() {//析构函数
-    _next = NULL;
+    _next = nullptr;
   }
   ListNode<T>* next()const { return this->_next; }//返回后置指针
   T data()const { return this->_data; }//返回数据
@@ -27,7 +27,7 @@ template<class T>
 class List
 {
 public:
-  List() :_len(0),_head(new ListNode<T>()),_last(NULL) {//构造函数
+  List() :_len(0),_head(new ListNode<T>()),_last(nullptr) {//构造函数
     _head->_next= _head;
     _last = _head;
   }
@@ -36,14 +36,14 @@ public:
     delete _head;
   }
 public:
-  ListNode<T>* find(T item)const;
+  ListNode<T>* find(const T& item)const;
   void clear();//清除
   void push(const T& item);//后插
-  bool insert(T item, int ind = 0);//插入
-  bool erase(T item);//删除
+  bool insert(const T& item, int ind = 0);//插入
+  bool erase(const T& item);//删除
   ListNode<T>* begin()const { return this->_head->_next; }
   ListNode<T>* end()const { return this->_head; }
-  bool change(T newitem, ListNode<T>* itor);//修改
+  bool change(const T& newitem, ListNode<T>* itor);//修改
   int size()const { return this->_len; }
   bool empty()const { return !(this->_len); }
   void print()const;
@@ -80,7 +80,7 @@ void List<T>::push(const T& item) {
 }
 
 template<typename T>
-ListNode<T>* List<T>::find(T item)const {
+ListNode<T>* List<T>::find(const T& item)const {
   ListNode<T>* pmove = this->begin();
   while (pmove != this->_head) {
     if (pmove->data() == item)
@@ -91,7 +91,7 @@ ListNode<T>* List<T>::find(T item)const {
 }
 
 template<typename T>
-bool List<T>::insert(T item, int ind) {
+bool List<T>::insert(const T& item, int ind) {
   if (ind <= 0||ind>this->_len+1)
     return false;
   if (ind == this->_len + 1) {
@@ -111,8 +111,8 @@ bool List<T>::insert(T item, int ind) {
 }
 
 template<typename T>
-bool List<T>::erase(T item) {
-  ListNode<T>* pmove = this->_head, * q=NULL;
+bool List<T>::erase(const T& item) {
+  ListNode<T>* pmove = this->_head, * q=nullptr;
   while (pmove->_next != this->_head) {
     if (pmove->_next->data() == item) {
       q = pmove;
@@ -131,7 +131,7 @@ bool List<T>::erase(T item) {
 }
 
 template<typename T>
-bool List<T>::change(T newitem, ListNode<T>* itor) {
+bool List<T>::change(const T& newitem, ListNode<T>* itor) {
   if (!itor||itor==this->_head)
     return false;
   itor->setData(newitem);

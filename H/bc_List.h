@@ -9,13 +9,13 @@ class ListNode
 {
 public:
   friend List<T>;
-  ListNode():_data(NULL),_pre(NULL),_next(NULL){}
-  ListNode(const T&item):_data(item),_pre(NULL),_next(NULL){}
-  ~ListNode() { _pre = NULL, _next = NULL; }//析构函数
+  ListNode() :_pre(nullptr), _next(nullptr) {}
+  ListNode(const T& item) :_data(item), _pre(nullptr), _next(nullptr) {}
+  ~ListNode() { _pre = nullptr, _next = nullptr; }//析构函数
   ListNode<T>* next()const { return this->_next; }//返回后置指针
   ListNode<T>* pre()const { return this->_pre; }//返回前置指针
   T data()const { return this->_data; }//返回数据
-  void setData(T& d) { _data = d; }//设置数据
+  void setData(T d) { _data = d; }//设置数据
 private:
   T _data;//存数据
   ListNode* _next;//后置指针
@@ -35,16 +35,17 @@ public:
     delete _head;
   }
 public:
-  ListNode<T>* find(T item)const;
+  ListNode<T>* find(const T& item)const;
   void clear();//清除
   void push(const T& item);//后插
-  bool insertBefore(T item, ListNode<T> *itor);//在itor前插入
-  bool insertAfter(T item, ListNode<T>* itor);//在itor后插入
-  bool insert(T item, int ind);//在ind位置插入
+  void push(const T&& item);
+  bool insertBefore(const T& item, ListNode<T>* itor);//在itor前插入
+  bool insertAfter(const T& item, ListNode<T>* itor);//在itor后插入
+  bool insert(const T& item, int ind);//在ind位置插入
   bool erase(ListNode<T>* itor);//删除
   ListNode<T>* begin()const { return this->_head->_next; }
   ListNode<T>* end()const { return this->_head; }
-  bool change(T newitem, ListNode<T>* itor);//修改
+  bool change(const T& newitem, ListNode<T>* itor);//修改
   int size()const { return this->_len; }
   bool empty()const { return!(this->_len); }
   void print()const;
@@ -79,7 +80,7 @@ void List<T>::push(const T& item) {
 }
 
 template<typename T>
-ListNode<T>* List<T>::find(T item)const {
+ListNode<T>* List<T>::find(const T& item)const {
   ListNode<T>* pmove = this->begin();
   while (pmove != this->_head) {
     if (pmove->_data == item)
@@ -90,10 +91,10 @@ ListNode<T>* List<T>::find(T item)const {
 }
 
 template<typename T>
-bool List<T>::insertBefore(T item, ListNode<T>* itor) {
+bool List<T>::insertBefore(const T& item, ListNode<T>* itor) {
   if (!itor)
     return false;
-  ListNode<T> *newnode = new ListNode<T>(item);
+  ListNode<T>* newnode = new ListNode<T>(item);
   newnode->_pre = itor->_pre;
   newnode->_next = itor;
   itor->_pre->_next = newnode;
@@ -103,7 +104,7 @@ bool List<T>::insertBefore(T item, ListNode<T>* itor) {
 }
 
 template<typename T>
-bool List<T>::insertAfter(T item, ListNode<T>* itor) {
+bool List<T>::insertAfter(const T& item, ListNode<T>* itor) {
   if (!itor)
     return false;
   ListNode<T>* newnode = new ListNode<T>(item);
@@ -116,7 +117,7 @@ bool List<T>::insertAfter(T item, ListNode<T>* itor) {
 }
 
 template<typename T>
-bool List<T>::insert(T item, int ind) {
+bool List<T>::insert(const T& item, int ind) {
   if (ind <= 0 || ind > this->_len + 1)
     return false;
   ListNode<T>* pmove = this->_head;
@@ -134,11 +135,12 @@ bool List<T>::erase(ListNode<T>* itor) {
   itor->_pre->_next = itor->_next;
   itor->_next->_pre = itor->_pre;
   this->_len--;
+  delete itor;
   return true;
 }
 
 template<typename T>
-bool List<T>::change(T newitem, ListNode<T>* itor) {
+bool List<T>::change(const T& newitem, ListNode<T>* itor) {
   if (!itor || itor == this->_head)
     return false;
   itor->setData(newitem);
