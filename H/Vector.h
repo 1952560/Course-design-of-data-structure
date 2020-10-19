@@ -30,8 +30,8 @@ public:
 
 private:
   int _size, _len;//len为数组有效长度，size为数组容量
-  T* head;
-  T* end;
+  T* _head;
+  T* _end;
   //to avoid vesting memory,when len*4<size then shrink
   void shrink();
   void expand();
@@ -54,7 +54,7 @@ void Vector<T>::expand() {
 template<typename T>
 bool Vector<T>::resize(int s) {
   if (this->_len < s)
-    retirn false;
+    return false;
   T* newhead = new T[s];
   for (int i = 0; i < this->_len; i++) {
     newhead[i] = this->_head[i];
@@ -93,7 +93,7 @@ void Vector<T>::clear() {
 template<typename T>
 T& Vector<T>::operator[](int ind)const {
   static T t;
-  if (ind >= size || ind < 0) {
+  if (ind >= _size || ind < 0) {
     std::cout << "the index if out of the vector" << '\n';
     return t;
   }
@@ -124,7 +124,7 @@ int Vector<T>::find(T item) {
 template<typename T>
 bool Vector<T>::rease(int ind) {
   if (ind < 0 || ind >= this->_len) {
-    cout << "the index is out of the vector" << '\n';
+    std::cout << "the index is out of the vector" << '\n';
     return false;
   }
   for (int i = ind; i < this->_len - 1; i++) {
