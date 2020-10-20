@@ -10,8 +10,9 @@ public:
     _end = _head;
   }
   ~Vector<T>() {
-    if (_head) delete[] _head;
+    if (_head!=nullptr) delete[] _head;
     _end = nullptr;
+    _head = nullptr;
   }
 
   int size()const { return _size; }
@@ -33,7 +34,7 @@ private:
   int _size, _len;//len为数组有效长度，size为数组容量
   T* _head;
   T* _end;
-  //to avoid vesting memory,when len*4<size then shrink
+  //when len*4<size then shrink
   void shrink();
   void expand();
 };
@@ -112,11 +113,13 @@ template<typename T>
 Vector<T> Vector<T>::operator =(Vector<T>& vec) {
   this->_size = vec.size();
   this->_len - vec.len();
-  T* itor = this->_head;
-  if (itor)
-    delete[] itor;
+  T* newhead = new T[_size];
+  if (_head!=nullptr)
+    delete[] _head;
   for (int i = 0; i < this->_len; i++)
-    this->_head[i] = vec[i];
+    newhead[i] = vec[i];
+  this->_head = newhead;
+  this->_end = this->_head + (_len ? _len - 1 : 0);
   return *this;
 }
 
