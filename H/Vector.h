@@ -13,18 +13,12 @@ public:
     if (_head) delete[] _head;
     _end = nullptr;
   }
-  void print() {
-    for (int i = 0; i < _len; i++)
-      std::cout << _head[i] << ' ';
-    std::cout << '\n' << '\n';
-  }
 
   int size()const { return _size; }
   int len()const { return _len; }
   bool empty() const { return !_len; }
   bool resize(int s);
   void push_back(T& item);
-  void push_back(T&& item);
   bool pop_back();
   void clear();
   int find(T item);
@@ -74,13 +68,6 @@ bool Vector<T>::resize(int s) {
 
 template<typename T>
 void Vector<T>::push_back(T& item) {
-  this->_head[_len++] = item;
-  this->_end = this->_head + _len - 1;
-  this->expand();
-}
-
-template<typename T>
-void Vector<T>::push_back(T&& item) {
   this->_head[_len++] = item;
   this->_end = this->_head + _len - 1;
   this->expand();
