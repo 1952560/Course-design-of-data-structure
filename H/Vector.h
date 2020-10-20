@@ -19,6 +19,7 @@ public:
   bool empty() const { return !_len; }
   bool resize(int s);
   void push_back(T& item);
+  void push_back(T&& item);
   bool pop_back();
   void clear();
   int find(T item);
@@ -68,6 +69,13 @@ bool Vector<T>::resize(int s) {
 
 template<typename T>
 void Vector<T>::push_back(T& item) {
+  this->_head[_len++] = item;
+  this->_end = this->_head + _len - 1;
+  this->expand();
+}
+
+template<typename T>
+void Vector<T>::push_back(T&& item) {
   this->_head[_len++] = item;
   this->_end = this->_head + _len - 1;
   this->expand();

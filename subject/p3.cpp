@@ -1,7 +1,7 @@
-#include<iostream>
 #include<string>
 #include<iomanip>
-#include<vector>
+#include"../H/Vector.h"
+
 
 const int maxn = 1e3;
 
@@ -35,9 +35,9 @@ private:
   int _entrancex, _entrancey;
   int _exitx, _exity;
   std::string _maze[maxn];
-  std::vector<bool> done[maxn];
-  std::vector<std::pair<int, int> > path[10];
-  std::vector<std::pair<int, int> > tpath;
+  Vector<bool> done[maxn];
+  Vector<std::pair<int, int> > path[10];
+  Vector<std::pair<int, int> > tpath;
   int _pathnum;
 };
 
@@ -90,7 +90,7 @@ void maze::set() {
 
 void maze::dfs(int x, int y) {
   if (x == _exitx && y == _exity) {
-    for (int i = 0; i < tpath.size(); i++) {
+    for (int i = 0; i < tpath.len(); i++) {
       path[_pathnum].push_back(tpath[i]);
     }
     _pathnum++;
@@ -134,13 +134,13 @@ void maze::mapPrintf() {
 void maze::pathPrint() {
   if (_pathnum == 0)
     return;
-  std::cout << "迷宫路径" << '\n' << '\n';
+  std::cout << "迷宫路径：" << '\n' << '\n';
   for (int i = 0; i < _pathnum; i++) {
     std::cout << "第" << i + 1 << "条路径：" << '\n';
-    for (int j = 0; j < path[i].size() - 1; j++) {
+    for (int j = 0; j < path[i].len() - 1; j++) {
       std::cout << '<' << path[i][j].first << ',' << path[i][j].second << '>' << "-->";
     }
-    std::cout << '<' << path[i][path[i].size() - 1].first << ',' << path[i][path[i].size() - 1].second << '>';
+    std::cout << '<' << path[i][path[i].len() - 1].first << ',' << path[i][path[i].len() - 1].second << '>';
     std::cout << '\n';
   }
 }
