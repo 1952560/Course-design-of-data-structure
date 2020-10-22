@@ -90,7 +90,7 @@ void maze::set() {
 
 void maze::dfs(int x, int y) {
   if (x == _exitx && y == _exity) {
-    for (int i = 0; i < _tpath.len(); i++) {
+    for (int i = 0; i < _tpath.size(); i++) {
       _path[_pathnum].push_back(_tpath[i]);
     }
     _pathnum++;
@@ -139,10 +139,10 @@ void maze::pathPrint() {
   std::cout << "迷宫路径：" << '\n' << '\n';
   for (int i = 0; i < _pathnum; i++) {
     std::cout << "第" << i + 1 << "条路径：" << '\n';
-    for (int j = 0; j < _path[i].len() - 1; j++) {
+    for (int j = 0; j < _path[i].size() - 1; j++) {
       std::cout << '<' << _path[i][j].first << ',' << _path[i][j].second << '>' << "-->";
     }
-    std::cout << '<' << _path[i][_path[i].len() - 1].first << ',' << _path[i][_path[i].len() - 1].second << '>';
+    std::cout << '<' << _path[i][_path[i].size() - 1].first << ',' << _path[i][_path[i].size() - 1].second << '>';
     std::cout << '\n';
   }
 }

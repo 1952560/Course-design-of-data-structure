@@ -4,21 +4,21 @@
 template<class T>
 class Vector {
 public:
-  Vector<T>(int s = 64) : _size(s) {
-    _len = 0;
-    _head = new T[s];
+  Vector<T>(int n = 64) : _capacity(n) {
+    _size = 0;
+    _head = new T[n];
     _end = _head;
   }
    Vector<T>(const Vector<T>& vec) {
     this->_size = vec.size();
-    this->_len = vec.len();
-    T* newhead = new T[_size];
+    this->_capacity = vec._capacity;
+    T* newhead = new T[_capacity];
     if (_head != nullptr)
       delete[] _head;
-    for (int i = 0; i < this->_len; i++)
+    for (int i = 0; i < this->_size; i++)
       *(newhead + i) = *(vec.begin() + i);
     this->_head = newhead;
-    this->_end = this->_head + (_len ? _len - 1 : 0);
+    this->_end = this->_head + (_size ? _size - 1 : 0);
   }
   ~Vector<T>() {
     if (_head != nullptr) delete[] _head;
@@ -28,79 +28,78 @@ public:
 public:
 
   int size()const { return _size; }
-  int len()const { return _len; }
-  bool empty() const { return !_len; }
+  bool empty() const { return !_size; }
   T* begin()const { return this->_head; }
   bool resize(int s);
-  void push_back(T& item);
-  void push_back(T&& item);
+  void push_back(const T& item);
+  void push_back(const T&& item);
   bool pop_back();
   void clear();
-  int find(T item);
-  bool rease(int ind);
+  int find(const T& item);
+  bool erase(int ind);
 
   T& operator[] (int ind)const;
 
   void operator=(Vector<T>& vec);
 
 private:
-  int _size, _len;//len为数组有效长度，size为数组容量
+  int _size,_capacity;//size为数组有效长度，capacity为数组容量
   T* _head;
   T* _end;
-  //when len*4<size then shrink
+  //when size*4<capacity then shrink
   void shrink();
   void expand();
 };
 
 template<typename T>
 void Vector<T>::shrink() {
-  if ((_len << 2) < _size) {
-    this->resize(_len ? _len << 1 : _size >> 1);
+  if ((_size << 2) < _capacity) {
+    this->resize(_size ? _size << 1 : _capacity >> 1);
   }
 }
 
 template<typename T>
 void Vector<T>::expand() {
-  if (_len == _size) {
-    this->resize(_size << 1);
+  if (_size == _capacity) {
+    this->resize(_capacity << 1);
   }
 }
 
 template<typename T>
 bool Vector<T>::resize(int s) {
-  if (this->_len < s)
+  if (this->_size < s)
     return false;
   T* newhead = new T[s];
-  for (int i = 0; i < this->_len; i++) {
+  for (int i = 0; i < this->_size; i++) {
     newhead[i] = this->_head[i];
   }
   delete[] this->_head;
   this->_head = newhead;
-  this->_end = this->_head + (_len ? _len - 1 : 0);
+  this->_end = this->_head + (_size ? _size - 1 : 0);
   this->_size = s;
   return true;
 }
 
 template<typename T>
-void Vector<T>::push_back(T& item) {
-  this->_head[_len++] = item;
-  this->_end = this->_head + _len - 1;
+void Vector<T>::push_back(const T& item) {
+  this->_head[_size++] = item;
+  this->_end = this->_head + _size - 1;
   this->expand();
 }
 
 template<typename T>
-void Vector<T>::push_back(T&& item) {
-  this->_head[_len++] = item;
-  this->_end = this->_head + _len - 1;
+void Vector<T>::push_back(const T&& item) {
+  this->_head[_size++] = item;
+  this->_end = this->_head + _size - 1;
   this->expand();
 }
 
 template<typename T>
 bool Vector<T>::pop_back() {
-  if (this->_len == 0)
+  if (this->_size == 0)
     return false;
-  this->_len--;
-  this->_end = this->_head + (_len ? _len - 1 : 0);
+  this->_size--;
+  this->_end = this->_head + (_size ? _size - 1 : 0);
   this->shrink();
   return true;
 }
@@ -108,7 +107,7 @@ bool Vector<T>::pop_back() {
 template<typename T>
 void Vector<T>::clear() {
   this->_end = this->_head;
-  this->_len = 0;
+  this->_size = 0;
   shrink();
 }
 
@@ -125,20 +124,20 @@ T& Vector<T>::operator[](int ind)const {
 template<typename T>
 void Vector<T>::operator=(Vector<T>& vec) {
   this->_size = vec.size();
-  this->_len = vec.len();
-  T* newhead = new T[_size];
+  this->_capacity = vec._capacity;
+  T* newhead = new T[_capacity];
   if (_head != nullptr)
     delete[] _head;
-  for (int i = 0; i < this->_len; i++)
+  for (int i = 0; i < this->_size; i++)
     *(newhead + i) = *(vec.begin() + i);
   this->_head = newhead;
-  this->_end = this->_head + (_len ? _len - 1 : 0);
+  this->_end = this->_head + (_size ? _size - 1 : 0);
   //return *this;
 }
 
 template<typename T>
-int Vector<T>::find(T item) {
-  for (int i = 0; i < this->_len; i++) {
+int Vector<T>::find(const T& item) {
+  for (int i = 0; i < this->_size; i++) {
     if ((*this)[i] == item)
       return i;
   }
@@ -146,12 +145,12 @@ int Vector<T>::find(T item) {
 }
 
 template<typename T>
-bool Vector<T>::rease(int ind) {
-  if (ind < 0 || ind >= this->_len) {
+bool Vector<T>::erase(int ind) {
+  if (ind < 0 || ind >= this->_size) {
     std::cout << "the index is out of the vector" << '\n';
     return false;
   }
-  for (int i = ind; i < this->_len - 1; i++) {
+  for (int i = ind; i < this->_size - 1; i++) {
     this->_head[i] = this->_head[i + 1];
   }
   this->pop_back();
