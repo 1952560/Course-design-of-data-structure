@@ -94,6 +94,7 @@ void maze::dfs(int x, int y) {
       _path[_pathnum].push_back(_tpath[i]);
     }
     _pathnum++;
+    return;
   }
   if (x >= _row || x < 0)
     return;
@@ -111,6 +112,7 @@ void maze::dfs(int x, int y) {
     dfs(newx, newy);
     _tpath.pop_back();
   }
+  _done[x][y] = false;
 }
 
 void maze::mapPrintf() {
