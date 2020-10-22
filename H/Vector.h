@@ -9,11 +9,23 @@ public:
     _head = new T[s];
     _end = _head;
   }
+   Vector<T>(const Vector<T>& vec) {
+    this->_size = vec.size();
+    this->_len = vec.len();
+    T* newhead = new T[_size];
+    if (_head != nullptr)
+      delete[] _head;
+    for (int i = 0; i < this->_len; i++)
+      *(newhead + i) = *(vec.begin() + i);
+    this->_head = newhead;
+    this->_end = this->_head + (_len ? _len - 1 : 0);
+  }
   ~Vector<T>() {
     if (_head != nullptr) delete[] _head;
     _end = nullptr;
     _head = nullptr;
   }
+public:
 
   int size()const { return _size; }
   int len()const { return _len; }
