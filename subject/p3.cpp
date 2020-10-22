@@ -25,7 +25,7 @@ public:
   void init() {
     for (int i = 0; i < _row; i++) {
       for (int j = 0; j < _col; j++) {
-        done[i].push_back(false);
+        _done[i].push_back(false);
       }
     }
   }
@@ -35,9 +35,9 @@ private:
   int _entrancex, _entrancey;
   int _exitx, _exity;
   std::string _maze[maxn];
-  Vector<bool> done[maxn];
-  Vector<std::pair<int, int> > path[10];
-  Vector<std::pair<int, int> > tpath;
+  Vector<bool> _done[maxn];
+  Vector<std::pair<int, int> > _path[10];
+  Vector<std::pair<int, int> > _tpath;
   int _pathnum;
 };
 
@@ -83,15 +83,15 @@ void maze::set() {
   this->setMaze();
   this->setEntrance();
   this->setExit();
-  this->tpath.push_back(std::make_pair(_entrancex, _entrancey));
+  this->_tpath.push_back(std::make_pair(_entrancex, _entrancey));
   this->init();
   this->dfs(_entrancex, _entrancey);
 }
 
 void maze::dfs(int x, int y) {
   if (x == _exitx && y == _exity) {
-    for (int i = 0; i < tpath.len(); i++) {
-      path[_pathnum].push_back(tpath[i]);
+    for (int i = 0; i < _tpath.len(); i++) {
+      _path[_pathnum].push_back(_tpath[i]);
     }
     _pathnum++;
   }
@@ -101,15 +101,15 @@ void maze::dfs(int x, int y) {
     return;
   if (_maze[x][y] == '#')
     return;
-  if (done[x][y])
+  if (_done[x][y])
     return;
-  done[x][y] = true;
+  _done[x][y] = true;
   for (int i = 0; i <= 3; i++) {
     int newx = x + dir[i][0];
     int newy = y + dir[i][1];
-    tpath.push_back(std::make_pair(newx, newy));
+    _tpath.push_back(std::make_pair(newx, newy));
     dfs(newx, newy);
-    tpath.pop_back();
+    _tpath.pop_back();
   }
 }
 
@@ -137,10 +137,10 @@ void maze::pathPrint() {
   std::cout << "迷宫路径：" << '\n' << '\n';
   for (int i = 0; i < _pathnum; i++) {
     std::cout << "第" << i + 1 << "条路径：" << '\n';
-    for (int j = 0; j < path[i].len() - 1; j++) {
-      std::cout << '<' << path[i][j].first << ',' << path[i][j].second << '>' << "-->";
+    for (int j = 0; j < _path[i].len() - 1; j++) {
+      std::cout << '<' << _path[i][j].first << ',' << _path[i][j].second << '>' << "-->";
     }
-    std::cout << '<' << path[i][path[i].len() - 1].first << ',' << path[i][path[i].len() - 1].second << '>';
+    std::cout << '<' << _path[i][_path[i].len() - 1].first << ',' << _path[i][_path[i].len() - 1].second << '>';
     std::cout << '\n';
   }
 }
