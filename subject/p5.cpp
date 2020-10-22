@@ -1,5 +1,4 @@
 #include<iostream>
-#include<vector>
 #include<queue>
 
 class customer {
@@ -21,29 +20,22 @@ public:
 int main() {
   int N;
   std::cin >> N;
-  std::priority_queue<int, std::vector<int>, std::greater<int> > queueA, queueB;
-  int x = 0, n = N;
-  while (n--) {
-    std::cin >> x;
-    if (x & 1)
-      queueA.push(x);
-    else
-      queueB.push(x);
-  }
-  std::priority_queue<customer>queueC;
+  int x = 0;
   int time1 = 1, time2 = 2;
-  while (!queueA.empty()) {
-    queueC.push(customer(queueA.top(), time1, true));
-    time1++;
-    queueA.pop();
+  std::priority_queue<customer>q;
+  while (N--) {
+    std::cin >> x;
+    if (x & 1) {
+      q.push(customer(x, time1, true));
+      time1++;
+    }
+    else {
+      q.push(customer(x, time2, false));
+      time2 += 2;
+    }
   }
-  while (!queueB.empty()) {
-    queueC.push(customer(queueB.top(), time2, false));
-    time2 *= 2;
-    queueB.pop();
-  }
-  while (!queueC.empty()) {
-    std::cout << queueC.top().number << ' ';
-    queueC.pop();
+  while (!q.empty()) {
+    std::cout << q.top().number << ' ';
+    q.pop();
   }
 }
