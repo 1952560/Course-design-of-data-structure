@@ -1,14 +1,12 @@
 #include<iostream>
 #include<queue>
 
-using namespace std;
-
 int main() {
   int N;
-  cin >> N;
-  priority_queue<int, vector<int>, greater<int> >p;
+  std::cin >> N;
+  std::priority_queue<int, std::vector<int>, std::greater<int> >p;
   for (int i = 0, x; i < N; i++) {
-    cin >> x;
+    std::cin >> x;
     p.push(x);
   }
   int ans = 0;
@@ -18,5 +16,5 @@ int main() {
     ans += u + v;
     p.push(u + v);
   }
-  cout << ans << '\n';
+  std::cout << ans << '\n';
 }
