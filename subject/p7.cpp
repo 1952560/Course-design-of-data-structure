@@ -17,4 +17,5 @@ int main() {
     p.push(u + v);
   }
   std::cout << ans << '\n';
+
 }
