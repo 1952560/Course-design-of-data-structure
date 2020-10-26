@@ -30,6 +30,7 @@ public:
   int size()const { return _size; }
   bool empty() const { return !_size; }
   T* begin()const { return this->_head; }
+  T* end()const { return this->_end; }
   bool resize(int s);
   void push_back(const T& item);
   void push_back(const T&& item);
