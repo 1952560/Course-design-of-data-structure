@@ -5,6 +5,17 @@
 #include<stack>
 #include<vector>
 
+int fastpow(int base, int n) {
+  int ans = 1;
+  while (n) {
+    if (n & 1) ans *= base;
+    base *= base;
+    n >>= 1;
+  }
+  return ans;
+}
+
+
 //中缀表达式转化成后缀表达式
 struct expre {
   bool isnum;//1为数字
@@ -17,9 +28,11 @@ public:
   eval(std::string str) {
     infix = str;
     change();
+    calculate();
   }
-//private:
+private:
   void change() {
+    std::stack<char> oper;
     for (int i = 0; i < infix.size(); ) {
       if (infix[i] >= '0' && infix[i] <= '9') {
         std::string str;
@@ -86,21 +99,100 @@ public:
       return 4;
     return -1;
   }
+  void calculate(){
+    std::stack<int> cal;
+    for (int i = 0; i < suffix.size(); i++) {
+      if (suffix[i].isnum)
+        cal.push(suffix[i].num);
+      else {
+        char oper = suffix[i].oper;
+        switch(oper){
+        case '+': {
+          if (cal.empty())
+            exit(0);
+          if (cal.size() >= 2) {
+            int x = cal.top(); cal.pop();
+            int y = cal.top(); cal.pop();
+            cal.push(x + y);
+          }
+          break;
+        }
+        case'-': {
+          if (cal.size() == 1) {
+            int x = cal.top(); cal.pop();
+            cal.push(-x);
+          }
+          else if (cal.size() >= 2) {
+            int x = cal.top(); cal.pop();
+            int y = cal.top(); cal.pop();
+            cal.push(y - x);
+          }
+          else
+            exit(0);
+          break;
+        }
+        case'*':{
+          if (cal.size() >= 2) {
+            int x = cal.top(); cal.pop();
+            int y = cal.top(); cal.pop();
+            cal.push(x * y);
+          }
+          else
+            exit(0);
+          break;
+         }
+        case'/':{
+          if (cal.size() >= 2) {
+            int x = cal.top(); cal.pop();
+            int y = cal.top(); cal.pop();
+            cal.push(y / x);
+          }
+          else
+            exit(0);
+          break;
+        }
+        case'%': {
+          if (cal.size() >= 2) {
+            int x = cal.top(); cal.pop();
+            int y = cal.top(); cal.pop();
+            cal.push(y % x);
+          }
+          else
+            exit(0);
+          break;
+        }
+        case'^': {
+          if (cal.size() >= 2) {
+            int x = cal.top(); cal.pop();
+            int y = cal.top(); cal.pop();
+            cal.push(fastpow(y,x));
+          }
+          else
+            exit(0);
+          break;
+        }
+        }
+      }
+    }
+    ans = 0;
+    while (!cal.empty()) {
+      ans += cal.top();
+      cal.pop();
+    }
+  }
+  friend std::ostream& operator<<(std::ostream& os, const eval& e) {
+    os << e.ans << '\n';
+    return os;
+  }
 
-//private:
+  private:
   std::string infix;
-  std::stack<char> oper;
   std::vector<expre> suffix;
+  int ans;
 };
 
 int main() {
   std::string str;
-  std::cin >> str;
-  eval e(str);
-  for (int i = 0; i < e.suffix.size(); i++) {
-    if (e.suffix[i].isnum)
-      std::cout << e.suffix[i].num << ' ';
-    else
-      std::cout << e.suffix[i].oper << ' ';
-  }
+  while(std::cin >> str)
+  std::cout<<eval (str);
 }
