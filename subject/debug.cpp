@@ -1,114 +1,106 @@
 #include<iostream>
 #include<string>
 #include<algorithm>
-#include"../H/Vector.h"
 #include<map>
+#include<stack>
+#include<vector>
 
-const int maxn = 1e5;
-
-struct edge {
-  std::string from;
-  std::string to;
-  int dist;
-  bool operator < (const edge& rhs)const {
-    return dist < rhs.dist;
-  }
-};
-
-class System {
-public:
-  std::string find(std::string x) {
-    return _par[x] == x ? x : _par[x] = find(_par[x]);
-  }
-  void mintree();
-  void initializeVertex();
-  void addEdge();
-  void print();
-private:
-  Vector<std::string> _vertex;
-  Vector<edge> _edge;
-  std::map<std::string, std::string> _par;
-  Vector<edge> _path;
-};
-
-void System::initializeVertex() {
-  _vertex.clear();
-  std::cout << "请输入顶点的个书：";
+//中缀表达式转化成后缀表达式
+struct expre {
+  bool isnum;//1为数字
+  char oper;
   int num;
-  std::string str;
-  std::cin >> num;
-  std::cout << "请依次输入各顶点的名称：" << '\n';
-  while (num--) {
-    std::cin >> str;
-    _vertex.push_back(str);
-    _par[str] = str;
-  }
-  std::cout << '\n';
-}
+};
 
-void System::addEdge() {
-  edge e;
-  while (true) {
-    std::cout << "请输入两个顶点及边：";
-    std::cin >> e.from >> e.to >> e.dist;
-    if (e.from == "?" && e.to == "?" && e.dist == 0)
-      break;
-    _edge.push_back(e);
+class eval {
+public:
+  eval(std::string str) {
+    infix = str;
+    change();
   }
-  std::cout << '\n';
-}
+//private:
+  void change() {
+    for (int i = 0; i < infix.size(); ) {
+      if (infix[i] >= '0' && infix[i] <= '9') {
+        std::string str;
+        while (infix[i] >= '0' && infix[i] <= '9') {
+          str.push_back(infix[i]);
+          i++;
+        }
+        int k = 1;
+        int num = 0;
+        for (int i = str.size() - 1; i >= 0; i--) {
+          num += k * (int)(str[i] - '0');
+          k *= 10;
+        }
+        expre e;
+        e.isnum = true; e.num = num; e.oper = '?';
+        suffix.push_back(e);
+      }
+      else {
+        if (oper.empty()) {//如果栈空
+          oper.push(infix[i]);
+          i++;
+        }
+        else {//如果栈非空
+          if (infix[i] == ')') {//如果是‘）’
+            while (oper.top()!= '(') {
+              expre e;
+              e.isnum = false; e.num = 0; e.oper = oper.top();
+              oper.pop();
+              suffix.push_back(e);
+            }
+            oper.pop();
+            i++;
+          }
+          else {//如果不是‘）’
+            while ((!oper.empty())&&(oper.top()!='(')&&(priority(infix[i]) <= priority(oper.top()))) {
+              expre e;
+              e.isnum = false; e.num = 0, e.oper = oper.top();
+              oper.pop();
+              suffix.push_back(e);
+            }
+            oper.push(infix[i]);
+            i++;
+          }
+        }
+      }
+    }
+    while (!oper.empty()) {
+      expre e;
+      e.isnum = false; e.num = 0, e.oper = oper.top();
+      oper.pop();
+      suffix.push_back(e);
+    }
+  }
+  int priority(char x) {
+    if (x == '+' || x == '-')
+      return 0;
+    if (x == '*' || x == '/')
+      return 1;
+    if (x == '%')
+      return 2;
+    if (x == '^')
+      return 3;
+    if (x == ')' || x == '(')
+      return 4;
+    return -1;
+  }
 
-void System::print() {
-  std::cout << "最小生成树的顶点及边为：" << '\n' << '\n';
-  for (int i = 0; i < _path.size(); i++) {
-    std::cout << _path[i].from << "-<" << _path[i].dist << ">->" << _path[i].to;
-    std::cout << "     ";
-  }
-  std::cout << '\n';
-}
-
-void System::mintree() {
-  std::sort(_edge.begin(), _edge.end());
-  std::map<std::string, std::string>::iterator iter;
-  for (iter = _par.begin(); iter != _par.end(); iter++) {
-    iter->second = iter->first;
-  }
-  _path.clear();
-  for (int i = 0; i < _edge.size(); i++) {
-    if (find(_edge[i].from) == find(_edge[i].to))
-      continue;
-    _par[find(_edge[i].from)] = find(_edge[i].to);
-    _path.push_back(_edge[i]);
-  }
-}
-
-void solve(){
-  System sys;
-  std::string num;
-  while (true) {
-    std::cout << "请输入操作：";
-    std::cin >> num;
-    if (num == "A") {
-      sys.initializeVertex();
-    }
-    else if (num == "B") {
-      sys.addEdge();
-    }
-    else if (num == "C") {
-      std::cout << "请输入起始顶点：";
-      std::string str;
-      std::cin >> str;
-      sys.mintree();
-      std::cout << "生成Prim最小生成树！" << '\n' << '\n';
-    }
-    else if (num == "D") {
-      sys.print();
-    }
-    else if (num == "E")
-      break;
-  }
-}
+//private:
+  std::string infix;
+  std::stack<char> oper;
+  std::vector<expre> suffix;
+};
 
 int main() {
-  solve();
+  std::string str;
+  std::cin >> str;
+  eval e(str);
+  for (int i = 0; i < e.suffix.size(); i++) {
+    if (e.suffix[i].isnum)
+      std::cout << e.suffix[i].num << ' ';
+    else
+      std::cout << e.suffix[i].oper << ' ';
+  }
 }
