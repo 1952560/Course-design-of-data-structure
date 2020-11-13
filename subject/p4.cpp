@@ -1,8 +1,9 @@
 #include<iostream>
 #include<string>
-#include<stack>
-#include<vector>
-
+#include<Stack>
+#include<Vector>
+#include"../H/Vector.h"
+#include"../H/Stack.h"
 int fastpow(int base, int n) {//快速幂
   int ans = 1;
   while (n) {
@@ -38,12 +39,12 @@ private:
   }
 private:
   std::string infix;//存中缀表达式
-  std::vector<expre> suffix;//存后缀表达式
+  Vector<expre> suffix;//存后缀表达式
   int ans;
 };
 
 void eval::calculate() {
-  std::stack<int> cal;
+  Stack<int> cal;
   for (int i = 0; i < suffix.size(); i++) {
     if (suffix[i].isnum)
       cal.push(suffix[i].num);
@@ -144,9 +145,11 @@ int eval::priority(char x) {
 }
 
 void eval::change() {
-  std::stack<char> oper;
+  Stack<char> oper;
+  bool flag = false;
   for (int i = 0; i < infix.size(); ) {
     if (infix[i] >= '0' && infix[i] <= '9') {
+      flag = false;
       std::string str;
       while (infix[i] >= '0' && infix[i] <= '9') {
         str.push_back(infix[i]);
@@ -174,12 +177,14 @@ void eval::change() {
         i++;
       }
       else {//如果不是‘）’
-        if ((infix[i] == '+' || infix[i] == '-') && !oper.empty() && oper.top() == '(') {
+        if ((infix[i] == '+' || infix[i] == '-') &&flag) {
+          flag = false;
           expre e;
           e.isnum = true; e.num = 0;
           suffix.push_back(e);
         }
-
+        if (infix[i] == '(')
+          flag = true;
         while ((!oper.empty()) && (oper.top() != '(') && (priority(infix[i]) <= priority(oper.top()))) {
           expre e;
           e.isnum = false; e.num = 0, e.oper = oper.top();
