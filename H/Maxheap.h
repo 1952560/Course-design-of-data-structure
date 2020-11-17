@@ -14,7 +14,7 @@ public:
   void push_heap(const T& item);
   void push_heap(const T&& item);
   void pop_heap();
-  int top() const { return _vec[0]; }
+  T top() const { return _vec[0]; }
   void erase(int ind);
   int  get_index(T item);
   bool empty() {
