@@ -3,7 +3,7 @@
 #include"../H/Vector.h"
 
 
-const int maxn = 1e3;
+const int maxn = 1e2;
 
 int dir[4][2] = { {1,0},{-1,0},{0,1},{0,-1} };
 
