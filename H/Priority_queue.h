@@ -38,7 +38,7 @@ void Priority_queue<T>::pop() {
 
 template<typename T>
 T Priority_queue<T>::top() const{
-  if (!size()) {
+  if (!_size) {
     static T item;
     std::cout << "Heap is empty!" << '\n';
     return item;
