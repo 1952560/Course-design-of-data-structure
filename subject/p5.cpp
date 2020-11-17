@@ -1,8 +1,9 @@
 #include<iostream>
-#include<queue>
+#include"../H/Priority_queue.h"
 
 class customer {
 public:
+  customer() :number(0), time(0), flag(0) {}
   customer(int num, int t, bool f) :
     number(num), time(t), flag(f) {}
   int number;
@@ -15,6 +16,11 @@ public:
       return false;
     return true;
   }
+  bool operator ==(const customer& rhs)const {
+    if (number == rhs.number && time == rhs.time && flag == rhs.flag)
+      return true;
+    return false;
+  }
 };
 
 int main() {
@@ -22,20 +28,20 @@ int main() {
   std::cin >> N;
   int x = 0;
   int time1 = 1, time2 = 2;
-  std::priority_queue<customer>q;
+  Priority_queue<customer>p;
   while (N--) {
     std::cin >> x;
     if (x & 1) {
-      q.push(customer(x, time1, true));
+      p.push(customer(x, time1, true));
       time1++;
     }
     else {
-      q.push(customer(x, time2, false));
+      p.push(customer(x, time2, false));
       time2 += 2;
     }
   }
-  while (!q.empty()) {
-    std::cout << q.top().number << ' ';
-    q.pop();
+  while (!p.empty()) {
+    std::cout << p.top().number << ' ';
+    p.pop();
   }
 }
