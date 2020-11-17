@@ -4,12 +4,12 @@
 template<class T>
 class Vector {
 public:
-  Vector<T>(int n = 64) : _capacity(n) {
+  Vector(int n = 64) : _capacity(n) {
     _size = 0;
     _head = new T[n];
     _end = _head;
   }
-   Vector<T>(const Vector<T>& vec) {
+   Vector(const Vector<T>& vec) {
     this->_size = vec.size();
     this->_capacity = vec._capacity;
     T* newhead = new T[_capacity];
@@ -20,7 +20,7 @@ public:
     this->_head = newhead;
     this->_end = this->_head + (_size ? _size - 1 : 0);
   }
-  ~Vector<T>() {
+  ~Vector() {
     if (_head != nullptr) delete[] _head;
     _end = nullptr;
     _head = nullptr;
