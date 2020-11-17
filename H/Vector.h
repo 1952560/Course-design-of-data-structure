@@ -68,7 +68,7 @@ void Vector<T>::expand() {
 
 template<typename T>
 bool Vector<T>::resize(int s) {
-  if (this->_size < s)
+  if (this->_size > s)
     return false;
   T* newhead = new T[s];
   for (int i = 0; i < this->_size; i++) {
@@ -77,7 +77,7 @@ bool Vector<T>::resize(int s) {
   delete[] this->_head;
   this->_head = newhead;
   this->_end = this->_head + (_size ? _size - 1 : 0);
-  this->_size = s;
+  this->_capacity = s;
   return true;
 }
 
