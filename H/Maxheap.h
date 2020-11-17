@@ -11,7 +11,8 @@ public:
     }
   }
 
-  void push_heap(T item);
+  void push_heap(const T& item);
+  void push_heap(const T&& item);
   void pop_heap();
   int top() const { return _vec[0]; }
   void erase(int ind);
@@ -69,7 +70,14 @@ void MaxHeap<T>::fitup(int ind) {
 }
 
 template<typename T>
-void MaxHeap<T>::push_heap(T item) {
+void MaxHeap<T>::push_heap(const T& item) {
+  _vec.push_back(item);
+  _size++;
+  fitup(_size - 1);
+}
+
+template<typename T>
+void MaxHeap<T>::push_heap(const T&& item) {
   _vec.push_back(item);
   _size++;
   fitup(_size - 1);
