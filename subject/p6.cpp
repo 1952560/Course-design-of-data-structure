@@ -17,6 +17,7 @@ public:
   tree(node* r):root(r){}
   ~tree() { clear(this->root); }
 
+  node* get_root()const { return this->root; }
   void init();
   void complete();
   void add();
@@ -24,8 +25,8 @@ public:
   void insert(node* r, std::string str);
   void clear(node* r);
   void erase();
-  node* find(node* root,std::string str);
-  void print();
+  node* find(node* r,std::string str);
+  void print(node* r);
 
 private:
   node* root;
@@ -111,6 +112,17 @@ void tree::clear(node* r) {
   }
 }
 
+void tree::print(node* r) {
+  if (!r)
+    return;
+  std::cout << r->name << "  ";
+  r = r->son;
+  while (r) {
+    print(r);
+    r = r->brother;
+  }
+}
+
 node* tree::find(node* r,std::string str) {
   node* ans = new node();
   ans = nullptr;
@@ -187,7 +199,8 @@ void solve() {
       break;
     }
     case'F': {
-      genealogy.print();
+      genealogy.print(genealogy.get_root());
+      std::cout << '\n' << '\n';
     }
     }
   }
