@@ -25,8 +25,8 @@ public:
   void change();
   void clear(node* r);
   void erase();
-  void print(node* r);
-  void new_print(node* r,int deep=0);
+  void print(node* r, int deep);
+  void new_print(node* r,int deep);
 
 private:
   void insert(node* r, std::string str);
@@ -37,34 +37,28 @@ private:
   std::vector<int> width;
 };
 
-void tree::new_print(node* r,int deep=0){
-  if (r == this->root) {
-    std::cout << r->name;
-    this->width.push_back(r->name.size()/2+1);
-    if (r->son) {
-      for (int i : width) {
-        while (i--)
-          std::cout << " ";
-        std::cout << "|";
-      }
-    }
-  }
-  else {
 
-  }
-  r = r->son;
-  while (r) {
-
-  }
-}
-
-void tree::print(node* r) {
+void tree::print(node* r,int deep) {
   if (!r)
     return;
-  std::cout << r->name << "  ";
+  int d = deep;
+  while (d--)
+    std::cout << ' ';
+  if (r != this->root) {
+    if (r->brother)
+      std::cout << "©Ç" << "  ";
+    else
+      std::cout << "©»" << "  ";
+  }
+  std::cout << r->name << '\n';
   r = r->son;
   while (r) {
-    print(r);
+    int new_deep = deep;
+    if (deep == 0)
+      new_deep += ceil(r->name.size() / 2);
+    else
+      new_deep += ceil(r->name.size() / 2) + 2;
+    print(r,new_deep);
     r = r->brother;
   }
 }
@@ -225,7 +219,9 @@ void solve() {
       break;
     }
     case'F': {
-      genealogy.print(genealogy.get_root());
+      std::vector<int> v;
+     // v.push_back(0);
+      genealogy.print(genealogy.get_root(),0);
       std::cout << '\n' << '\n';
     }
     }
@@ -233,7 +229,7 @@ void solve() {
 }
 
 int main() {
- // solve();
-  int a = 1, b = 2;
-  std::cout << (a ^ b) << (a & b);
+ solve();
+  std::cout << "©§" << '\n';
+  std::cout << "©»";
 }
