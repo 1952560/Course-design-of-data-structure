@@ -1,5 +1,6 @@
 #include<iostream>
 #include<vector>
+#include<stack>
 
 struct node {
   node() {
@@ -22,15 +23,51 @@ public:
   void complete();
   void add();
   void change();
-  void insert(node* r, std::string str);
   void clear(node* r);
   void erase();
-  node* find(node* r,std::string str);
   void print(node* r);
+  void new_print(node* r,int deep=0);
+
+private:
+  void insert(node* r, std::string str);
+  node* find(node* r, std::string str);
 
 private:
   node* root;
+  std::vector<int> width;
 };
+
+void tree::new_print(node* r,int deep=0){
+  if (r == this->root) {
+    std::cout << r->name;
+    this->width.push_back(r->name.size()/2+1);
+    if (r->son) {
+      for (int i : width) {
+        while (i--)
+          std::cout << " ";
+        std::cout << "|";
+      }
+    }
+  }
+  else {
+
+  }
+  r = r->son;
+  while (r) {
+
+  }
+}
+
+void tree::print(node* r) {
+  if (!r)
+    return;
+  std::cout << r->name << "  ";
+  r = r->son;
+  while (r) {
+    print(r);
+    r = r->brother;
+  }
+}
 
 void tree::change(){
   std::cout << "请输入要更改姓名的人的目前姓名:";
@@ -109,17 +146,6 @@ void tree::clear(node* r) {
     node* p = q->brother;
     clear(q);
     q = p;
-  }
-}
-
-void tree::print(node* r) {
-  if (!r)
-    return;
-  std::cout << r->name << "  ";
-  r = r->son;
-  while (r) {
-    print(r);
-    r = r->brother;
   }
 }
 
@@ -207,5 +233,7 @@ void solve() {
 }
 
 int main() {
-  solve();
+ // solve();
+  int a = 1, b = 2;
+  std::cout << (a ^ b) << (a & b);
 }
