@@ -6,10 +6,10 @@ struct node {
   node() {
     parent = son = brother = nullptr;
   }
-  std::string name;
-  node* parent;
-  node* son;
-  node* brother;
+  std::string name;//存名字
+  node* parent;//存父节点
+  node* son;//存儿子
+  node* brother;//存兄弟
 };
 
 class tree {
@@ -25,10 +25,10 @@ public:
   void change();
   void clear(node* r);
   void erase();
-  void print(node* r, int deep);
-  void new_print(node* r,int deep);
+  void print(node* r, int deep, std::vector<int> width);
 
 private:
+  bool cin_check();//恢复cin
   void insert(node* r, std::string str);
   node* find(node* r, std::string str);
 
@@ -37,11 +37,22 @@ private:
   std::vector<int> width;
 };
 
+bool tree::cin_check() {
+  if (std::cin.fail()) {
+    std::cin.clear();
+    std::cin.ignore(INT_MAX, '\n');
+    std::cout << "input error,please re-inter!" << '\n';
+    return false;
+  }
+  return true;
+}
 
-void tree::print(node* r,int deep) {
+
+void tree::print(node* r,int deep,std::vector<int> width) {
   if (!r)
     return;
   int d = deep;
+
   while (d--)
     std::cout << ' ';
   if (r != this->root) {
@@ -58,7 +69,10 @@ void tree::print(node* r,int deep) {
       new_deep += ceil(r->name.size() / 2);
     else
       new_deep += ceil(r->name.size() / 2) + 2;
-    print(r,new_deep);
+    width.push_back(new_deep);
+    print(r,new_deep,width);
+    if (!width.empty())
+      width.pop_back();
     r = r->brother;
   }
 }
@@ -67,9 +81,17 @@ void tree::change(){
   std::cout << "请输入要更改姓名的人的目前姓名:";
   std::string str,name;
   std::cin >> str;
+  while(!cin_check())
+    std::cin >> str;
   node* r = find(root, str);
+  if (!r) {
+    std::cout << "家谱中没有此人！" << '\n'<<'\n';
+    return;
+  }
   std::cout << "请输入更改后的姓名:";
   std::cin >> name;
+  while (!cin_check())
+    std::cin >> name;
   r->name = name;
   std::cout << str << "已更名为" << name;
   std::cout << '\n'<<'\n';
@@ -79,8 +101,14 @@ void tree::erase() {
   std::cout << "请输入要解散的家庭的人的姓名：";
   std::string str;
   std::cin >> str;
-  node* r = new node();
-  r = this->find(root, str);
+  while (!cin_check()) {
+    std::cin >> str;
+  }
+  node* r = this->find(root, str);
+  if (!r) {
+    std::cout << "家谱中没有此人！" << '\n'<<'\n';
+    return;
+  }
   node *p, *q;
   p = r->son;
   std::cout << "要解散家庭的人是:" << str << '\n';
@@ -99,11 +127,18 @@ void tree::add() {
   std::cout << "请输入要添加儿子（或女儿）的人的姓名:";
   std::string str;
   std::cin >> str;
+  while (!cin_check())
+    std::cin >> str;
+  node* r = find(root, str);
+  if (!r) {
+    std::cout << "家谱中没有此人！" << '\n'<<'\n';
+    return;
+  }
   std::cout << "请输入" << str << "新添加的儿子（或女儿）的姓名:";
   std::string name;
   std::cin >> name;
-  node* r = new node();
-  r = find(root, str);
+  while (!cin_check())
+    std::cin >> name;
   this->insert(r, name);
   std::cout << str << "的第一代子孙是:";
   r = r->son;
@@ -163,6 +198,8 @@ void tree::init() {
   std::cout << "请输入祖先的名字:";
   std::string str;
   std::cin >> str;
+  while (!cin_check())
+    std::cin >> str;
   this->root->name = str;
   std::cout << "此家谱的祖先是:" << str << '\n' << '\n';
 }
@@ -171,16 +208,25 @@ void tree::complete() {
   std::cout << "请输入要建立家庭的人的名字:";
   std::string str;
   std::cin >> str;
-  node* r = new node();
-  r = this->find(this->root,str);
+  while (!cin_check())
+    std::cin >> str;
+  node* r = this->find(this->root,str);
+  if (!r) {
+    std::cout << "家谱中没有此人的名字！" << '\n'<<'\n';
+    return;
+  }
   int num = 0;
   std::vector<std::string> vec;
   std::cout << "请输入" << str << "的儿女人数:";
   std::cin >> num;
+  while (!cin_check())
+    std::cin >> num;
   std::cout << "请依次输入" << str << "的儿女的名字:";
   while (num--) {
     std::string name;
     std::cin >> name;
+    while (!cin_check())
+      std::cin >> name;
     vec.push_back(name);
   }
   for (int i = 0; i < vec.size(); i++) {
@@ -199,6 +245,11 @@ void solve() {
   while (true) {
     std::cout << "请选择要执行的操作:";
     std::cin >> ch;
+    while (std::cin.fail()) {
+      std::cin.clear();
+      std::cin.ignore(INT_MAX,'\n');
+      std::cout << "input error,please re-input!" << '\n';
+    }
     if (ch == 'E')
       break;
     switch (ch) {
@@ -221,8 +272,13 @@ void solve() {
     case'F': {
       std::vector<int> v;
      // v.push_back(0);
-      genealogy.print(genealogy.get_root(),0);
+      genealogy.print(genealogy.get_root(),0,v);
       std::cout << '\n' << '\n';
+    }
+    default: {
+      std::cout << "input error,please re-input!" << '\n'<<'\n';
+      std::cin.clear();
+      std::cin.ignore(INT_MAX, '\n');
     }
     }
   }
@@ -230,6 +286,6 @@ void solve() {
 
 int main() {
  solve();
-  std::cout << "┃" << '\n';
-  std::cout << "┗";
+  //std::cout << "┃" << '\n';
+  //std::cout << "┗";
 }
