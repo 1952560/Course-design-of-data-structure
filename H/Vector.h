@@ -9,7 +9,7 @@ public:
     _head = new T[n];
     _end = _head;
   }
-   Vector(const Vector<T>& vec) {
+  Vector(const Vector<T>& vec) {
     this->_size = vec.size();
     this->_capacity = vec._capacity;
     T* newhead = new T[_capacity];
@@ -41,7 +41,7 @@ public:
 
   T& operator[] (int ind)const;
 
-  void operator=(Vector<T>& vec);
+  Vector<T>& operator=(const Vector<T>& vec);
 
 private:
   int _size,_capacity;//size为数组有效长度，capacity为数组容量
@@ -123,7 +123,7 @@ T& Vector<T>::operator[](int ind)const {
 }
 
 template<typename T>
-void Vector<T>::operator=(Vector<T>& vec) {
+Vector<T>& Vector<T>::operator=(const Vector<T>& vec) {
   this->_size = vec.size();
   this->_capacity = vec._capacity;
   T* newhead = new T[_capacity];
@@ -133,7 +133,7 @@ void Vector<T>::operator=(Vector<T>& vec) {
     *(newhead + i) = *(vec.begin() + i);
   this->_head = newhead;
   this->_end = this->_head + (_size ? _size - 1 : 0);
-  //return *this;
+  return *this;
 }
 
 template<typename T>

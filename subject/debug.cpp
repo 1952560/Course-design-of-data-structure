@@ -5,33 +5,26 @@
 #include<stdlib.h>
 #include<algorithm>
 #include<map>
+#include<set>
 #include<stack>
 #include<vector>
-#include"../H/Maxheap.h"
-#include"../H/Vector.h"
-#include"../H/Priority_queue.h"
 #include<queue>
+#include<unordered_set>
+#include<unordered_map>
+#include"../H/Vector.h"
+#include"../H/Sort.h"
 
+#define ll long long
+#define lld long long double
+#define ull unsigned long long
 using namespace std;
 
-int main() {
-  Priority_queue<int> p;
-  for (int i = 0; i < 10; i++) {
-    p.push(i);
-  }
-  p.push(-10);
-  while (!p.empty()) {
-    cout << p.top();
-    p.pop();
-  }
+const ll maxn = 1e2 + 10;
 
- /* Vector<int> vec;
-  for (int i = 0; i < 10; i++)
-    vec.push_back(-i);
-  MaxHeap<int> m(vec);
-  m.erase(-5);
-  while (!m.empty()) {
-    cout << m.top();
-    m.pop_heap();
-  }*/
+int main() {
+  Vector<int> v=get_random(10);
+  Vector<int> c;
+  c = v;
+  for (int i = 0; i < v.size(); i++)
+    cout << c[i] << ' ';
 }
