@@ -6,16 +6,16 @@ struct node {
   node() {
     parent = son = brother = nullptr;
   }
-  std::string name;//¥Ê√˚◊÷
-  node* parent;//¥Ê∏∏Ω⁄µ„
-  node* son;//¥Ê∂˘◊”
-  node* brother;//¥Ê–÷µ‹
+  std::string name;//Â≠òÂêçÂ≠ó
+  node* parent;//Â≠òÁà∂ËäÇÁÇπ
+  node* son;//Â≠òÂÑøÂ≠ê
+  node* brother;//Â≠òÂÖÑÂºü
 };
 
 class tree {
 public:
-  tree():root(new node()){}
-  tree(node* r):root(r){}
+  tree() :root(new node()) {}
+  tree(node* r) :root(r) {}
   ~tree() { clear(this->root); }
 
   node* get_root()const { return this->root; }
@@ -28,7 +28,7 @@ public:
   void print(node* r, int deep, std::vector<int> width);
 
 private:
-  bool cin_check();//ª÷∏¥cin
+  bool cin_check();//ÊÅ¢Â§çcin
   void insert(node* r, std::string str);
   node* find(node* r, std::string str);
 
@@ -48,7 +48,7 @@ bool tree::cin_check() {
 }
 
 
-void tree::print(node* r,int deep,std::vector<int> width) {
+void tree::print(node* r, int deep, std::vector<int> width) {
   if (!r)
     return;
   int d = deep;
@@ -57,9 +57,9 @@ void tree::print(node* r,int deep,std::vector<int> width) {
     std::cout << ' ';
   if (r != this->root) {
     if (r->brother)
-      std::cout << "©«" << "  ";
+      std::cout << "‚î£" << "  ";
     else
-      std::cout << "©ª" << "  ";
+      std::cout << "‚îó" << "  ";
   }
   std::cout << r->name << '\n';
   r = r->son;
@@ -70,35 +70,35 @@ void tree::print(node* r,int deep,std::vector<int> width) {
     else
       new_deep += ceil(r->name.size() / 2) + 2;
     width.push_back(new_deep);
-    print(r,new_deep,width);
+    print(r, new_deep, width);
     if (!width.empty())
       width.pop_back();
     r = r->brother;
   }
 }
 
-void tree::change(){
-  std::cout << "«Î ‰»Î“™∏¸∏ƒ–’√˚µƒ»Àµƒƒø«∞–’√˚:";
-  std::string str,name;
+void tree::change() {
+  std::cout << "ËØ∑ËæìÂÖ•Ë¶ÅÊõ¥ÊîπÂßìÂêçÁöÑ‰∫∫ÁöÑÁõÆÂâçÂßìÂêç:";
+  std::string str, name;
   std::cin >> str;
-  while(!cin_check())
+  while (!cin_check())
     std::cin >> str;
   node* r = find(root, str);
   if (!r) {
-    std::cout << "º“∆◊÷–√ª”–¥À»À£°" << '\n'<<'\n';
+    std::cout << "ÂÆ∂Ë∞±‰∏≠Ê≤°ÊúâÊ≠§‰∫∫ÔºÅ" << '\n' << '\n';
     return;
   }
-  std::cout << "«Î ‰»Î∏¸∏ƒ∫Ûµƒ–’√˚:";
+  std::cout << "ËØ∑ËæìÂÖ•Êõ¥ÊîπÂêéÁöÑÂßìÂêç:";
   std::cin >> name;
   while (!cin_check())
     std::cin >> name;
   r->name = name;
-  std::cout << str << "“—∏¸√˚Œ™" << name;
-  std::cout << '\n'<<'\n';
+  std::cout << str << "Â∑≤Êõ¥Âêç‰∏∫" << name;
+  std::cout << '\n' << '\n';
 }
 
 void tree::erase() {
-  std::cout << "«Î ‰»Î“™Ω‚…¢µƒº“Õ•µƒ»Àµƒ–’√˚£∫";
+  std::cout << "ËØ∑ËæìÂÖ•Ë¶ÅËß£Êï£ÁöÑÂÆ∂Â∫≠ÁöÑ‰∫∫ÁöÑÂßìÂêçÔºö";
   std::string str;
   std::cin >> str;
   while (!cin_check()) {
@@ -106,13 +106,13 @@ void tree::erase() {
   }
   node* r = this->find(root, str);
   if (!r) {
-    std::cout << "º“∆◊÷–√ª”–¥À»À£°" << '\n'<<'\n';
+    std::cout << "ÂÆ∂Ë∞±‰∏≠Ê≤°ÊúâÊ≠§‰∫∫ÔºÅ" << '\n' << '\n';
     return;
   }
-  node *p, *q;
+  node* p, * q;
   p = r->son;
-  std::cout << "“™Ω‚…¢º“Õ•µƒ»À «:" << str << '\n';
-  std::cout << str << "µƒµ⁄“ª¥˙◊”ÀÔ «:";
+  std::cout << "Ë¶ÅËß£Êï£ÂÆ∂Â∫≠ÁöÑ‰∫∫ÊòØ:" << str << '\n';
+  std::cout << str << "ÁöÑÁ¨¨‰∏Ä‰ª£Â≠êÂ≠ôÊòØ:";
   while (p) {
     std::cout << p->name << "  ";
     q = p->brother;
@@ -124,29 +124,29 @@ void tree::erase() {
 }
 
 void tree::add() {
-  std::cout << "«Î ‰»Î“™ÃÌº”∂˘◊”£®ªÚ≈Æ∂˘£©µƒ»Àµƒ–’√˚:";
+  std::cout << "ËØ∑ËæìÂÖ•Ë¶ÅÊ∑ªÂä†ÂÑøÂ≠êÔºàÊàñÂ•≥ÂÑøÔºâÁöÑ‰∫∫ÁöÑÂßìÂêç:";
   std::string str;
   std::cin >> str;
   while (!cin_check())
     std::cin >> str;
   node* r = find(root, str);
   if (!r) {
-    std::cout << "º“∆◊÷–√ª”–¥À»À£°" << '\n'<<'\n';
+    std::cout << "ÂÆ∂Ë∞±‰∏≠Ê≤°ÊúâÊ≠§‰∫∫ÔºÅ" << '\n' << '\n';
     return;
   }
-  std::cout << "«Î ‰»Î" << str << "–¬ÃÌº”µƒ∂˘◊”£®ªÚ≈Æ∂˘£©µƒ–’√˚:";
+  std::cout << "ËØ∑ËæìÂÖ•" << str << "Êñ∞Ê∑ªÂä†ÁöÑÂÑøÂ≠êÔºàÊàñÂ•≥ÂÑøÔºâÁöÑÂßìÂêç:";
   std::string name;
   std::cin >> name;
   while (!cin_check())
     std::cin >> name;
   this->insert(r, name);
-  std::cout << str << "µƒµ⁄“ª¥˙◊”ÀÔ «:";
+  std::cout << str << "ÁöÑÁ¨¨‰∏Ä‰ª£Â≠êÂ≠ôÊòØ:";
   r = r->son;
   while (r) {
     std::cout << r->name << "  ";
     r = r->brother;
   }
-  std::cout << '\n'<<'\n';
+  std::cout << '\n' << '\n';
 }
 
 void tree::insert(node* r, std::string str) {
@@ -178,7 +178,7 @@ void tree::clear(node* r) {
   }
 }
 
-node* tree::find(node* r,std::string str) {
+node* tree::find(node* r, std::string str) {
   node* ans = new node();
   ans = nullptr;
   if (!r)
@@ -194,34 +194,34 @@ node* tree::find(node* r,std::string str) {
 }
 
 void tree::init() {
-  std::cout << " ◊œ»Ω®¡¢“ª∏ˆº“∆◊£°" << '\n';
-  std::cout << "«Î ‰»Î◊Êœ»µƒ√˚◊÷:";
+  std::cout << "È¶ñÂÖàÂª∫Á´ã‰∏Ä‰∏™ÂÆ∂Ë∞±ÔºÅ" << '\n';
+  std::cout << "ËØ∑ËæìÂÖ•Á•ñÂÖàÁöÑÂêçÂ≠ó:";
   std::string str;
   std::cin >> str;
   while (!cin_check())
     std::cin >> str;
   this->root->name = str;
-  std::cout << "¥Àº“∆◊µƒ◊Êœ» «:" << str << '\n' << '\n';
+  std::cout << "Ê≠§ÂÆ∂Ë∞±ÁöÑÁ•ñÂÖàÊòØ:" << str << '\n' << '\n';
 }
 
 void tree::complete() {
-  std::cout << "«Î ‰»Î“™Ω®¡¢º“Õ•µƒ»Àµƒ√˚◊÷:";
+  std::cout << "ËØ∑ËæìÂÖ•Ë¶ÅÂª∫Á´ãÂÆ∂Â∫≠ÁöÑ‰∫∫ÁöÑÂêçÂ≠ó:";
   std::string str;
   std::cin >> str;
   while (!cin_check())
     std::cin >> str;
-  node* r = this->find(this->root,str);
+  node* r = this->find(this->root, str);
   if (!r) {
-    std::cout << "º“∆◊÷–√ª”–¥À»Àµƒ√˚◊÷£°" << '\n'<<'\n';
+    std::cout << "ÂÆ∂Ë∞±‰∏≠Ê≤°ÊúâÊ≠§‰∫∫ÁöÑÂêçÂ≠óÔºÅ" << '\n' << '\n';
     return;
   }
   int num = 0;
   std::vector<std::string> vec;
-  std::cout << "«Î ‰»Î" << str << "µƒ∂˘≈Æ»À ˝:";
+  std::cout << "ËØ∑ËæìÂÖ•" << str << "ÁöÑÂÑøÂ•≥‰∫∫Êï∞:";
   std::cin >> num;
   while (!cin_check())
     std::cin >> num;
-  std::cout << "«Î“¿¥Œ ‰»Î" << str << "µƒ∂˘≈Æµƒ√˚◊÷:";
+  std::cout << "ËØ∑‰æùÊ¨°ËæìÂÖ•" << str << "ÁöÑÂÑøÂ•≥ÁöÑÂêçÂ≠ó:";
   while (num--) {
     std::string name;
     std::cin >> name;
@@ -232,10 +232,10 @@ void tree::complete() {
   for (int i = 0; i < vec.size(); i++) {
     this->insert(r, vec[i]);
   }
-  std::cout << str << "µƒµ⁄“ª¥˙◊”ÀÔ «:";
+  std::cout << str << "ÁöÑÁ¨¨‰∏Ä‰ª£Â≠êÂ≠ôÊòØ:";
   for (int i = 0; i < vec.size(); i++)
     std::cout << vec[i] << "  ";
-  std::cout << '\n'<<'\n';
+  std::cout << '\n' << '\n';
 }
 
 void solve() {
@@ -243,11 +243,11 @@ void solve() {
   genealogy.init();
   char ch;
   while (true) {
-    std::cout << "«Î—°‘Ò“™÷¥––µƒ≤Ÿ◊˜:";
+    std::cout << "ËØ∑ÈÄâÊã©Ë¶ÅÊâßË°åÁöÑÊìç‰Ωú:";
     std::cin >> ch;
     while (std::cin.fail()) {
       std::cin.clear();
-      std::cin.ignore(INT_MAX,'\n');
+      std::cin.ignore(INT_MAX, '\n');
       std::cout << "input error,please re-input!" << '\n';
     }
     if (ch == 'E')
@@ -271,12 +271,12 @@ void solve() {
     }
     case'F': {
       std::vector<int> v;
-     // v.push_back(0);
-      genealogy.print(genealogy.get_root(),0,v);
+      // v.push_back(0);
+      genealogy.print(genealogy.get_root(), 0, v);
       std::cout << '\n' << '\n';
     }
     default: {
-      std::cout << "input error,please re-input!" << '\n'<<'\n';
+      std::cout << "input error,please re-input!" << '\n' << '\n';
       std::cin.clear();
       std::cin.ignore(INT_MAX, '\n');
     }
@@ -285,7 +285,7 @@ void solve() {
 }
 
 int main() {
- solve();
-  //std::cout << "©ß" << '\n';
-  //std::cout << "©ª";
+  solve();
+  //std::cout << "‚îÉ" << '\n';
+  //std::cout << "‚îó";
 }
