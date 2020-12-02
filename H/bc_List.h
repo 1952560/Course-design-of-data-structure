@@ -80,6 +80,16 @@ void List<T>::push(const T& item) {
 }
 
 template<typename T>
+void List<T>::push(const T&& item) {
+    ListNode<T>* newnode = new ListNode<T>(item);
+    newnode->_next = this->_head;
+    newnode->_pre = this->_head->_pre;
+    this->_head->_pre->_next = newnode;
+    this->_head->_pre = newnode;
+    this->_len++;
+}
+
+template<typename T>
 ListNode<T>* List<T>::find(const T& item)const {
   ListNode<T>* pmove = this->begin();
   while (pmove != this->_head) {
