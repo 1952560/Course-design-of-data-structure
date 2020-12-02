@@ -21,11 +21,11 @@ public:
     _number = number; _name = name; _sex = sex; _age = age; _type = type;
   }
 private:
-  int _number;
-  std::string _name;
-  std::string _sex;
-  int _age;
-  std::string _type;//
+  int _number;//学号
+  std::string _name;//姓名
+  std::string _sex;//性别
+  int _age;//年龄
+  std::string _type;//报名类型
 };
 
 std::istream& operator>>(std::istream& is, student& student){
@@ -48,13 +48,13 @@ class EMIS{
 public:
   EMIS() = default;
   void push(const student& stu) { _list.push(stu); }
-  bool seek();//3
-  bool del();//2
-  bool insert();//1
-  void statistics() const;//5
-  bool revise();
+  bool seek();//3查找
+  bool del();//2删除
+  bool insert();//1插入
+  void statistics() const;//5统计
+  bool revise();//4修改
   const List<student>& getList() const { return this->_list; }
-  void print()const;
+  void print()const;//输出
 private:
   List<student> _list;
 };
@@ -75,9 +75,9 @@ bool EMIS::insert(){
   int place = -1;
   std::cout << "请输入你要插入的考生的位置：";
   std::cin >> place;
-  if (place <= 0 || place > this->_list.size() + 1) {
-    std::cout << "插入失败" << '\n';
-    return false;
+  while (place <= 0 || place > this->_list.size() + 1) {
+    std::cout << "插入失败，请重新输入：" ;
+    std::cin >> place;
   }
   std::cout << "请依次输入要插入的考生的考号，姓名，性别，年龄及报考类型！" << '\n';
   student stu;
@@ -160,6 +160,10 @@ void solve(){
   int num = 0;
   std::cout << "请输入考生人数:";
   std::cin >> num;
+  while (num < 0) {
+      std::cout << "请输入一个自然数：";
+      std::cin >> num;
+  }
   std::cout << "请依次输入考生的考号，姓名，性别，年龄及报考类型！" << '\n';
   for (int i = 1; i <= num;){
     student stu;
@@ -206,6 +210,7 @@ void solve(){
     }
     else if (order == 3){
       stus.seek();
+      std::cout << '\n';
     }
     else if (order == 4){
       stus.revise();
