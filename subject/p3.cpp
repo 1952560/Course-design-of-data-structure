@@ -1,4 +1,4 @@
-#include<string>
+ï»¿#include<string>
 #include<iomanip>
 #include"../H/Vector.h"
 
@@ -10,147 +10,147 @@ int dir[4][2] = { {1,0},{-1,0},{0,1},{0,-1} };
 class maze
 {
 public:
-  maze() :_row(0), _col(0) {
-    _entrancex = _entrancey = -1;
-    _exitx = _exity = -1;
-    _pathnum = 0;
-  }
-  void set();
-  void setMaze();
-  bool setEntrance();
-  bool setExit();
-  void mapPrintf();//Êä³öÃÔ¹¬µØÍ¼
-  void pathPrint();//Êä³öÂ·¾¶
-  void dfs(int x, int y);
-  void init() {
-    for (int i = 0; i < _row; i++) {
-      for (int j = 0; j < _col; j++) {
-        _done[i].push_back(false);
-      }
-    }
-  }
+	maze() :_row(0), _col(0) {
+		_entrancex = _entrancey = -1;
+		_exitx = _exity = -1;
+		_pathnum = 0;
+	}
+	void set();
+	void setMaze();
+	bool setEntrance();
+	bool setExit();
+	void mapPrintf();//è¾“å‡ºè¿·å®«åœ°å›¾
+	void pathPrint();//è¾“å‡ºè·¯å¾„
+	void dfs(int x, int y);
+	void init() {
+		for (int i = 0; i < _row; i++) {
+			for (int j = 0; j < _col; j++) {
+				_done[i].push_back(false);
+			}
+		}
+	}
 
 private:
-  int _row, _col;//ÐÐºÍÁÐ,´Ó0¿ªÊ¼
-  int _entrancex, _entrancey;
-  int _exitx, _exity;
-  std::string _maze[maxn];
-  Vector<bool> _done[maxn];
-  Vector<std::pair<int, int> > _path[10];
-  Vector<std::pair<int, int> > _tpath;
-  int _pathnum;
+	int _row, _col;//è¡Œå’Œåˆ—,ä»Ž0å¼€å§‹
+	int _entrancex, _entrancey;
+	int _exitx, _exity;
+	std::string _maze[maxn];
+	Vector<bool> _done[maxn];
+	Vector<std::pair<int, int> > _path[10];
+	Vector<std::pair<int, int> > _tpath;
+	int _pathnum;
 };
 
 bool maze::setEntrance() {
-  int row = -1, col = -1;
-  std::cout << "ÇëÊäÈëÃÔ¹¬µÄÈë¿Ú:";
-  std::cin >> row >> col;
-  std::cout << '\n';
-  if (row < 0 || row >= _row || col < 0 || col >= _col)
-    return false;
-  _entrancex = row; _entrancey = col;
-  return true;
+	int row = -1, col = -1;
+	std::cout << "è¯·è¾“å…¥è¿·å®«çš„å…¥å£:";
+	std::cin >> row >> col;
+	std::cout << '\n';
+	if (row < 0 || row >= _row || col < 0 || col >= _col)
+		return false;
+	_entrancex = row; _entrancey = col;
+	return true;
 }
 
 bool maze::setExit() {
-  int row = -1, col = -1;
-  std::cout << "ÇëÊäÈëÃÔ¹¬µÄ³ö¿Ú£º";
-  std::cin >> row >> col;
-  std::cout << '\n';
-  if (row < 0 || row >= _row || col < 0 || col >= _col)
-    return false;
-  _exitx = row; _exity = col;
-  return true;
+	int row = -1, col = -1;
+	std::cout << "è¯·è¾“å…¥è¿·å®«çš„å‡ºå£ï¼š";
+	std::cin >> row >> col;
+	std::cout << '\n';
+	if (row < 0 || row >= _row || col < 0 || col >= _col)
+		return false;
+	_exitx = row; _exity = col;
+	return true;
 }
 
 void maze::setMaze() {
-  if (_row == 0 || _col == 0) {
-    std::cout << "ÇëÊäÈëÃÔ¹¬µÄÐÐºÍÁÐ£º";
-    std::cin >> _row >> _col;
-  }
-  std::cout << '\n';
-  std::cout << "ÇëÊäÈëÃÔ¹¬µÄ¹¹Ôì£º" << '\n';
-  for (int i = 0; i < _row; i++)
-    for (int j = 0; j < _col; j++) {
-      char ch;
-      std::cin >> ch;
-      _maze[i].push_back(ch);
-    }
-  std::cout << '\n';
+	if (_row == 0 || _col == 0) {
+		std::cout << "è¯·è¾“å…¥è¿·å®«çš„è¡Œå’Œåˆ—ï¼š";
+		std::cin >> _row >> _col;
+	}
+	std::cout << '\n';
+	std::cout << "è¯·è¾“å…¥è¿·å®«çš„æž„é€ ï¼š" << '\n';
+	for (int i = 0; i < _row; i++)
+		for (int j = 0; j < _col; j++) {
+			char ch;
+			std::cin >> ch;
+			_maze[i].push_back(ch);
+		}
+	std::cout << '\n';
 }
 
 void maze::set() {
-  this->setMaze();
-  this->setEntrance();
-  this->setExit();
-  this->_tpath.push_back(std::make_pair(_entrancex, _entrancey));
-  this->init();
-  this->dfs(_entrancex, _entrancey);
+	this->setMaze();
+	this->setEntrance();
+	this->setExit();
+	this->_tpath.push_back(std::make_pair(_entrancex, _entrancey));
+	this->init();
+	this->dfs(_entrancex, _entrancey);
 }
 
 void maze::dfs(int x, int y) {
-  if (x == _exitx && y == _exity) {
-    for (int i = 0; i < _tpath.size(); i++) {
-      _path[_pathnum].push_back(_tpath[i]);
-    }
-    _pathnum++;
-    return;
-  }
-  if (x >= _row || x < 0)
-    return;
-  if (y >= _col || y < 0)
-    return;
-  if (_maze[x][y] == '#')
-    return;
-  if (_done[x][y])
-    return;
-  _done[x][y] = true;
-  for (int i = 0; i <= 3; i++) {
-    int newx = x + dir[i][0];
-    int newy = y + dir[i][1];
-    _tpath.push_back(std::make_pair(newx, newy));
-    dfs(newx, newy);
-    _tpath.pop_back();
-  }
-  _done[x][y] = false;
+	if (x == _exitx && y == _exity) {
+		for (int i = 0; i < _tpath.size(); i++) {
+			_path[_pathnum].push_back(_tpath[i]);
+		}
+		_pathnum++;
+		return;
+	}
+	if (x >= _row || x < 0)
+		return;
+	if (y >= _col || y < 0)
+		return;
+	if (_maze[x][y] == '#')
+		return;
+	if (_done[x][y])
+		return;
+	_done[x][y] = true;
+	for (int i = 0; i <= 3; i++) {
+		int newx = x + dir[i][0];
+		int newy = y + dir[i][1];
+		_tpath.push_back(std::make_pair(newx, newy));
+		dfs(newx, newy);
+		_tpath.pop_back();
+	}
+	_done[x][y] = false;
 }
 
 void maze::mapPrintf() {
-  std::cout << "ÃÔ¹¬µØÍ¼£º" << '\n' << '\n';
-  std::cout << "    ";
-  for (int i = 0; i < _col; i++) {
-    std::cout << i << "ÁÐ" << "  ";
-  }
-  std::cout << '\n';
-  for (int i = 0; i < _row; i++) {
-    std::cout << i << "ÐÐ";
-    std::cout << " ";
-    for (int j = 0; j <= _col; j++) {
-      std::cout << _maze[i][j] << "    ";
-    }
-    std::cout << '\n';
-  }
-  std::cout << '\n';
+	std::cout << "è¿·å®«åœ°å›¾ï¼š" << '\n' << '\n';
+	std::cout << "    ";
+	for (int i = 0; i < _col; i++) {
+		std::cout << i << "åˆ—" << "  ";
+	}
+	std::cout << '\n';
+	for (int i = 0; i < _row; i++) {
+		std::cout << i << "è¡Œ";
+		std::cout << " ";
+		for (int j = 0; j <= _col; j++) {
+			std::cout << _maze[i][j] << "    ";
+		}
+		std::cout << '\n';
+	}
+	std::cout << '\n';
 }
 
 void maze::pathPrint() {
-  if (_pathnum == 0)
-    return;
-  std::cout << "ÃÔ¹¬Â·¾¶£º" << '\n' << '\n';
-  for (int i = 0; i < _pathnum; i++) {
-    std::cout << "µÚ" << i + 1 << "ÌõÂ·¾¶£º" << '\n';
-    for (int j = 0; j < _path[i].size() - 1; j++) {
-      std::cout << '<' << _path[i][j].first << ',' << _path[i][j].second << '>' << "-->";
-    }
-    std::cout << '<' << _path[i][_path[i].size() - 1].first << ',' << _path[i][_path[i].size() - 1].second << '>';
-    std::cout << '\n';
-  }
+	if (_pathnum == 0)
+		return;
+	std::cout << "è¿·å®«è·¯å¾„ï¼š" << '\n' << '\n';
+	for (int i = 0; i < _pathnum; i++) {
+		std::cout << "ç¬¬" << i + 1 << "æ¡è·¯å¾„ï¼š" << '\n';
+		for (int j = 0; j < _path[i].size() - 1; j++) {
+			std::cout << '<' << _path[i][j].first << ',' << _path[i][j].second << '>' << "-->";
+		}
+		std::cout << '<' << _path[i][_path[i].size() - 1].first << ',' << _path[i][_path[i].size() - 1].second << '>';
+		std::cout << '\n';
+	}
 }
 
 int main()
 {
-  maze mymaze;
-  mymaze.set();
-  mymaze.mapPrintf();
-  mymaze.pathPrint();
+	maze mymaze;
+	mymaze.set();
+	mymaze.mapPrintf();
+	mymaze.pathPrint();
 }

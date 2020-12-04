@@ -1,219 +1,219 @@
-#include<iostream>
+ï»¿#include<iostream>
 #include<string>
 #include<Stack>
 #include<Vector>
 #include"../H/Vector.h"
 #include"../H/Stack.h"
-int fastpow(int base, int n) {//¿ìËÙÃİ
-  int ans = 1;
-  while (n) {
-    if (n & 1) ans *= base;
-    base *= base;
-    n >>= 1;
-  }
-  return ans;
+int fastpow(int base, int n) {//å¿«é€Ÿå¹‚
+	int ans = 1;
+	while (n) {
+		if (n & 1) ans *= base;
+		base *= base;
+		n >>= 1;
+	}
+	return ans;
 }
 
 
-//ÖĞ×º±í´ïÊ½×ª»¯³Éºó×º±í´ïÊ½
+//ä¸­ç¼€è¡¨è¾¾å¼è½¬åŒ–æˆåç¼€è¡¨è¾¾å¼
 struct expre {
-  bool isnum;//1ÎªÊı×Ö
-  char oper;
-  int num;
+	bool isnum;//1ä¸ºæ•°å­—
+	char oper;
+	int num;
 };
 
 class eval {
 public:
-  eval(std::string &str) {
-    infix = str;
-    change();
-    calculate();
-  }
+	eval(std::string& str) {
+		infix = str;
+		change();
+		calculate();
+	}
 private:
-  void change();
-  int priority(char x);
-  void calculate();
-  friend std::ostream& operator<<(std::ostream& os, const eval& e) {
-    os << e.ans << '\n';
-    return os;
-  }
+	void change();
+	int priority(char x);
+	void calculate();
+	friend std::ostream& operator<<(std::ostream& os, const eval& e) {
+		os << e.ans << '\n';
+		return os;
+	}
 private:
-  std::string infix;//´æÖĞ×º±í´ïÊ½
-  Vector<expre> suffix;//´æºó×º±í´ïÊ½
-  int ans;
+	std::string infix;//å­˜ä¸­ç¼€è¡¨è¾¾å¼
+	Vector<expre> suffix;//å­˜åç¼€è¡¨è¾¾å¼
+	int ans;
 };
 
 void eval::calculate() {
-  Stack<int> cal;
-  for (int i = 0; i < suffix.size(); i++) {
-    if (suffix[i].isnum)
-      cal.push(suffix[i].num);
-    else {
-      char oper = suffix[i].oper;
-      switch (oper) {
-      case '+': {
-        if (cal.empty())
-          exit(0);
-        else if (cal.size() == 1) {
-          int x = 0;
-          int y = cal.top(); cal.pop();
-          cal.push(x + y);
-        }
-        else if (cal.size() >= 2) {
-          int x = cal.top(); cal.pop();
-          int y = cal.top(); cal.pop();
-          cal.push(x + y);
-        }
-        break;
-      }
-      case'-': {
-        if (cal.size() == 1) {
-          int x = cal.top(); cal.pop();
-          cal.push(-x);
-        }
-        else if (cal.size() >= 2) {
-          int x = cal.top(); cal.pop();
-          int y = cal.top(); cal.pop();
-          cal.push(y - x);
-        }
-        else
-          exit(0);
-        break;
-      }
-      case'*': {
-        if (cal.size() >= 2) {
-          int x = cal.top(); cal.pop();
-          int y = cal.top(); cal.pop();
-          cal.push(x * y);
-        }
-        else
-          exit(0);
-        break;
-      }
-      case'/': {
-        if (cal.size() >= 2) {
-          int x = cal.top(); cal.pop();
-          int y = cal.top(); cal.pop();
-          cal.push(y / x);
-        }
-        else
-          exit(0);
-        break;
-      }
-      case'%': {
-        if (cal.size() >= 2) {
-          int x = cal.top(); cal.pop();
-          int y = cal.top(); cal.pop();
-          cal.push(y % x);
-        }
-        else
-          exit(0);
-        break;
-      }
-      case'^': {
-        if (cal.size() >= 2) {
-          int x = cal.top(); cal.pop();
-          int y = cal.top(); cal.pop();
-          cal.push(fastpow(y, x));
-        }
-        else
-          exit(0);
-        break;
-      }
-      }
-    }
-  }
-  ans = 0;
-  while (!cal.empty()) {
-    ans += cal.top();
-    cal.pop();
-  }
+	Stack<int> cal;
+	for (int i = 0; i < suffix.size(); i++) {
+		if (suffix[i].isnum)
+			cal.push(suffix[i].num);
+		else {
+			char oper = suffix[i].oper;
+			switch (oper) {
+			case '+': {
+				if (cal.empty())
+					exit(0);
+				else if (cal.size() == 1) {
+					int x = 0;
+					int y = cal.top(); cal.pop();
+					cal.push(x + y);
+				}
+				else if (cal.size() >= 2) {
+					int x = cal.top(); cal.pop();
+					int y = cal.top(); cal.pop();
+					cal.push(x + y);
+				}
+				break;
+			}
+			case'-': {
+				if (cal.size() == 1) {
+					int x = cal.top(); cal.pop();
+					cal.push(-x);
+				}
+				else if (cal.size() >= 2) {
+					int x = cal.top(); cal.pop();
+					int y = cal.top(); cal.pop();
+					cal.push(y - x);
+				}
+				else
+					exit(0);
+				break;
+			}
+			case'*': {
+				if (cal.size() >= 2) {
+					int x = cal.top(); cal.pop();
+					int y = cal.top(); cal.pop();
+					cal.push(x * y);
+				}
+				else
+					exit(0);
+				break;
+			}
+			case'/': {
+				if (cal.size() >= 2) {
+					int x = cal.top(); cal.pop();
+					int y = cal.top(); cal.pop();
+					cal.push(y / x);
+				}
+				else
+					exit(0);
+				break;
+			}
+			case'%': {
+				if (cal.size() >= 2) {
+					int x = cal.top(); cal.pop();
+					int y = cal.top(); cal.pop();
+					cal.push(y % x);
+				}
+				else
+					exit(0);
+				break;
+			}
+			case'^': {
+				if (cal.size() >= 2) {
+					int x = cal.top(); cal.pop();
+					int y = cal.top(); cal.pop();
+					cal.push(fastpow(y, x));
+				}
+				else
+					exit(0);
+				break;
+			}
+			}
+		}
+	}
+	ans = 0;
+	while (!cal.empty()) {
+		ans += cal.top();
+		cal.pop();
+	}
 }
 
 int eval::priority(char x) {
-  if (x == ')' || x == '(')
-    return 5;
-  if (x == '+' || x == '-')
-    return 1;
-  if (x == '*' || x == '/')
-    return 2;
-  if (x == '%')
-    return 3;
-  if (x == '^')
-    return 4;
-  return -1;
+	if (x == ')' || x == '(')
+		return 5;
+	if (x == '+' || x == '-')
+		return 1;
+	if (x == '*' || x == '/')
+		return 2;
+	if (x == '%')
+		return 3;
+	if (x == '^')
+		return 4;
+	return -1;
 }
 
 void eval::change() {
-  Stack<char> oper;
-  bool flag = false;
-  for (int i = 0; i < infix.size(); ) {
-    if (infix[i] >= '0' && infix[i] <= '9') {
-      flag = false;
-      std::string str;
-      while (infix[i] >= '0' && infix[i] <= '9') {
-        str.push_back(infix[i]);
-        i++;
-      }
-      int k = 1;
-      int num = 0;
-      for (int i = str.size() - 1; i >= 0; i--) {
-        num += k * (int)(str[i] - '0');
-        k *= 10;
-      }
-      expre e;
-      e.isnum = true; e.num = num; e.oper = '?';
-      suffix.push_back(e);
-    }
-    else {
-      if (infix[i] == ')') {//Èç¹ûÊÇ¡®£©¡¯
-        while (oper.top() != '(') {
-          expre e;
-          e.isnum = false; e.num = 0; e.oper = oper.top();
-          oper.pop();
-          suffix.push_back(e);
-        }
-        oper.pop();
-        i++;
-      }
-      else {//Èç¹û²»ÊÇ¡®£©¡¯
-        if ((infix[i] == '+' || infix[i] == '-') &&flag) {
-          flag = false;
-          expre e;
-          e.isnum = true; e.num = 0;
-          suffix.push_back(e);
-        }
-        if (infix[i] == '(')
-          flag = true;
-        while ((!oper.empty()) && (oper.top() != '(') && (priority(infix[i]) <= priority(oper.top()))) {
-          expre e;
-          e.isnum = false; e.num = 0, e.oper = oper.top();
-          oper.pop();
-          suffix.push_back(e);
-        }
-        oper.push(infix[i]);
-        i++;
-      }
-    }
-  }
-  while (!oper.empty()) {
-    expre e;
-    e.isnum = false; e.num = 0, e.oper = oper.top();
-    oper.pop();
-    suffix.push_back(e);
-  }
+	Stack<char> oper;
+	bool flag = false;
+	for (int i = 0; i < infix.size(); ) {
+		if (infix[i] >= '0' && infix[i] <= '9') {
+			flag = false;
+			std::string str;
+			while (infix[i] >= '0' && infix[i] <= '9') {
+				str.push_back(infix[i]);
+				i++;
+			}
+			int k = 1;
+			int num = 0;
+			for (int i = str.size() - 1; i >= 0; i--) {
+				num += k * (int)(str[i] - '0');
+				k *= 10;
+			}
+			expre e;
+			e.isnum = true; e.num = num; e.oper = '?';
+			suffix.push_back(e);
+		}
+		else {
+			if (infix[i] == ')') {//å¦‚æœæ˜¯â€˜ï¼‰â€™
+				while (oper.top() != '(') {
+					expre e;
+					e.isnum = false; e.num = 0; e.oper = oper.top();
+					oper.pop();
+					suffix.push_back(e);
+				}
+				oper.pop();
+				i++;
+			}
+			else {//å¦‚æœä¸æ˜¯â€˜ï¼‰â€™
+				if ((infix[i] == '+' || infix[i] == '-') && flag) {
+					flag = false;
+					expre e;
+					e.isnum = true; e.num = 0;
+					suffix.push_back(e);
+				}
+				if (infix[i] == '(')
+					flag = true;
+				while ((!oper.empty()) && (oper.top() != '(') && (priority(infix[i]) <= priority(oper.top()))) {
+					expre e;
+					e.isnum = false; e.num = 0, e.oper = oper.top();
+					oper.pop();
+					suffix.push_back(e);
+				}
+				oper.push(infix[i]);
+				i++;
+			}
+		}
+	}
+	while (!oper.empty()) {
+		expre e;
+		e.isnum = false; e.num = 0, e.oper = oper.top();
+		oper.pop();
+		suffix.push_back(e);
+	}
 }
 
 int main() {
-  std::string str;
-  char ch;
-  while (true) {
-    std::cout << "ÊäÈë±í´ïÊ½£º" << '\n';
-    std::cin >> str;
-    std::cout << eval(str);
-    std::cout << "ÊÇ·ñ¼ÌĞø£¨y,n£©£¿";
-    std::cin >> ch;
-    if (ch == 'n')
-      break;
-  }
+	std::string str;
+	char ch;
+	while (true) {
+		std::cout << "è¾“å…¥è¡¨è¾¾å¼ï¼š" << '\n';
+		std::cin >> str;
+		std::cout << eval(str);
+		std::cout << "æ˜¯å¦ç»§ç»­ï¼ˆy,nï¼‰ï¼Ÿ";
+		std::cin >> ch;
+		if (ch == 'n')
+			break;
+	}
 }
