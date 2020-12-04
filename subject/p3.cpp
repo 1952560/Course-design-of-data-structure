@@ -5,8 +5,6 @@
 
 const int maxn = 1e2;
 
-int dir[4][2] = { {1,0},{-1,0},{0,1},{0,-1} };
-
 class maze
 {
 public:
@@ -39,6 +37,7 @@ private:
 	Vector<std::pair<int, int> > _path[10];
 	Vector<std::pair<int, int> > _tpath;
 	int _pathnum;
+	int dir[4][2] = { {1,0},{-1,0},{0,1},{0,-1} };
 };
 
 bool maze::setEntrance() {
@@ -134,8 +133,10 @@ void maze::mapPrintf() {
 }
 
 void maze::pathPrint() {
-	if (_pathnum == 0)
+	if (_pathnum == 0) {
+		std::cout << "无路径" << '\n';
 		return;
+	}
 	std::cout << "迷宫路径：" << '\n' << '\n';
 	for (int i = 0; i < _pathnum; i++) {
 		std::cout << "第" << i + 1 << "条路径：" << '\n';
