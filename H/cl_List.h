@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include<iostream>
 #include<typeinfo>
 
@@ -8,145 +8,145 @@ template<class T>
 class ListNode
 {
 public:
-  friend List<T>;
-  ListNode():_data(NULL),_next(nullptr){}//¹¹Ôìº¯Êı
-  ListNode(const T& item,ListNode<T>* n=nullptr)
-    :_data(item),_next(n){}
-  ~ListNode() {//Îö¹¹º¯Êı
-    _next = nullptr;
-  }
-  ListNode<T>* next()const { return this->_next; }//·µ»ØºóÖÃÖ¸Õë
-  T data()const { return this->_data; }//·µ»ØÊı¾İ
-  void setData(T& d) { _data = d; }//ÉèÖÃÊı¾İ
+	friend List<T>;
+	ListNode() :_data(NULL), _next(nullptr) {}//æ„é€ å‡½æ•°
+	ListNode(const T& item, ListNode<T>* n = nullptr)
+		:_data(item), _next(n) {}
+	~ListNode() {//ææ„å‡½æ•°
+		_next = nullptr;
+	}
+	ListNode<T>* next()const { return this->_next; }//è¿”å›åç½®æŒ‡é’ˆ
+	T data()const { return this->_data; }//è¿”å›æ•°æ®
+	void setData(T& d) { _data = d; }//è®¾ç½®æ•°æ®
 private:
-  T _data;//´æÊı¾İ
-  ListNode* _next;//ºóÖÃÖ¸Õë
+	T _data;//å­˜æ•°æ®
+	ListNode* _next;//åç½®æŒ‡é’ˆ
 };
 
 template<class T>
 class List
 {
 public:
-  List() :_len(0),_head(new ListNode<T>()),_last(nullptr) {//¹¹Ôìº¯Êı
-    _head->_next= _head;
-    _last = _head;
-  }
-  ~List() {//Îö¹¹º¯Êı
-    this->clear();
-    delete _head;
-  }
+	List() :_len(0), _head(new ListNode<T>()), _last(nullptr) {//æ„é€ å‡½æ•°
+		_head->_next = _head;
+		_last = _head;
+	}
+	~List() {//ææ„å‡½æ•°
+		this->clear();
+		delete _head;
+	}
 public:
-  ListNode<T>* find(const T& item)const;
-  void clear();//Çå³ı
-  void push(const T& item);//ºó²å
-  bool insert(const T& item, int ind = 0);//²åÈë
-  bool erase(const T& item);//É¾³ı
-  ListNode<T>* begin()const { return this->_head->_next; }
-  ListNode<T>* end()const { return this->_head; }
-  bool change(const T& newitem, ListNode<T>* itor);//ĞŞ¸Ä
-  int size()const { return this->_len; }
-  bool empty()const { return !(this->_len); }
-  void print()const;
+	ListNode<T>* find(const T& item)const;
+	void clear();//æ¸…é™¤
+	void push(const T& item);//åæ’
+	bool insert(const T& item, int ind = 0);//æ’å…¥
+	bool erase(const T& item);//åˆ é™¤
+	ListNode<T>* begin()const { return this->_head->_next; }
+	ListNode<T>* end()const { return this->_head; }
+	bool change(const T& newitem, ListNode<T>* itor);//ä¿®æ”¹
+	int size()const { return this->_len; }
+	bool empty()const { return !(this->_len); }
+	void print()const;
 private:
-  int _len;
-  ListNode<T>* _head;
-  //head is a pointer to the first list node
-  ListNode<T>* _last;
-  //last is a pointer to the last node
+	int _len;
+	ListNode<T>* _head;
+	//head is a pointer to the first list node
+	ListNode<T>* _last;
+	//last is a pointer to the last node
 };
 
 template<typename T>
 void List<T>::clear() {
-  if (this->empty())
-    return;
-  ListNode<T>* pmove = this->begin(), * pdel;
-  while (pmove != this->_head) {
-    pdel = pmove;
-    pmove = pdel->_next;
-    delete pdel;
-  }
-  this->_len = 0;
-  this->_head->_next = this->_head;
-  this->_last = this->_head;
+	if (this->empty())
+		return;
+	ListNode<T>* pmove = this->begin(), * pdel;
+	while (pmove != this->_head) {
+		pdel = pmove;
+		pmove = pdel->_next;
+		delete pdel;
+	}
+	this->_len = 0;
+	this->_head->_next = this->_head;
+	this->_last = this->_head;
 }
 
 template<typename T>
 void List<T>::push(const T& item) {
-  ListNode<T>* newnode = new ListNode<T>(item);
-  newnode->_next = this->_head;
-  this->_last->_next = newnode;
-  _last = newnode;
-  this->_len++;
+	ListNode<T>* newnode = new ListNode<T>(item);
+	newnode->_next = this->_head;
+	this->_last->_next = newnode;
+	_last = newnode;
+	this->_len++;
 }
 
 template<typename T>
 ListNode<T>* List<T>::find(const T& item)const {
-  ListNode<T>* pmove = this->begin();
-  while (pmove != this->_head) {
-    if (pmove->data() == item)
-      return pmove;
-    pmove = pmove->_next;
-  }
-  return pmove;
+	ListNode<T>* pmove = this->begin();
+	while (pmove != this->_head) {
+		if (pmove->data() == item)
+			return pmove;
+		pmove = pmove->_next;
+	}
+	return pmove;
 }
 
 template<typename T>
 bool List<T>::insert(const T& item, int ind) {
-  if (ind <= 0||ind>this->_len+1)
-    return false;
-  if (ind == this->_len + 1) {
-    this->push(item);
-    this->_last = this->_last->_next;
-    this->_len++;
-    return true;
-  }
-  ListNode<T> *newnode = new ListNode<T>(item), * pmove = this->_head;
-  for (int i = 1; i < ind; i++) {
-    pmove = pmove->_next;
-  }
-  newnode->_next = pmove->_next;
-  pmove->_next = newnode;
-  this->_len++;
-  return true;
+	if (ind <= 0 || ind > this->_len + 1)
+		return false;
+	if (ind == this->_len + 1) {
+		this->push(item);
+		this->_last = this->_last->_next;
+		this->_len++;
+		return true;
+	}
+	ListNode<T>* newnode = new ListNode<T>(item), * pmove = this->_head;
+	for (int i = 1; i < ind; i++) {
+		pmove = pmove->_next;
+	}
+	newnode->_next = pmove->_next;
+	pmove->_next = newnode;
+	this->_len++;
+	return true;
 }
 
 template<typename T>
 bool List<T>::erase(const T& item) {
-  ListNode<T>* pmove = this->_head, * q=nullptr;
-  while (pmove->_next != this->_head) {
-    if (pmove->_next->data() == item) {
-      q = pmove;
-      pmove = pmove->_next;
-      break;
-    }
-    else
-      pmove = pmove->_next;
-  }
-  if (pmove->_next == this->_head)
-    return false;
-  q->_next = pmove->_next;
-  this->_len--;
-  delete pmove;
-  return true;
+	ListNode<T>* pmove = this->_head, * q = nullptr;
+	while (pmove->_next != this->_head) {
+		if (pmove->_next->data() == item) {
+			q = pmove;
+			pmove = pmove->_next;
+			break;
+		}
+		else
+			pmove = pmove->_next;
+	}
+	if (pmove->_next == this->_head)
+		return false;
+	q->_next = pmove->_next;
+	this->_len--;
+	delete pmove;
+	return true;
 }
 
 template<typename T>
 bool List<T>::change(const T& newitem, ListNode<T>* itor) {
-  if (!itor||itor==this->_head)
-    return false;
-  itor->setData(newitem);
-  return true;
+	if (!itor || itor == this->_head)
+		return false;
+	itor->setData(newitem);
+	return true;
 }
 
 template<typename T>
 void List<T>::print()const {
-  if (this->empty()) {
-    std::cout << "NULL";
-    return;
-  }
-  ListNode<T>* itor = this->begin();
-  for (; itor != this->end(); itor = itor->_next) {
-    std::cout << itor->_data << ' ';
-  }
-  std::cout << '\n';
+	if (this->empty()) {
+		std::cout << "NULL";
+		return;
+	}
+	ListNode<T>* itor = this->begin();
+	for (; itor != this->end(); itor = itor->_next) {
+		std::cout << itor->_data << ' ';
+	}
+	std::cout << '\n';
 }

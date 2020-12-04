@@ -1,4 +1,4 @@
-#include<iostream>
+﻿#include<iostream>
 #include<string>
 #include<stdio.h>
 #include<cstring>
@@ -11,8 +11,9 @@
 #include<queue>
 #include<unordered_set>
 #include<unordered_map>
-#include"../H/Vector.h"
-#include"../H/Sort.h"
+#include<thread>
+#include<mutex>
+#include<chrono>
 
 #define ll long long
 #define lld long long double
@@ -20,11 +21,24 @@
 using namespace std;
 
 const ll maxn = 1e2 + 10;
+int counter = 0;
+std::mutex mtx;
+
+void increase(int time) {
+	for (int i = 0; i < time; i++) {
+		//当前线程休眠1毫秒
+		mtx.lock();
+		std::this_thread::sleep_for(std::chrono::milliseconds(1));
+		counter++;
+		mtx.unlock();
+	}
+}
 
 int main() {
-  Vector<int> v=get_random(10);
-  Vector<int> c;
-  c = v;
-  for (int i = 0; i < v.size(); i++)
-    cout << c[i] << ' ';
+	std::thread t1(increase, 1000);
+	std::thread t2(increase, 1000);
+	t1.join();
+	t2.join();
+	std::cout << "counter:" << counter << std::endl;
+	return 0;
 }

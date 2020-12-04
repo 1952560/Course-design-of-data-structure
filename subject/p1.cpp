@@ -1,4 +1,4 @@
-#include<algorithm>
+ï»¿#include<algorithm>
 #include<string>
 #include<iomanip>
 #include"../H/bc_List.h"
@@ -6,225 +6,225 @@
 const int blankspace_num = 10;
 class EMIS;
 
-class student{
+class student {
 public:
-  student() = default;
-  friend class EMIS;
-  friend std::istream& operator>>(std::istream& is, student& student);
-  friend std::ostream& operator<<(std::ostream& os, const student& student);
-  const int number()const { return _number; }
-  const std::string name()const { return _name; }
-  const std::string sex()const { return _sex; }
-  const int age()const { return _age; }
-  const std::string type()const { return _type; }
-  void set(int number, std::string name, std::string sex, int age, std::string type) {
-    _number = number; _name = name; _sex = sex; _age = age; _type = type;
-  }
+	student() = default;
+	friend class EMIS;
+	friend std::istream& operator>>(std::istream& is, student& student);
+	friend std::ostream& operator<<(std::ostream& os, const student& student);
+	const int number()const { return _number; }
+	const std::string name()const { return _name; }
+	const std::string sex()const { return _sex; }
+	const int age()const { return _age; }
+	const std::string type()const { return _type; }
+	void set(int number, std::string name, std::string sex, int age, std::string type) {
+		_number = number; _name = name; _sex = sex; _age = age; _type = type;
+	}
 private:
-  int _number;//Ñ§ºÅ
-  std::string _name;//ĞÕÃû
-  std::string _sex;//ĞÔ±ğ
-  int _age;//ÄêÁä
-  std::string _type;//±¨ÃûÀàĞÍ
+	int _number;//å­¦å·
+	std::string _name;//å§“å
+	std::string _sex;//æ€§åˆ«
+	int _age;//å¹´é¾„
+	std::string _type;//æŠ¥åç±»å‹
 };
 
-std::istream& operator>>(std::istream& is, student& student){
-  is >> student._number >> student._name >> student._sex >> student._age >> student._type;
-  if (is.fail()){
-    std::cout << "ÊäÈë´íÎó£¬ÇëÖØĞÂÊäÈë£¡" << '\n';
-    return is;
-  }
-  return is;
+std::istream& operator>>(std::istream& is, student& student) {
+	is >> student._number >> student._name >> student._sex >> student._age >> student._type;
+	if (is.fail()) {
+		std::cout << "è¾“å…¥é”™è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥ï¼" << '\n';
+		return is;
+	}
+	return is;
 }
-std::ostream& operator<<(std::ostream& os, const student& student){
-  os.setf(std::ios::left);
-  os << std::setw(blankspace_num) << student.number() << std::setw(blankspace_num) << student.name()
-    << std::setw(blankspace_num) << student.sex() << std::setw(blankspace_num) << student.age()
-    << std::setw(blankspace_num) << student.type() << '\n';
-  return os;
+std::ostream& operator<<(std::ostream& os, const student& student) {
+	os.setf(std::ios::left);
+	os << std::setw(blankspace_num) << student.number() << std::setw(blankspace_num) << student.name()
+		<< std::setw(blankspace_num) << student.sex() << std::setw(blankspace_num) << student.age()
+		<< std::setw(blankspace_num) << student.type() << '\n';
+	return os;
 }
 
-class EMIS{
+class EMIS {
 public:
-  EMIS() = default;
-  void push(const student& stu) { _list.push(stu); }
-  bool seek();//3²éÕÒ
-  bool del();//2É¾³ı
-  bool insert();//1²åÈë
-  void statistics() const;//5Í³¼Æ
-  bool revise();//4ĞŞ¸Ä
-  const List<student>& getList() const { return this->_list; }
-  void print()const;//Êä³ö
+	EMIS() = default;
+	void push(const student& stu) { _list.push(stu); }
+	bool seek();//3æŸ¥æ‰¾
+	bool del();//2åˆ é™¤
+	bool insert();//1æ’å…¥
+	void statistics() const;//5ç»Ÿè®¡
+	bool revise();//4ä¿®æ”¹
+	const List<student>& getList() const { return this->_list; }
+	void print()const;//è¾“å‡º
 private:
-  List<student> _list;
+	List<student> _list;
 };
 //EMIS stus;
 
 void EMIS::print() const {
-  std::cout.setf(std::ios::left);
-  std::cout << std::setw(blankspace_num) << "¿¼ºÅ" << std::setw(blankspace_num) << "ĞÕÃû"
-    << std::setw(blankspace_num) << "ĞÔ±ğ" << std::setw(blankspace_num) << "ÄêÁä"
-    << std::setw(blankspace_num) << "±¨¿¼ÀàĞÍ" << '\n';
-  ListNode<student>* itor;
-  for (itor = this->_list.begin(); itor != this->_list.end(); itor = itor->next()) {
-    std::cout << itor->data();
-  }
+	std::cout.setf(std::ios::left);
+	std::cout << std::setw(blankspace_num) << "è€ƒå·" << std::setw(blankspace_num) << "å§“å"
+		<< std::setw(blankspace_num) << "æ€§åˆ«" << std::setw(blankspace_num) << "å¹´é¾„"
+		<< std::setw(blankspace_num) << "æŠ¥è€ƒç±»å‹" << '\n';
+	ListNode<student>* itor;
+	for (itor = this->_list.begin(); itor != this->_list.end(); itor = itor->next()) {
+		std::cout << itor->data();
+	}
 }
 
-bool EMIS::insert(){
-  int place = -1;
-  std::cout << "ÇëÊäÈëÄãÒª²åÈëµÄ¿¼ÉúµÄÎ»ÖÃ£º";
-  std::cin >> place;
-  while (place <= 0 || place > this->_list.size() + 1) {
-    std::cout << "²åÈëÊ§°Ü£¬ÇëÖØĞÂÊäÈë£º" ;
-    std::cin >> place;
-  }
-  std::cout << "ÇëÒÀ´ÎÊäÈëÒª²åÈëµÄ¿¼ÉúµÄ¿¼ºÅ£¬ĞÕÃû£¬ĞÔ±ğ£¬ÄêÁä¼°±¨¿¼ÀàĞÍ£¡" << '\n';
-  student stu;
-  std::cin >> stu;
-  this->_list.insert(stu, place);
-  return true;
+bool EMIS::insert() {
+	int place = -1;
+	std::cout << "è¯·è¾“å…¥ä½ è¦æ’å…¥çš„è€ƒç”Ÿçš„ä½ç½®ï¼š";
+	std::cin >> place;
+	while (place <= 0 || place > this->_list.size() + 1) {
+		std::cout << "æ’å…¥å¤±è´¥ï¼Œè¯·é‡æ–°è¾“å…¥ï¼š";
+		std::cin >> place;
+	}
+	std::cout << "è¯·ä¾æ¬¡è¾“å…¥è¦æ’å…¥çš„è€ƒç”Ÿçš„è€ƒå·ï¼Œå§“åï¼Œæ€§åˆ«ï¼Œå¹´é¾„åŠæŠ¥è€ƒç±»å‹ï¼" << '\n';
+	student stu;
+	std::cin >> stu;
+	this->_list.insert(stu, place);
+	return true;
 }
 
-bool EMIS::seek(){
-  std::cout << "ÇëÊäÈëÒª²éÕÒµÄ¿¼ÉúµÄ¿¼ºÅ:";
-  int number = 0;
-  std::cin >> number;
-  ListNode<student>* itor;
-  for (itor = _list.begin(); itor != _list.end(); itor = itor->next()){
-    if (itor->data().number() == number){
-      std::cout.setf(std::ios::left);
-      std::cout << std::setw(blankspace_num) << "¿¼ºÅ" << std::setw(blankspace_num) << "ĞÕÃû"
-        << std::setw(blankspace_num) << "ĞÔ±ğ" << std::setw(blankspace_num) << "ÄêÁä"
-        << std::setw(blankspace_num) << "±¨¿¼ÀàĞÍ" << '\n';
-      std::cout << itor->data();
-      return true;
-    }
-  }
-  if (itor == _list.end()) {
-    std::cout << "¿¼ÉúĞÅÏ¢ÏµÍ³ÎŞ¸Ã¿¼ÉúĞÅÏ¢" << '\n';
-    return false;
-  }
-  return false;
+bool EMIS::seek() {
+	std::cout << "è¯·è¾“å…¥è¦æŸ¥æ‰¾çš„è€ƒç”Ÿçš„è€ƒå·:";
+	int number = 0;
+	std::cin >> number;
+	ListNode<student>* itor;
+	for (itor = _list.begin(); itor != _list.end(); itor = itor->next()) {
+		if (itor->data().number() == number) {
+			std::cout.setf(std::ios::left);
+			std::cout << std::setw(blankspace_num) << "è€ƒå·" << std::setw(blankspace_num) << "å§“å"
+				<< std::setw(blankspace_num) << "æ€§åˆ«" << std::setw(blankspace_num) << "å¹´é¾„"
+				<< std::setw(blankspace_num) << "æŠ¥è€ƒç±»å‹" << '\n';
+			std::cout << itor->data();
+			return true;
+		}
+	}
+	if (itor == _list.end()) {
+		std::cout << "è€ƒç”Ÿä¿¡æ¯ç³»ç»Ÿæ— è¯¥è€ƒç”Ÿä¿¡æ¯" << '\n';
+		return false;
+	}
+	return false;
 }
 
-bool EMIS::del(){
-  std::cout << "ÇëÊäÈëÒªÉ¾³ıµÄ¿¼ÉúµÄ¿¼ºÅ£º";
-  int number = -1;
-  std::cin >> number;
-  ListNode<student>* itor;
-  for (itor = _list.begin(); itor != _list.end(); itor = itor->next()){
-    if (itor->data().number() == number){
-      student s = itor->data();
-      std::cout << "ÄãÉ¾³ıµÄ¿¼ÉúĞÅÏ¢ÊÇ£º" << s;
-      _list.erase(itor);
-      return true;
-    }
-  }
-  if (itor == _list.end()) {
-    std::cout << "É¾³ıÊ§°Ü" << '\n';
-    return false;
-  }
-  return false;
+bool EMIS::del() {
+	std::cout << "è¯·è¾“å…¥è¦åˆ é™¤çš„è€ƒç”Ÿçš„è€ƒå·ï¼š";
+	int number = -1;
+	std::cin >> number;
+	ListNode<student>* itor;
+	for (itor = _list.begin(); itor != _list.end(); itor = itor->next()) {
+		if (itor->data().number() == number) {
+			student s = itor->data();
+			std::cout << "ä½ åˆ é™¤çš„è€ƒç”Ÿä¿¡æ¯æ˜¯ï¼š" << s;
+			_list.erase(itor);
+			return true;
+		}
+	}
+	if (itor == _list.end()) {
+		std::cout << "åˆ é™¤å¤±è´¥" << '\n';
+		return false;
+	}
+	return false;
 }
 
-void EMIS::statistics()const{
-  print();
+void EMIS::statistics()const {
+	print();
 }
 
-bool EMIS::revise(){
-  std::cout << "ÇëÊäÈëÒªĞŞ¸ÄµÄ¿¼ÉúµÄ¿¼ºÅ£º";
-  int number = 0;
-  std::cin >> number;
-  ListNode<student>* itor;
-  for (itor = _list.begin(); itor != _list.end(); itor = itor->next()){
-    if (itor->data().number() == number){
-      std::cout << "ÇëÊäÈëÒªĞŞ¸ÄµÄ¿¼ÉúµÄĞÕÃû£¬ĞÔ±ğ£¬ÄêÁä¼°±¨¿¼ÀàĞÍ£¡" << '\n';
-      student a;
-      std::cin >> a._name >> a._sex >> a._age >> a._type;
-      a._number = number;
-      _list.change(a, itor);
-      return true;
-    }
-  }
-  if (itor == _list.end()) {
-    std::cout << "¿¼ÉúĞÅÏ¢ÏµÍ³ÎŞ¸Ã¿¼ÉúĞÅÏ¢" << '\n';
-    return false;
-  }
-  return false;
+bool EMIS::revise() {
+	std::cout << "è¯·è¾“å…¥è¦ä¿®æ”¹çš„è€ƒç”Ÿçš„è€ƒå·ï¼š";
+	int number = 0;
+	std::cin >> number;
+	ListNode<student>* itor;
+	for (itor = _list.begin(); itor != _list.end(); itor = itor->next()) {
+		if (itor->data().number() == number) {
+			std::cout << "è¯·è¾“å…¥è¦ä¿®æ”¹çš„è€ƒç”Ÿçš„å§“åï¼Œæ€§åˆ«ï¼Œå¹´é¾„åŠæŠ¥è€ƒç±»å‹ï¼" << '\n';
+			student a;
+			std::cin >> a._name >> a._sex >> a._age >> a._type;
+			a._number = number;
+			_list.change(a, itor);
+			return true;
+		}
+	}
+	if (itor == _list.end()) {
+		std::cout << "è€ƒç”Ÿä¿¡æ¯ç³»ç»Ÿæ— è¯¥è€ƒç”Ÿä¿¡æ¯" << '\n';
+		return false;
+	}
+	return false;
 }
 
-void solve(){
-  EMIS stus;
-  std::cout << "Ê×ÏÈÇë½¨Á¢¿¼ÉúĞÅÏ¢ÏµÍ³£¡" << '\n';
-  int num = 0;
-  std::cout << "ÇëÊäÈë¿¼ÉúÈËÊı:";
-  std::cin >> num;
-  while (num < 0) {
-      std::cout << "ÇëÊäÈëÒ»¸ö×ÔÈ»Êı£º";
-      std::cin >> num;
-  }
-  std::cout << "ÇëÒÀ´ÎÊäÈë¿¼ÉúµÄ¿¼ºÅ£¬ĞÕÃû£¬ĞÔ±ğ£¬ÄêÁä¼°±¨¿¼ÀàĞÍ£¡" << '\n';
-  for (int i = 1; i <= num;){
-    student stu;
-    std::cin >> stu;
-    if (std::cin.fail()){
-      std::cin.clear();
-      std::cin.ignore(100, '\n');
-    }
-    else{
-      stus.push(stu); i++;
-    }
-  }
-  std::cout << '\n';
-  stus.print();
-  std::cout << "ÇëÑ¡ÔñÄúÒª½øĞĞµÄ²Ù×÷£¨1Îª²åÈë£¬2ÎªÉ¾³ı£¬3Îª²éÕÒ£¬4ÎªĞŞ¸Ä£¬5ÎªÍ³¼Æ£¬0ÎªÈ¡Ïû²Ù×÷£©" << '\n' << '\n';
-  while (true)
-  {
-    if (std::cin.fail()) {
-      std::cin.clear();
-      std::cin.ignore(100, '\n');
-    }
-    int order = 6;
-    std::cout << "ÇëÑ¡ÔñÄúÒª½øĞĞµÄ²Ù×÷£º";
-    std::cin >> order;
-    if (order < 0 || order>5) {
-      std::cout << "ÊäÈë´íÎó£¬ÇëÖØĞÂÊäÈë" << '\n';
-      continue;
-    }
-    if (std::cin.fail()) {
-      std::cin.clear();
-      std::cin.ignore(100, '\n');
-      std::cout << "ÊäÈë´íÎó£¬ÇëÖØĞÂÊäÈë" << '\n';
-      continue;
-    }
-    if (order == 1){
-      stus.insert();
-      std::cout << '\n';
-      stus.print();
-    }
-    else if (order == 2){
-      stus.del();
-      std::cout << '\n';
-      stus.print();
-    }
-    else if (order == 3){
-      stus.seek();
-      std::cout << '\n';
-    }
-    else if (order == 4){
-      stus.revise();
-      std::cout << '\n';
-      stus.print();
-    }
-    else if (order == 5){
-      stus.statistics();
-    }
-    else if (order == 0)
-      break;
-  }
+void solve() {
+	EMIS stus;
+	std::cout << "é¦–å…ˆè¯·å»ºç«‹è€ƒç”Ÿä¿¡æ¯ç³»ç»Ÿï¼" << '\n';
+	int num = 0;
+	std::cout << "è¯·è¾“å…¥è€ƒç”Ÿäººæ•°:";
+	std::cin >> num;
+	while (num < 0) {
+		std::cout << "è¯·è¾“å…¥ä¸€ä¸ªè‡ªç„¶æ•°ï¼š";
+		std::cin >> num;
+	}
+	std::cout << "è¯·ä¾æ¬¡è¾“å…¥è€ƒç”Ÿçš„è€ƒå·ï¼Œå§“åï¼Œæ€§åˆ«ï¼Œå¹´é¾„åŠæŠ¥è€ƒç±»å‹ï¼" << '\n';
+	for (int i = 1; i <= num;) {
+		student stu;
+		std::cin >> stu;
+		if (std::cin.fail()) {
+			std::cin.clear();
+			std::cin.ignore(100, '\n');
+		}
+		else {
+			stus.push(stu); i++;
+		}
+	}
+	std::cout << '\n';
+	stus.print();
+	std::cout << "è¯·é€‰æ‹©æ‚¨è¦è¿›è¡Œçš„æ“ä½œï¼ˆ1ä¸ºæ’å…¥ï¼Œ2ä¸ºåˆ é™¤ï¼Œ3ä¸ºæŸ¥æ‰¾ï¼Œ4ä¸ºä¿®æ”¹ï¼Œ5ä¸ºç»Ÿè®¡ï¼Œ0ä¸ºå–æ¶ˆæ“ä½œï¼‰" << '\n' << '\n';
+	while (true)
+	{
+		if (std::cin.fail()) {
+			std::cin.clear();
+			std::cin.ignore(100, '\n');
+		}
+		int order = 6;
+		std::cout << "è¯·é€‰æ‹©æ‚¨è¦è¿›è¡Œçš„æ“ä½œï¼š";
+		std::cin >> order;
+		if (order < 0 || order>5) {
+			std::cout << "è¾“å…¥é”™è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥" << '\n';
+			continue;
+		}
+		if (std::cin.fail()) {
+			std::cin.clear();
+			std::cin.ignore(100, '\n');
+			std::cout << "è¾“å…¥é”™è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥" << '\n';
+			continue;
+		}
+		if (order == 1) {
+			stus.insert();
+			std::cout << '\n';
+			stus.print();
+		}
+		else if (order == 2) {
+			stus.del();
+			std::cout << '\n';
+			stus.print();
+		}
+		else if (order == 3) {
+			stus.seek();
+			std::cout << '\n';
+		}
+		else if (order == 4) {
+			stus.revise();
+			std::cout << '\n';
+			stus.print();
+		}
+		else if (order == 5) {
+			stus.statistics();
+		}
+		else if (order == 0)
+			break;
+	}
 }
 
-int main(){
-  solve();
+int main() {
+	solve();
 }
