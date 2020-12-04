@@ -64,6 +64,11 @@ void eval::calculate() {
 						int y = cal.top(); cal.pop();
 						cal.push(x + y);
 					}
+					else if (cal.size() == 1) {
+						int x = cal.top(); cal.pop();
+						int y = 0;
+						cal.push(x + y);
+					}
 					else {
 						this->flag = true;
 						throw std::string("表达式有误");
@@ -74,6 +79,11 @@ void eval::calculate() {
 					if (cal.size() >= 2) {
 						int x = cal.top(); cal.pop();
 						int y = cal.top(); cal.pop();
+						cal.push(y - x);
+					}
+					else if (cal.size() == 1) {
+						int x = cal.top(); cal.pop();
+						int y = 0;
 						cal.push(y - x);
 					}
 					else {
@@ -164,8 +174,6 @@ int eval::priority(char x) {
 void eval::change() {
 	Stack<char> oper;
 	bool flag = false;
-	if (infix[0] == '+' || infix[0] == '-')
-		flag = true;
 	for (int i = 0; i < infix.size(); ) {
 		if (infix[i] >= '0' && infix[i] <= '9') {
 			flag = false;
@@ -237,7 +245,7 @@ int main() {
 		std::cout << eval(str);
 		std::cout << "是否继续（y,n）？";
 		std::cin >> ch;
-		while (std::cin.fail() || ch != "n" || ch != "y") {
+		while (std::cin.fail() || (ch != "n" && ch != "y")) {
 			if (std::cin.fail()) {
 				std::cin.ignore(INT_MAX, '\n');
 				std::cin.clear();
