@@ -43,6 +43,7 @@ bool Stack<T>::pop() {
 	}
 	_vec.pop_back();
 	_size--;
+	return true;
 }
 
 template<typename T>
