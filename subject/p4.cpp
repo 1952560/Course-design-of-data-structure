@@ -25,6 +25,7 @@ struct expre {
 class eval {
 public:
 	eval(std::string& str) {
+		flag = false;
 		infix = str;
 		change();
 		calculate();
@@ -34,99 +35,115 @@ private:
 	int priority(char x);
 	void calculate();
 	friend std::ostream& operator<<(std::ostream& os, const eval& e) {
-		os << e.ans << '\n';
+		if (e.flag) {
+			os << '\n' << '\n';
+			return os;
+		}
+		os << e.ans << '\n' << '\n';
 		return os;
 	}
 private:
 	std::string infix;//存中缀表达式
 	Vector<expre> suffix;//存后缀表达式
 	int ans;
+	bool flag;
 };
 
 void eval::calculate() {
 	Stack<int> cal;
-	for (int i = 0; i < suffix.size(); i++) {
-		if (suffix[i].isnum)
-			cal.push(suffix[i].num);
-		else {
-			char oper = suffix[i].oper;
-			switch (oper) {
-			case '+': {
-				if (cal.empty())
-					exit(0);
-				else if (cal.size() == 1) {
-					int x = 0;
-					int y = cal.top(); cal.pop();
-					cal.push(x + y);
+	try {
+		for (int i = 0; i < suffix.size(); i++) {
+			if (suffix[i].isnum)
+				cal.push(suffix[i].num);
+			else {
+				char oper = suffix[i].oper;
+				switch (oper) {
+				case '+': {
+					if (cal.size() >= 2) {
+						int x = cal.top(); cal.pop();
+						int y = cal.top(); cal.pop();
+						cal.push(x + y);
+					}
+					else {
+						this->flag = true;
+						throw std::string("表达式有误");
+					}
+					break;
 				}
-				else if (cal.size() >= 2) {
-					int x = cal.top(); cal.pop();
-					int y = cal.top(); cal.pop();
-					cal.push(x + y);
+				case'-': {
+					if (cal.size() >= 2) {
+						int x = cal.top(); cal.pop();
+						int y = cal.top(); cal.pop();
+						cal.push(y - x);
+					}
+					else {
+						this->flag = true;
+						throw std::string("表达式有误");
+					}
+					break;
 				}
-				break;
-			}
-			case'-': {
-				if (cal.size() == 1) {
-					int x = cal.top(); cal.pop();
-					cal.push(-x);
+				case'*': {
+					if (cal.size() >= 2) {
+						int x = cal.top(); cal.pop();
+						int y = cal.top(); cal.pop();
+						cal.push(x * y);
+					}
+					else {
+						this->flag = true;
+						throw std::string("表达式有误");
+					}
+					break;
 				}
-				else if (cal.size() >= 2) {
-					int x = cal.top(); cal.pop();
-					int y = cal.top(); cal.pop();
-					cal.push(y - x);
+				case'/': {
+					if (cal.size() >= 2) {
+						int x = cal.top(); cal.pop();
+						int y = cal.top(); cal.pop();
+						cal.push(y / x);
+					}
+					else {
+						this->flag = true;
+						throw std::string("表达式有误");
+					}
+					break;
 				}
-				else
-					exit(0);
-				break;
-			}
-			case'*': {
-				if (cal.size() >= 2) {
-					int x = cal.top(); cal.pop();
-					int y = cal.top(); cal.pop();
-					cal.push(x * y);
+				case'%': {
+					if (cal.size() >= 2) {
+						int x = cal.top(); cal.pop();
+						int y = cal.top(); cal.pop();
+						cal.push(y % x);
+					}
+					else {
+						this->flag = true;
+						throw std::string("表达式有误");
+					}
+					break;
 				}
-				else
-					exit(0);
-				break;
-			}
-			case'/': {
-				if (cal.size() >= 2) {
-					int x = cal.top(); cal.pop();
-					int y = cal.top(); cal.pop();
-					cal.push(y / x);
+				case'^': {
+					if (cal.size() >= 2) {
+						int x = cal.top(); cal.pop();
+						int y = cal.top(); cal.pop();
+						cal.push(fastpow(y, x));
+					}
+					else {
+						this->flag = true;
+						throw std::string("表达式有误");
+					}
+					break;
 				}
-				else
-					exit(0);
-				break;
-			}
-			case'%': {
-				if (cal.size() >= 2) {
-					int x = cal.top(); cal.pop();
-					int y = cal.top(); cal.pop();
-					cal.push(y % x);
 				}
-				else
-					exit(0);
-				break;
-			}
-			case'^': {
-				if (cal.size() >= 2) {
-					int x = cal.top(); cal.pop();
-					int y = cal.top(); cal.pop();
-					cal.push(fastpow(y, x));
-				}
-				else
-					exit(0);
-				break;
-			}
 			}
 		}
+		ans = 0;
+		if (cal.size() == 1) {
+			ans += cal.top();
+			cal.pop();
+		}
+		else {
+			throw"表达式有误";
+		}
 	}
-	ans = 0;
-	while (!cal.empty()) {
-		ans += cal.top();
-		cal.pop();
+	catch (std::string str) {
+		std::cout << str;
 	}
 }
 
@@ -147,6 +164,8 @@ int eval::priority(char x) {
 void eval::change() {
 	Stack<char> oper;
 	bool flag = false;
+	if (infix[0] == '+' || infix[0] == '-')
+		flag = true;
 	for (int i = 0; i < infix.size(); ) {
 		if (infix[i] >= '0' && infix[i] <= '9') {
 			flag = false;
@@ -206,14 +225,27 @@ void eval::change() {
 
 int main() {
 	std::string str;
-	char ch;
+	std::string ch;
 	while (true) {
 		std::cout << "输入表达式：" << '\n';
 		std::cin >> str;
+		if (str[str.size() - 1] != '=') {
+			std::cout << "表达式缺少‘=’,请重新输入！" << '\n' << '\n';
+			continue;
+		}
+		str.pop_back();
 		std::cout << eval(str);
 		std::cout << "是否继续（y,n）？";
 		std::cin >> ch;
-		if (ch == 'n')
+		while (std::cin.fail() || ch != "n" || ch != "y") {
+			if (std::cin.fail()) {
+				std::cin.ignore(INT_MAX, '\n');
+				std::cin.clear();
+			}
+			std::cout << "输入错误，请重新输入:";
+			std::cin >> ch;
+		}
+		if (ch == "n")
 			break;
 	}
 }
