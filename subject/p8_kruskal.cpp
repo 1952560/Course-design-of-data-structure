@@ -34,7 +34,7 @@ private:
 
 void System::initializeVertex() {
 	_vertex.clear();
-	std::cout << "请输入顶点的个书：";
+	std::cout << "请输入顶点的个数：";
 	int num;
 	std::string str;
 	std::cin >> num;
