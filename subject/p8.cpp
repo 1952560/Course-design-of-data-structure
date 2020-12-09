@@ -4,6 +4,7 @@
 #include<algorithm>
 #include"../H/Vector.h"
 #include<map>
+#include<cstring>
 
 const int maxn = 1e3;
 const int INF = 1e9 + 7;

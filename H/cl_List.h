@@ -9,7 +9,7 @@ class ListNode
 {
 public:
 	friend List<T>;
-	ListNode() :_data(NULL), _next(nullptr) {}//构造函数
+	ListNode() :_next(nullptr) {}//构造函数
 	ListNode(const T& item, ListNode<T>* n = nullptr)
 		:_data(item), _next(n) {}
 	~ListNode() {//析构函数
