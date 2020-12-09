@@ -10,6 +10,10 @@ const int maxn = 1e3;
 const int INF = 1e9 + 7;
 
 struct edge {
+	edge(std::string f,std::string t,int d){
+		from=f;to=t;dist=d;
+	}
+	edge()=default;
 	std::string from;
 	std::string to;
 	int dist = 0;
@@ -20,34 +24,36 @@ struct edge {
 
 class System {
 public:
-	void prim(int cur);
+	void prim(std::string str);
 	void initializeVertex();
 	void addEdge();
 	void print();
 private:
+    int _size=0;
 	Vector<std::string> _vertex;//顶点集
-	Vector<edge> _path;//存
-	std::unordered_map<std::string, int> _map;
-	int _dist[maxn][maxn];
-	bool _visit[maxn];
+	Vector<edge> _path;//存路径
+	std::unordered_map<std::string, int> _map;//映射
+	int _graph[maxn][maxn];
+	bool _visit[maxn];//判断顶点有没有访问过
 };
 
 void System::initializeVertex() {
-	_vertex.clear();
-	_map.clear();
+	_vertex.clear();//清空顶点
+	_map.clear();//清空映射
 	std::cout << "请输入顶点的个数：";
 	int num;
 	std::string str;
 	std::cin >> num;
+	_size=num;
 	std::cout << "请依次输入各顶点的名称：" << '\n';
 	for (int i = 0; i < num; i++) {
 		std::cin >> str;
 		_vertex.push_back(str);
 		_map[str] = i;
 	}
-	for (int i = 0; i < num; i++)
-		for (int j = 0; j < num; j++)
-			_dist[i][j] = INF;
+	for(int i=0;i<_size;i++)
+	    for(int j=0;j<_size;j++)
+		    _graph[i][j]=INF;
 	std::cout << '\n';
 }
 
@@ -58,17 +64,38 @@ void System::addEdge() {
 		std::cin >> e.from >> e.to >> e.dist;
 		if (e.from == "?" && e.to == "?" && e.dist == 0)
 			break;
-		_dist[_map[e.from]][_map[e.to]] = e.dist;
-		_dist[_map[e.to]][_map[e.from]] = e.dist;
+		_graph[_map[e.from]][_map[e.to]]=e.dist;
+		_graph[_map[e.to]][_map[e.from]]=e.dist;
 	}
 	std::cout << '\n';
 }
 
-void System::prim(int cur) {
-	int index = cur;
-	memset(_visit, false, sizeof(_visit));
-	_visit[cur] = true;
-
+void System::prim(std::string str) {
+	int cur=_map[str];
+	_path.clear();
+	for(int i=0;i<_size;i++)
+		_visit[i]=false;
+	_visit[cur]=false;
+	int index=cur;
+	int dist[maxn]={0};
+	for(int i=0;i<_size;i++)
+	    dist[i]=_graph[cur][i];
+	for(int i=1;i<_size;i++){
+		int minor=INF;
+		for(int j=0;j<_size;j++){
+			if(!_visit[j]&&dist[j]<minor){
+				minor=dist[j];
+				index=j;
+			}
+		}
+	    _visit[index]=true;
+     	_path.push_back(edge(_vertex[cur],_vertex[index],minor));
+    	for(int j=0;j<_size;j++){
+	    	if(!_visit[j]&&dist[j]>_graph[index][j])
+		        dist[j]=_graph[index][j];
+		}
+		cur=index;
+	}
 }
 
 void System::print() {
@@ -79,10 +106,6 @@ void System::print() {
 	}
 	std::cout << '\n';
 }
-
-
-
-
 
 void solve() {
 	System sys;
@@ -100,7 +123,7 @@ void solve() {
 			std::cout << "请输入起始顶点：";
 			std::string str;
 			std::cin >> str;
-			//sys.mintree();
+			sys.prim(str);
 			std::cout << "生成Prim最小生成树！" << '\n' << '\n';
 		}
 		else if (num == "D") {
