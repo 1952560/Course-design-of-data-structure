@@ -1,6 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<stack>
+#include<cmath>
 
 struct node {
 	node() {
@@ -66,9 +67,9 @@ void tree::print(node* r, int deep, std::vector<int> width) {
 	while (r) {
 		int new_deep = deep;
 		if (deep == 0)
-			new_deep += ceil(r->name.size() / 2);
+			new_deep += std::ceil(r->name.size() / 2);
 		else
-			new_deep += ceil(r->name.size() / 2) + 2;
+			new_deep += std::ceil(r->name.size() / 2) + 2;
 		width.push_back(new_deep);
 		print(r, new_deep, width);
 		if (!width.empty())
