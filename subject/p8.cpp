@@ -25,8 +25,8 @@ public:
 	void addEdge();
 	void print();
 private:
-	Vector<std::string> _vertex;
-	Vector<edge> _path;
+	Vector<std::string> _vertex;//顶点集
+	Vector<edge> _path;//存
 	std::unordered_map<std::string, int> _map;
 	int _dist[maxn][maxn];
 	bool _visit[maxn];
@@ -35,7 +35,7 @@ private:
 void System::initializeVertex() {
 	_vertex.clear();
 	_map.clear();
-	std::cout << "请输入顶点的个书：";
+	std::cout << "请输入顶点的个数：";
 	int num;
 	std::string str;
 	std::cin >> num;
