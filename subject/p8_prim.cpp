@@ -120,7 +120,6 @@ void System::prim(std::string str) {
 	}
 	int cur=_map[str];
 	_path.clear();
-	_flag=true;
 	for(int i=0;i<_size;i++)
 		_visit[i]=false;
 	_visit[cur]=false;
@@ -165,6 +164,16 @@ void System::print() {
 }
 
 void solve() {
+	std::string str[7];
+	str[0]="**			电网造价模拟系统			**";
+	str[1]="=========================================";
+	str[2]="**			A---创建电网顶点			**";
+	str[3]="**			B---添加电网的边			**";
+	str[4]="**			C---构建最小生成树			**";
+	str[5]="**			D---显示最小生成树	 		**";
+	str[6]="**			E---退出  程序				**";
+	for(int i=0;i<7;i++)
+		std::cout<<str[i]<<'\n';
 	System sys;
 	std::string num;
 	while (true) {
