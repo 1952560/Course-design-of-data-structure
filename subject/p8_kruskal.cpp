@@ -21,6 +21,7 @@ public:
 	std::string find(std::string x) {
 		return _par[x] == x ? x : _par[x] = find(_par[x]);
 	}
+	bool exist(std::string str);
 	void mintree();
 	void initializeVertex();
 	void addEdge();
@@ -32,6 +33,16 @@ private:
 	Vector<edge> _path;
 	bool _flag;
 };
+
+bool System::exist(std::string str){
+	auto i=_vertex.begin();
+	while(i!=_vertex.end()){
+		if(*i==str)
+			return true;
+		i++;
+	}
+	return false;
+}
 
 bool cinClear(){
 	if(std::cin.good()){
@@ -133,6 +144,10 @@ void solve() {
 			std::cout << "请输入起始顶点：";
 			std::string str;
 			std::cin >> str;
+			while(!sys.exist(str)){
+				std::cout<<"电网顶点集不存在"<<str<<",请重新输入:";
+				std::cin>>str;
+			}
 			sys.mintree();
 			std::cout << "生成Prim最小生成树！" << '\n' << '\n';
 		}

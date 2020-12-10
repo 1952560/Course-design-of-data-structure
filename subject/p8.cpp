@@ -41,6 +41,7 @@ public:
 	void initializeVertex();
 	void addEdge();
 	void print();
+	bool exist(std::string str);
 private:
     int _size=0;
 	bool _flag;//是否进行了操作C
@@ -52,6 +53,16 @@ private:
 	bool _visit[maxn];//判断顶点有没有访问过
 	std::map<std::string, std::string> _par;
 };
+
+bool System::exist(std::string str){
+	auto i=_vertex.begin();
+	while(i!=_vertex.end()){
+		if(*i==str)
+			return true;
+		i++;
+	}
+	return false;
+}
 
 void System::initializeVertex() {
 	_par.clear();
@@ -170,6 +181,10 @@ void solve() {
 			std::cout << "请输入起始顶点：";
 			std::string str;
 			std::cin >> str;
+			while(!sys.exist(str)){
+				std::cout<<"电网顶点集不存在"<<str<<",请重新输入:";
+				std::cin>>str;
+			}
 			sys.prim(str);
 			std::cout << "生成Prim最小生成树！" << '\n' << '\n';
 		}
