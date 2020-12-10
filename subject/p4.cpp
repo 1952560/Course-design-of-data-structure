@@ -5,6 +5,7 @@
 #include"../H/Vector.h"
 #include"../H/Stack.h"
 #include<limits.h>
+#include<math.h>
 int fastpow(int base, int n) {//快速幂
 	int ans = 1;
 	while (n) {
@@ -123,7 +124,7 @@ void eval::calculate() {
 					if (cal.size() >= 2) {
 						int x = cal.top(); cal.pop();
 						int y = cal.top(); cal.pop();
-						cal.push(fastpow(y, x));
+						cal.push(pow(y, x));
 					}
 					else {
 						this->flag = true;
