@@ -18,7 +18,7 @@ struct Int{
 int main() {
 	int N;
 	std::cin >> N;
-	while(std::cin.fail()){
+	while(std::cin.fail()||N<1){
 		std::cin.clear();
 		std::cin.ignore(INT_MAX,'\n');
 		std::cout<<"input error,please re-enput!"<<'\n';
@@ -27,7 +27,7 @@ int main() {
 	Priority_queue<Int> p;
 	for (int i = 0, x; i < N; i++) {
 		std::cin >> x;
-		while(std::cin.fail()){
+		while(std::cin.fail()||x<=0){
 			std::cin.clear();
 			std::cin.ignore(INT_MAX,'\n');
 			std::cout<<"input error,please re-enput!"<<'\n';
@@ -42,5 +42,7 @@ int main() {
 		ans += u + v;
 		p.push(u + v);
 	}
+	if(N==1)
+		ans+=p.top().val;
 	std::cout << ans << '\n';
 }
