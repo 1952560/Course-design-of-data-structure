@@ -5,15 +5,16 @@
 #include"../H/Vector.h"
 #include<map>
 #include<cstring>
+#include<vector>
 
-const int maxn = 1e3;
+const int maxn = 1e2;
 const int INF = 1e9 + 7;
 
 struct edge {
 	edge(std::string f,std::string t,int d){
 		from=f;to=t;dist=d;
 	}
-	edge()=default;
+	edge(){from=to=" ";dist=INF;}
 	std::string from;
 	std::string to;
 	int dist = 0;
@@ -30,8 +31,8 @@ public:
 	void print();
 private:
     int _size=0;
-	Vector<std::string> _vertex;//顶点集
-	Vector<edge> _path;//存路径
+	std::vector<std::string> _vertex;//顶点集
+	std::vector<edge> _path;//存路径
 	std::unordered_map<std::string, int> _map;//映射
 	int _graph[maxn][maxn];
 	bool _visit[maxn];//判断顶点有没有访问过

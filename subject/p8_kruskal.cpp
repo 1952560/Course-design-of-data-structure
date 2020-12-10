@@ -30,17 +30,35 @@ private:
 	Vector<edge> _edge;
 	std::map<std::string, std::string> _par;
 	Vector<edge> _path;
+	bool _flag;
 };
 
+bool cinClear(){
+	if(std::cin.good()){
+		return true;
+	}
+	std::cout<<"输入错误，请重新输入:";
+	std::cin.clear();
+	std::cin.ignore(INT_MAX,'\n');
+	return false;
+}
+
 void System::initializeVertex() {
+	_flag=false;
 	_vertex.clear();
+	_edge.clear();
+	_par.clear();
 	std::cout << "请输入顶点的个数：";
 	int num;
 	std::string str;
 	std::cin >> num;
+	while(!cinClear())
+	    std::cin>>num;
 	std::cout << "请依次输入各顶点的名称：" << '\n';
 	while (num--) {
 		std::cin >> str;
+		while(!cinClear())
+		    std::cin>>str;
 		_vertex.push_back(str);
 		_par[str] = str;
 	}
@@ -60,6 +78,16 @@ void System::addEdge() {
 }
 
 void System::print() {
+	if(!_flag){
+		std::cout<<"请运行操作C生成最小生成树！"<<'\n';
+		return;
+	}
+	for(int i=0;i<_vertex.size()-1;i++){
+		if(find(_vertex[i])!=find(_vertex[i+1])){
+			std::cout<<"没有最小生成树!"<<'\n';
+			return;
+		}
+	}
 	std::cout << "最小生成树的顶点及边为：" << '\n' << '\n';
 	for (int i = 0; i < _path.size(); i++) {
 		std::cout << _path[i].from << "-<" << _path[i].dist << ">->" << _path[i].to;
@@ -74,6 +102,7 @@ void System::mintree() {
 	for (iter = _par.begin(); iter != _par.end(); iter++) {
 		iter->second = iter->first;
 	}
+	_flag=true;
 	_path.clear();
 	for (int i = 0; i < _edge.size(); i++) {
 		if (find(_edge[i].from) == find(_edge[i].to))
@@ -89,6 +118,11 @@ void solve() {
 	while (true) {
 		std::cout << "请输入操作：";
 		std::cin >> num;
+		while(!cinClear()){
+			std::cin>>num;
+		}
+		while(!cinClear())
+			std::cin>>num;
 		if (num == "A") {
 			sys.initializeVertex();
 		}
@@ -107,6 +141,9 @@ void solve() {
 		}
 		else if (num == "E")
 			break;
+		else{
+			std::cout<<"输入错误"<<'\n';
+		}
 	}
 }
 
