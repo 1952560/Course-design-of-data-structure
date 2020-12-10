@@ -29,6 +29,7 @@ bool cinClear(){
 	std::cout<<"输入错误，请重新输入:";
 	std::cin.clear();
 	std::cin.ignore();
+	return false;
 }
 
 class System {
