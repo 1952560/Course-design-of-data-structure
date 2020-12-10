@@ -1,7 +1,7 @@
 ﻿#include<iostream>
 #include<string>
-#include<Stack>
-#include<Vector>
+#include<stack>
+#include<vector>
 #include"../H/Vector.h"
 #include"../H/Stack.h"
 int fastpow(int base, int n) {//快速幂
