@@ -2,7 +2,7 @@
 #include<vector>
 #include<stack>
 #include<cmath>
-
+#include<limits.h>
 struct node {
 	node() {
 		parent = son = brother = nullptr;
@@ -270,11 +270,12 @@ void solve() {
 			genealogy.change();
 			break;
 		}
-		case'F': {
+		case 'F': {
 			std::vector<int> v;
 			// v.push_back(0);
 			genealogy.print(genealogy.get_root(), 0, v);
 			std::cout << '\n' << '\n';
+			break;
 		}
 		default: {
 			std::cout << "input error,please re-input!" << '\n' << '\n';
