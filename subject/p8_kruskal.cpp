@@ -4,6 +4,7 @@
 #include<algorithm>
 #include"../H/Vector.h"
 #include<map>
+#include<limits.h>
 
 const int maxn = 1e5;
 
