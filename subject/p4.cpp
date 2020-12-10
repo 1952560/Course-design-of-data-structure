@@ -111,7 +111,12 @@ void eval::calculate() {
 				case'%': {
 					if (cal.size() >= 2) {
 						int x = cal.top(); cal.pop();
-						int y = cal.top(); cal.pop();
+						int y = cal.top(); cal.pop();{
+							if(x==0){
+								this->flag=true;
+								throw std::string("0不能作为被除数");
+							}
+						}
 						cal.push(y % x);
 					}
 					else {
@@ -124,6 +129,10 @@ void eval::calculate() {
 					if (cal.size() >= 2) {
 						int x = cal.top(); cal.pop();
 						int y = cal.top(); cal.pop();
+						if(y==0&&x<0){
+							this->flag==true;
+							throw std::string("表达式有误");
+						}
 						cal.push(pow(y, x));
 					}
 					else {
