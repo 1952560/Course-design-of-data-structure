@@ -23,34 +23,59 @@ struct edge {
 	}
 };
 
+bool cinClear(){
+	if(std::cin.good())
+		return true;
+	std::cout<<"输入错误，请重新输入:";
+	std::cin.clear();
+	std::cin.ignore();
+}
+
 class System {
 public:
+	std::string find(std::string x) {
+		return _par[x] == x ? x : _par[x] = find(_par[x]);
+	}
 	void prim(std::string str);
 	void initializeVertex();
 	void addEdge();
 	void print();
 private:
     int _size=0;
+	bool _flag;//是否进行了操作C
+	bool _exist;//是否存在最小生成树
 	std::vector<std::string> _vertex;//顶点集
 	std::vector<edge> _path;//存路径
 	std::unordered_map<std::string, int> _map;//映射
 	int _graph[maxn][maxn];
 	bool _visit[maxn];//判断顶点有没有访问过
+	std::map<std::string, std::string> _par;
 };
 
 void System::initializeVertex() {
+	_par.clear();
+	_flag=false;
+	_exist=false;
 	_vertex.clear();//清空顶点
 	_map.clear();//清空映射
 	std::cout << "请输入顶点的个数：";
 	int num;
 	std::string str;
 	std::cin >> num;
+	while(!cinClear()||num<2){
+		if(num<2)
+			std::cout<<"输入错误，请重新输入:";
+		std::cin>>num;
+	}
 	_size=num;
 	std::cout << "请依次输入各顶点的名称：" << '\n';
 	for (int i = 0; i < num; i++) {
 		std::cin >> str;
+		while(!cinClear())
+			std::cin>>str;
 		_vertex.push_back(str);
 		_map[str] = i;
+		_par[str]=str;
 	}
 	for(int i=0;i<_size;i++)
 	    for(int j=0;j<_size;j++)
@@ -67,13 +92,22 @@ void System::addEdge() {
 			break;
 		_graph[_map[e.from]][_map[e.to]]=e.dist;
 		_graph[_map[e.to]][_map[e.from]]=e.dist;
+		_par[find(e.from)]=find(e.to);
 	}
 	std::cout << '\n';
 }
 
 void System::prim(std::string str) {
+	_flag=true;
+	for(int i=0;i<_size-1;i++){
+		if(find(_vertex[i])!=find(_vertex[i+1])){
+			_exist=false;
+			return;
+		}
+	}
 	int cur=_map[str];
 	_path.clear();
+	_flag=true;
 	for(int i=0;i<_size;i++)
 		_visit[i]=false;
 	_visit[cur]=false;
@@ -97,9 +131,18 @@ void System::prim(std::string str) {
 		}
 		cur=index;
 	}
+	_exist=true;
 }
 
 void System::print() {
+	if(!_flag){
+		std::cout<<"请输入操作C生成最小生成树!"<<'\n';
+		return;
+	}
+	if(!_exist){
+		std::cout<<"不存在最小生成树!"<<'\n';
+		return;
+	}
 	std::cout << "最小生成树的顶点及边为：" << '\n' << '\n';
 	for (int i = 0; i < _path.size(); i++) {
 		std::cout << _path[i].from << "-<" << _path[i].dist << ">->" << _path[i].to;
@@ -114,6 +157,8 @@ void solve() {
 	while (true) {
 		std::cout << "请输入操作：";
 		std::cin >> num;
+		while(!cinClear())
+			std::cin>>num;
 		if (num == "A") {
 			sys.initializeVertex();
 		}
@@ -132,6 +177,8 @@ void solve() {
 		}
 		else if (num == "E")
 			break;
+		else
+			std::cout<<"输入错误!"<<'\n';
 	}
 }
 
