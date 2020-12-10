@@ -4,6 +4,7 @@
 #include<vector>
 #include"../H/Vector.h"
 #include"../H/Stack.h"
+#include<limits.h>
 int fastpow(int base, int n) {//快速幂
 	int ans = 1;
 	while (n) {

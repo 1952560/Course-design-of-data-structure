@@ -6,6 +6,7 @@
 #include<map>
 #include<cstring>
 #include<vector>
+#include<limits.h>
 
 const int maxn = 1e2;
 const int INF = 1e9 + 7;
