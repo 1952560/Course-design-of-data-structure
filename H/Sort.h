@@ -164,49 +164,37 @@ void merge_sort(Vector<T>& v, int start, int end) {
 }
 
 //radix_sort(8)
-int maxbit(Vector<int>& v) {
-	if (v.empty())
-		return -1;
-	int max_v = v[0];
-	for (int i = 1; i < v.size(); i++) {
-		if (max_v < v[i])
-			max_v = v[i];
-	}
-	int d = 0;
-	while (max_v >= 1) {
-		d++;
-		max_v /= 10;
-	}
-	return d;
-}
+void radix_sort(Vector<int32_t> &v){
+    int32_t len = v.size();
+    if(len <= 1) 
+		return;
+    int32_t res = 10, div = 1;
+    bool is_not_max_digit = true;
+    Vector<int32_t> counter[20];
+    while(is_not_max_digit){
+        is_not_max_digit = false;
+        for(int32_t i = 0; i < len; i++){
+            if(abs(v[i]) / res) 
+				is_not_max_digit = true;
+            int32_t index = v[i] % res / div+10;
+			if(v[i]<0)
+				index=9-abs(v[i])%res/div;
+            counter[index].push_back(v[i]);
+        }
+        int32_t radix = 0, index = 0;
+        for(int32_t i = 0; i < len;){
+			for(;index<counter[radix].size();index++){
+				v[i+index]=counter[radix][index];
+			}
+			i+=index;
+			index=0;
+			radix++;
+        }
+        for(int32_t i = 0; i < 20; i++){
+            counter[i].clear();
+        }
+        res *= 10; div *= 10;
+    }
 
-void radix_sort(Vector<int>& v) {
-	int d = maxbit(v);
-	int* tmp = new int[v.size()];
-	int* count = new int[10]; //计数器
-	int i, j, k;
-	int radix = 1;
-	for (i = 1; i <= d; i++) //进行d次排序
-	{
-		for (j = 0; j < 10; j++)
-			count[j] = 0; //每次分配前清空计数器
-		for (j = 0; j < v.size(); j++)
-		{
-			k = (v[j] / radix) % 10; //统计每个桶中的记录数
-			count[k]++;
-		}
-		for (j = 1; j < 10; j++)
-			count[j] = count[j - 1] + count[j]; //将tmp中的位置依次分配给每个桶
-		for (j = v.size() - 1; j >= 0; j--) //将所有桶中记录依次收集到tmp中
-		{
-			k = (v[j] / radix) % 10;
-			tmp[count[k] - 1] = v[j];
-			count[k]--;
-		}
-		for (j = 0; j < v.size(); j++) //将临时数组的内容复制到v中
-			v[j] = tmp[j];
-		radix = radix * 10;
-	}
-	delete[]tmp;
-	delete[]count;
+	
 }

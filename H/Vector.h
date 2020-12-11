@@ -12,12 +12,9 @@ public:
 	Vector(const Vector<T>& vec) {
 		this->_size = vec.size();
 		this->_capacity = vec._capacity;
-		T* newhead = new T[_capacity];
-		if (_head != nullptr)
-			delete[] _head;
+		_head = new T[_capacity];
 		for (int i = 0; i < this->_size; i++)
-			*(newhead + i) = *(vec.begin() + i);
-		this->_head = newhead;
+			*(_head + i) = *(vec.begin() + i);
 		this->_end = this->_head + (_size ? _size - 1 : 0);
 	}
 	~Vector() {
