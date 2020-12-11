@@ -13,6 +13,15 @@ bool checkCin(){
 	return true;
 }
 
+bool checkSort(const Vector<int> &v){
+	for(int i=0;i<v.size()-1;i++){
+		if(v[i]>v[i+1])
+			return false;
+	}
+	std::cout<<"the vector has sorted!"<<'\n';
+	return true;
+}
+
 void instructions(){
 	std::string str[12];
 	str[0]="**         sorting algorithm comparison     **";
@@ -42,14 +51,20 @@ int main() {
 	Vector<int> v = get_random(random_num);
 	int order=0;
 	while(true){
+		Vector<int> v_copy=v;
+		clock_t start,end;
+		double cost;
+		for(int i=0;i<v_copy.size();i++){
+			if(v_copy[i]>v_copy[i+1]){
+				std::cout<<'\n'<<"the vector has not sorted!"<<'\n';
+				break;
+			}
+		}
 		std::cout<<std::setw(15)<<"please select the sorting algorithm:";
 		std::cin>>order;
 		while(!checkCin()||order<1||order>9){
 			std::cin>>order;
 		}
-		Vector<int> v_copy=v;
-		clock_t start,end;
-		double cost;
 		switch (order)
 		{
 		case 1:
@@ -57,61 +72,64 @@ int main() {
 			bubbleSort(v_copy);
 			end=clock();
 			cost=end-start;
-			std::cout<<std::setw(15)<<"bubblesort takes time:"<<cost<<"ms"<<'\n';
+			checkSort(v_copy);
+			std::cout<<std::setw(15)<<"bubblesort takes time:"<<cost<<" ms"<<'\n'<<'\n';
 			break;
 		case 2:
 			start=clock();
 			selectionSort(v_copy);
 			end=clock();
 			cost=end-start;
-			std::cout<<std::setw(15)<<"selectionsort takes time:"<<cost<<"ms"<<'\n';
+			checkSort(v_copy);
+			std::cout<<std::setw(15)<<"selectionsort takes time:"<<cost<<" ms"<<'\n'<<'\n';
 			break;		
 		case 3:
 			start=clock();
 			insertionSort(v_copy);
 			end=clock();
 			cost=end-start;
-			std::cout<<std::setw(15)<<"insertionsort takes time:"<<cost<<"ms"<<'\n';
+			checkSort(v_copy);
+			std::cout<<std::setw(15)<<"insertionsort takes time:"<<cost<<" ms"<<'\n'<<'\n';
 			break;
 		case 4:
 			start=clock();
 			shellSort(v_copy);
 			end=clock();
-			cost=end-start;                                                                                                                                                                                                                               
-			std::cout<<std::setw(15)<<"shellsort takes time:"<<cost<<"ms"<<'\n';                                                                                                                                                                                                                                                                                                                                                                                       
+			cost=end-start;     
+			checkSort(v_copy);                                                                                                                                                                                                                          
+			std::cout<<std::setw(15)<<"shellsort takes time:"<<cost<<" ms"<<'\n'<<'\n';                                                                                                                                                                                                                                                                                                                                                                                       
 			break;
 		case 5:
 			start=clock();
 			quickSort(v_copy,0,v_copy.size()-1);
 			end=clock();
 			cost=end-start;
-			for(int i=0;i<v_copy.size()-1;i++){
-				if(v_copy[i]>v_copy[i+1]){
-					std::cout<<"error"<<' ';
-				}
-			}
-			std::cout<<std::setw(15)<<"quicksort takes time:"<<cost<<"ms"<<'\n';
+			checkSort(v_copy);
+			std::cout<<std::setw(15)<<"quicksort takes time:"<<cost<<" ms"<<'\n'<<'\n';
 			break;         
 		case 6:
 			start=clock();
 			heapSort(v_copy);
 			end=clock();
 			cost=end-start;
-			std::cout<<std::setw(15)<<"heapsort takes time:"<<cost<<"ms"<<'\n';
+			checkSort(v_copy);
+			std::cout<<std::setw(15)<<"heapsort takes time:"<<cost<<" ms"<<'\n'<<'\n';
 			break;
 		case 7:
 			start=clock();
 			mergeSort(v_copy,0,v_copy.size()-1);
 			end=clock();
 			cost=end-start;
-			std::cout<<std::setw(15)<<"mergesort takes time:"<<cost<<"ms"<<'\n';
+			checkSort(v_copy);
+			std::cout<<std::setw(15)<<"mergesort takes time:"<<cost<<" ms"<<'\n'<<'\n';
 			break;
 		case 8:
 			start=clock();
 			radixSort(v_copy);
 			end=clock();
 			cost=end-start;
-			std::cout<<std::setw(15)<<"radixsort takes time:"<<cost<<"ms"<<'\n';
+			checkSort(v_copy);
+			std::cout<<std::setw(15)<<"radixsort takes time:"<<cost<<" ms"<<'\n'<<'\n';
 			break;
 		case 9:
 			exit(0);
