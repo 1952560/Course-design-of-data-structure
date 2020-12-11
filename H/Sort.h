@@ -5,8 +5,9 @@
 #include<vector>
 
 /*
-1.冒泡 2.选择 3.直接插入 4.希尔排序 5.快速排序
-6.堆排序 7.归并 8 基数 9 退出程序
+1.bubblesoty 2.selsetionsort 3.insertionsort 
+4.shellsort 5.quicksort
+6.heapsort 7.mergesort 8 radixsort 9 exit
 */
 
 template<typename T>
@@ -18,7 +19,7 @@ void swap(T& a, T& b) {
 
 Vector<int> get_random(int size) {
 	std::default_random_engine e;
-	std::uniform_int_distribution<int> u(-1000000000, 1e9+7);
+	std::uniform_int_distribution<int> u(-1e9-7, 1e9+7);
 	e.seed(time(0));
 	Vector<int> v;
 	for (int i = 0; i < size; i++)
@@ -27,8 +28,14 @@ Vector<int> get_random(int size) {
 }
 
 //bubble_sort(1)
+//data structure-------------Vector<int>
+//worst time complexity------O(n^2)
+//optimal time complexity----O(n)
+//average time complexity----O(n^2)
+//required auxiliary space---O(1)
+//stability------------------stable
 template<typename T>
-void bubble_sort(Vector<T>& v) {
+void bubbleSort(Vector<T>& v) {
 	if (v.size() <= 1)
 		return;
 	for (int i = 0; i < v.size() - 1; i++) {
@@ -41,8 +48,14 @@ void bubble_sort(Vector<T>& v) {
 }
 
 //select_sort(2)
+//data structure-------------Vector<int>
+//worst time complexity------O(n^2)
+//optimal time complexity----O(n^2)
+//average time complexity----O(n^2)
+//required auxiliary space---O(1)
+//stability------------------stable
 template<typename T>
-void select_sort(Vector<T>& v) {
+void selectionSort(Vector<T>& v) {
 	if (v.size() <= 1)
 		return;
 	for (int i = 0; i < v.size() - 1; i++) {
@@ -57,8 +70,14 @@ void select_sort(Vector<T>& v) {
 }
 
 //insert_sort(3)
+//data structure-------------Vector<int>
+//worst time complexity------O(n^2)
+//optimal time complexity----O(n)
+//average time complexity----O(n^2)
+//required auxiliary space---O(1)
+//stability------------------stable
 template<typename T>
-void insert_sort(Vector<T>& v) {
+void insertionSort(Vector<T>& v) {
 	if (v.size() <= 1)
 		return;
 	for (int i = 1; i < v.size(); i++) {
@@ -73,8 +92,14 @@ void insert_sort(Vector<T>& v) {
 }
 
 //shell_sort(4)
+//data structure-------------Vector<int>
+//worst time complexity------
+//optimal time complexity----O(n)
+//average time complexity----
+//required auxiliary space---O(1)
+//stability------------------unstable
 template<typename T>
-void shell_sort(Vector<T>& v) {
+void shellSort(Vector<T>& v) {
 	for (int gap = v.size() >> 1; gap > 0; gap >>= 1) {
 		for (int i = gap; i < v.size(); i++) {
 			int j = i;
@@ -87,8 +112,14 @@ void shell_sort(Vector<T>& v) {
 }
 
 //quick_sort(5)
+//data structure-------------Vector<int>
+//worst time complexity------O(n^2)
+//optimal time complexity----O(nlogn)
+//average time complexity----O(nlogn)
+//required auxiliary space---generally O(logn),the worst is O(n)
+//stability------------------unstable
 template<typename T>
-void quick_sort(Vector<T>& v, int start, int end) {
+void quickSort(Vector<T>& v, int start, int end) {
 	if (start >= end)
 		return;
 	int i = start, j = end, base = v[i];
@@ -131,9 +162,14 @@ void fitdown(int ind, Vector<T>& v, int end) {
 		}
 	}
 }
-
+//data structure-------------Vector<int>
+//worst time complexity------O(nlogn)
+//optimal time complexity----O(nlogn)
+//average time complexity----O(nlogn)
+//required auxiliary space---O(n)
+//stability------------------stable
 template<typename T>
-void heap_sort(Vector<T>& v) {
+void heapSort(Vector<T>& v) {
 	for (int i = (v.size() >> 1) - 1; i >= 0; i--) {
 		fitdown(i, v, v.size());
 	}
@@ -144,8 +180,14 @@ void heap_sort(Vector<T>& v) {
 }
 
 //merge_sort(7)
+//data structure-------------Vector<int>
+//worst time complexity------O(nlogn)
+//optimal time complexity----O(nlogn)
+//average time complexity----O(nlogn)
+//required auxiliary space---O(n)
+//stability------------------unstable
 template<typename T>
-void merge_sort(Vector<T>& v, int start, int end) {
+void mergeSort(Vector<T>& v, int start, int end) {
 	if (start >= end)
 		return;
 	int len = end - start, mid = (len >> 1) + start;
@@ -165,7 +207,13 @@ void merge_sort(Vector<T>& v, int start, int end) {
 }
 
 //radix_sort(8)
-void radix_sort(Vector<int> &v){
+//data structure-------------Vector<int>
+//worst time complexity------O(n^2)
+//optimal time complexity----O(2n*d)
+//average time complexity----O(n)
+//required auxiliary space---O(n+k)
+//stability------------------stable
+void radixSort(Vector<int> &v){
     int len = v.size();
     if(len <= 1) return;
     int res = 10, div = 1;
