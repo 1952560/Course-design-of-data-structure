@@ -51,7 +51,7 @@ private:
 
 template<typename T>
 void Vector<T>::shrink() {
-	if ((_size << 2) < _capacity) {
+	if ((_size << 2) < _capacity&&_capacity>64) {
 		this->resize(_size ? _size << 1 : _capacity >> 1);
 	}
 }
@@ -71,7 +71,8 @@ bool Vector<T>::resize(int s) {
 	for (int i = 0; i < this->_size; i++) {
 		newhead[i] = this->_head[i];
 	}
-	delete[] this->_head;
+	if(this->_head!=nullptr)
+		delete[] this->_head;
 	this->_head = newhead;
 	this->_end = this->_head + (_size ? _size - 1 : 0);
 	this->_capacity = s;

@@ -2,6 +2,7 @@
 #include"Vector.h"
 #include<random>
 #include<ctime>
+#include<vector>
 
 /*
 1.冒泡 2.选择 3.直接插入 4.希尔排序 5.快速排序
@@ -17,7 +18,7 @@ void swap(T& a, T& b) {
 
 Vector<int> get_random(int size) {
 	std::default_random_engine e;
-	std::uniform_int_distribution<int> u(-INT_MAX - 1, INT_MAX);
+	std::uniform_int_distribution<int> u(1, 1e9+7);
 	e.seed(time(0));
 	Vector<int> v;
 	for (int i = 0; i < size; i++)
@@ -164,25 +165,21 @@ void merge_sort(Vector<T>& v, int start, int end) {
 }
 
 //radix_sort(8)
-void radix_sort(Vector<int32_t> &v){
-    int32_t len = v.size();
-    if(len <= 1) 
-		return;
-    int32_t res = 10, div = 1;
+void radix_sort(Vector<int> &v){
+    int len = v.size();
+    if(len <= 1) return;
+    int res = 10, div = 1;
     bool is_not_max_digit = true;
-    Vector<int32_t> counter[20];
+    Vector<int> counter[10];
     while(is_not_max_digit){
         is_not_max_digit = false;
-        for(int32_t i = 0; i < len; i++){
-            if(abs(v[i]) / res) 
-				is_not_max_digit = true;
-            int32_t index = v[i] % res / div+10;
-			if(v[i]<0)
-				index=9-abs(v[i])%res/div;
+        for(int i = 0; i < len; i++){
+            if(v[i] / res) is_not_max_digit = true;
+            int index = v[i] % res / div;
             counter[index].push_back(v[i]);
         }
-        int32_t radix = 0, index = 0;
-        for(int32_t i = 0; i < len;){
+        int radix = 0, index = 0;
+        for(int i = 0; i < len;){
 			for(;index<counter[radix].size();index++){
 				v[i+index]=counter[radix][index];
 			}
@@ -190,11 +187,9 @@ void radix_sort(Vector<int32_t> &v){
 			index=0;
 			radix++;
         }
-        for(int32_t i = 0; i < 20; i++){
+        for(int i = 0; i < 10; i++){
             counter[i].clear();
         }
         res *= 10; div *= 10;
     }
-
-	
 }
