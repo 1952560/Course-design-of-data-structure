@@ -18,7 +18,7 @@ void swap(T& a, T& b) {
 
 Vector<int> get_random(int size) {
 	std::default_random_engine e;
-	std::uniform_int_distribution<int> u(1, 1e9+7);
+	std::uniform_int_distribution<int> u(-1000000000, 1e9+7);
 	e.seed(time(0));
 	Vector<int> v;
 	for (int i = 0; i < size; i++)
@@ -170,12 +170,14 @@ void radix_sort(Vector<int> &v){
     if(len <= 1) return;
     int res = 10, div = 1;
     bool is_not_max_digit = true;
-    Vector<int> counter[10];
+    Vector<int> counter[20];
     while(is_not_max_digit){
         is_not_max_digit = false;
         for(int i = 0; i < len; i++){
-            if(v[i] / res) is_not_max_digit = true;
-            int index = v[i] % res / div;
+            if(abs(v[i]) / res) is_not_max_digit = true;
+            int index = v[i] % res / div+10;
+			if(v[i]<0)
+				index=9-abs(v[i])%res/div;
             counter[index].push_back(v[i]);
         }
         int radix = 0, index = 0;
@@ -187,7 +189,7 @@ void radix_sort(Vector<int> &v){
 			index=0;
 			radix++;
         }
-        for(int i = 0; i < 10; i++){
+        for(int i = 0; i < 20; i++){
             counter[i].clear();
         }
         res *= 10; div *= 10;
