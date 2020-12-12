@@ -213,7 +213,7 @@ void eval::change() {
 					e.isnum = true; e.num = 0;
 					suffix.push_back(e);
 				}
-				if (infix[i] == '(')
+				if (infix[i] == '('||infix[i]=='*')
 					flag = true;
 				while ((!oper.empty()) && (oper.top() != '(') && (priority(infix[i]) <= priority(oper.top()))) {
 					expre e;
@@ -244,6 +244,29 @@ int main() {
 			std::cout << "表达式缺少‘=’,请重新输入！" << '\n' << '\n';
 			continue;
 		}
+		std::string str_copy;
+		for(int i=0;i<str.size();){
+			if((str[i]=='-'||str[i]=='+')&&i>0&&(str[i-1]=='*'||str[i-1]=='^'||str[i-1]=='/'||str[i-1]=='%')){
+				int num=1;
+				str_copy.push_back('(');
+				str_copy.push_back('0');
+				str_copy.push_back(str[i]);
+				while(i+num<str.size()&&str[i+num]>='0'&&str[i+num]<='9'){
+					str_copy.push_back(str[i+num]);
+					num++;
+				}
+				if(num==1)
+					str_copy.push_back('0');
+				str_copy.push_back(')');
+				i+=num;
+			}
+			else{
+				str_copy.push_back(str[i]);
+				i++;
+			}
+		}
+		str=str_copy;
+		std::cout<<str<<'\n';
 		str.pop_back();
 		std::cout << eval(str);
 		std::cout << "是否继续（y,n）？";
