@@ -68,7 +68,7 @@ void eval::calculate() {
 					}
 					else {
 						this->flag = true;
-						throw std::string("表达式有误");
+						throw std::string("The expression is wrong!");
 					}
 					break;
 				}
@@ -80,7 +80,7 @@ void eval::calculate() {
 					}
 					else {
 						this->flag = true;
-						throw std::string("表达式有误");
+						throw std::string("The expression is wrong!");
 					}
 					break;
 				}
@@ -92,7 +92,7 @@ void eval::calculate() {
 					}
 					else {
 						this->flag = true;
-						throw std::string("表达式有误");
+						throw std::string("The expression is wrong!");
 					}
 					break;
 				}
@@ -104,7 +104,7 @@ void eval::calculate() {
 					}
 					else {
 						this->flag = true;
-						throw std::string("表达式有误");
+						throw std::string("The expression is wrong!");
 					}
 					break;
 				}
@@ -114,14 +114,14 @@ void eval::calculate() {
 						int y = cal.top(); cal.pop();{
 							if(x==0){
 								this->flag=true;
-								throw std::string("0不能作为被除数");
+								throw std::string("0 cannot be used as dividend!");
 							}
 						}
 						cal.push(y % x);
 					}
 					else {
 						this->flag = true;
-						throw std::string("表达式有误");
+						throw std::string("The expression is wrong!");
 					}
 					break;
 				}
@@ -131,13 +131,13 @@ void eval::calculate() {
 						int y = cal.top(); cal.pop();
 						if(y==0&&x<0){
 							this->flag==true;
-							throw std::string("表达式有误");
+							throw std::string("The expression is wrong!");
 						}
 						cal.push(pow(y, x));
 					}
 					else {
 						this->flag = true;
-						throw std::string("表达式有误");
+						throw std::string("The expression is wrong!");
 					}
 					break;
 				}
@@ -150,7 +150,7 @@ void eval::calculate() {
 			cal.pop();
 		}
 		else {
-			throw"表达式有误";
+			throw std::string("The expression is wrong!");
 		}
 	}
 	catch (std::string str) {
@@ -238,10 +238,10 @@ int main() {
 	std::string str;
 	std::string ch;
 	while (true) {
-		std::cout << "输入表达式：" << '\n';
+		std::cout << "Please input expression：" << '\n';
 		std::cin >> str;
 		if (str[str.size() - 1] != '=') {
-			std::cout << "表达式缺少‘=’,请重新输入！" << '\n' << '\n';
+			std::cout << "The expression is missing ‘=’, please re-enter！" << '\n' << '\n';
 			continue;
 		}
 		std::string str_copy;
@@ -269,14 +269,14 @@ int main() {
 		//std::cout<<str<<'\n';
 		str.pop_back();
 		std::cout << eval(str);
-		std::cout << "是否继续（y,n）？";
+		std::cout << "Whether to continue（y,n）？";
 		std::cin >> ch;
 		while (std::cin.fail() || (ch != "n" && ch != "y")) {
 			if (std::cin.fail()) {
 				std::cin.ignore(INT_MAX, '\n');
 				std::cin.clear();
 			}
-			std::cout << "输入错误，请重新输入:";
+			std::cout << "Input errors, please re-enter:";
 			std::cin >> ch;
 		}
 		if (ch == "n")

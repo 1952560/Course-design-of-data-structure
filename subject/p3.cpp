@@ -42,7 +42,7 @@ private:
 
 bool maze::setEntrance() {
 	int row = -1, col = -1;
-	std::cout << "请输入迷宫的入口:";
+	std::cout << "Please enter the entrance of the maze:";
 	std::cin >> row >> col;
 	std::cout << '\n';
 	if (row < 0 || row >= _row || col < 0 || col >= _col)
@@ -53,7 +53,7 @@ bool maze::setEntrance() {
 
 bool maze::setExit() {
 	int row = -1, col = -1;
-	std::cout << "请输入迷宫的出口：";
+	std::cout << "Please enter the exit of the maze：";
 	std::cin >> row >> col;
 	std::cout << '\n';
 	if (row < 0 || row >= _row || col < 0 || col >= _col)
@@ -64,11 +64,11 @@ bool maze::setExit() {
 
 void maze::setMaze() {
 	if (_row == 0 || _col == 0) {
-		std::cout << "请输入迷宫的行和列：";
+		std::cout << "Please enter the rows and columns of the maze：";
 		std::cin >> _row >> _col;
 	}
 	std::cout << '\n';
-	std::cout << "请输入迷宫的构造：" << '\n';
+	std::cout << "Please enter the structure of the maze：" << '\n';
 	for (int i = 0; i < _row; i++)
 		for (int j = 0; j < _col; j++) {
 			char ch;
@@ -115,14 +115,14 @@ void maze::dfs(int x, int y) {
 }
 
 void maze::mapPrintf() {
-	std::cout << "迷宫地图：" << '\n' << '\n';
+	std::cout << "Maze map：" << '\n' << '\n';
 	std::cout << "    ";
 	for (int i = 0; i < _col; i++) {
-		std::cout << i << "列" << "  ";
+		std::cout << i << "Column" << "  ";
 	}
 	std::cout << '\n';
 	for (int i = 0; i < _row; i++) {
-		std::cout << i << "行";
+		std::cout << i << "Row";
 		std::cout << " ";
 		for (int j = 0; j <= _col; j++) {
 			std::cout << _maze[i][j] << "    ";
@@ -134,12 +134,12 @@ void maze::mapPrintf() {
 
 void maze::pathPrint() {
 	if (_pathnum == 0) {
-		std::cout << "无路径" << '\n';
+		std::cout << "No path!" << '\n';
 		return;
 	}
-	std::cout << "迷宫路径：" << '\n' << '\n';
+	std::cout << "Maze path：" << '\n' << '\n';
 	for (int i = 0; i < _pathnum; i++) {
-		std::cout << "第" << i + 1 << "条路径：" << '\n';
+		std::cout << "Path " << i + 1 << "：" << '\n';
 		for (int j = 0; j < _path[i].size() - 1; j++) {
 			std::cout << '<' << _path[i][j].first << ',' << _path[i][j].second << '>' << "-->";
 		}
