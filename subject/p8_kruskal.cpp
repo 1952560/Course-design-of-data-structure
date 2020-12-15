@@ -49,7 +49,7 @@ bool cinClear(){
 	if(std::cin.good()){
 		return true;
 	}
-	std::cout<<"输入错误，请重新输入:";
+	std::cout<<"Input errors, please re-enter:";
 	std::cin.clear();
 	std::cin.ignore(INT_MAX,'\n');
 	return false;
@@ -60,13 +60,13 @@ void System::initializeVertex() {
 	_vertex.clear();
 	_edge.clear();
 	_par.clear();
-	std::cout << "请输入顶点的个数：";
+	std::cout << "Please enter the number of vertices：";
 	int num;
 	std::string str;
 	std::cin >> num;
 	while(!cinClear())
 	    std::cin>>num;
-	std::cout << "请依次输入各顶点的名称：" << '\n';
+	std::cout << "Please enter the name of each vertex in turn：" << '\n';
 	while (num--) {
 		std::cin >> str;
 		while(!cinClear())
@@ -80,7 +80,7 @@ void System::initializeVertex() {
 void System::addEdge() {
 	edge e;
 	while (true) {
-		std::cout << "请输入两个顶点及边：";
+		std::cout << "Please enter two vertices and edges：";
 		std::cin >> e.from >> e.to >> e.dist;
 		if (e.from == "?" && e.to == "?" && e.dist == 0)
 			break;
@@ -91,16 +91,16 @@ void System::addEdge() {
 
 void System::print() {
 	if(!_flag){
-		std::cout<<"请运行操作C生成最小生成树！"<<'\n';
+		std::cout<<"Please run operation C to generate a minimum spanning tree！"<<'\n';
 		return;
 	}
 	for(int i=0;i<_vertex.size()-1;i++){
 		if(find(_vertex[i])!=find(_vertex[i+1])){
-			std::cout<<"没有最小生成树!"<<'\n';
+			std::cout<<"No minimum spanning tree!"<<'\n';
 			return;
 		}
 	}
-	std::cout << "最小生成树的顶点及边为：" << '\n' << '\n';
+	std::cout << "The vertices and edges of the minimum spanning tree are：" << '\n' << '\n';
 	for (int i = 0; i < _path.size(); i++) {
 		std::cout << _path[i].from << "-<" << _path[i].dist << ">->" << _path[i].to;
 		std::cout << "     ";
@@ -126,19 +126,19 @@ void System::mintree() {
 
 void solve() {
 	std::string str[7];
-	str[0]="**         电网造价模拟系统                   **";
-	str[1]="==============================================";
-	str[2]="**          A---创建电网顶点                  **";
-	str[3]="**          B---添加电网的边                  **";
-	str[4]="**          C---构建最小生成树                **";
-	str[5]="**          D---显示最小生成树                **";
-	str[6]="**          E---退出  程序                   **";
+	str[0]="**         Power grid cost simulation system        **";
+	str[1]="======================================================";
+	str[2]="**          A---Create grid vertex                  **";
+	str[3]="**          B---Add the edge of the grid            **";
+	str[4]="**          C---Build a minimum spanning tree       **";
+	str[5]="**          D---Show minimum spanning tree          **";
+	str[6]="**          E---exit the program                    **";
 	for(int i=0;i<7;i++)
 		std::cout<<str[i]<<'\n';
 	System sys;
 	std::string num;
 	while (true) {
-		std::cout << "请输入操作：";
+		std::cout << "Please enter operation：";
 		std::cin >> num;
 		while(!cinClear()){
 			std::cin>>num;
@@ -152,15 +152,15 @@ void solve() {
 			sys.addEdge();
 		}
 		else if (num == "C") {
-			std::cout << "请输入起始顶点：";
+			std::cout << "Please enter the starting vertex：";
 			std::string str;
 			std::cin >> str;
 			while(!sys.exist(str)){
-				std::cout<<"电网顶点集不存在"<<str<<",请重新输入:";
+				std::cout<<"The grid vertex set does not exist"<<str<<",please enter again:";
 				std::cin>>str;
 			}
 			sys.mintree();
-			std::cout << "生成Prim最小生成树！" << '\n' << '\n';
+			std::cout << "Generate Prim minimum spanning tree！" << '\n' << '\n';
 		}
 		else if (num == "D") {
 			sys.print();
@@ -168,7 +168,7 @@ void solve() {
 		else if (num == "E")
 			break;
 		else{
-			std::cout<<"输入错误"<<'\n';
+			std::cout<<"Input error"<<'\n';
 		}
 	}
 }

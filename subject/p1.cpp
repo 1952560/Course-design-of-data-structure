@@ -38,7 +38,7 @@ std::istream& operator>>(std::istream& is, student& student) {
 }
 std::ostream& operator<<(std::ostream& os, const student& student) {
 	//os.setf(std::ios::left);
-	os << std::setw(blankspace_num) << student.number() << std::setw(blankspace_num) << student.name()
+	os << std::setiosflags(std::ios::left)<< std::setw(blankspace_num) << student.number() << std::setw(blankspace_num) << student.name()
 		<< std::setw(blankspace_num) << student.sex() << std::setw(blankspace_num) << student.age()
 		<< std::setw(blankspace_num) << student.type() << '\n';
 	return os;
@@ -62,7 +62,7 @@ private:
 
 void EMIS::print() const {
 	//std::cout.setf(std::ios::left);
-	std::cout << std::setw(blankspace_num) << "test number" << std::setw(blankspace_num) << "name"
+	std::cout << std::setiosflags(std::ios::left)<<std::setw(blankspace_num) << "test number" << std::setw(blankspace_num) << "name"
 		<< std::setw(blankspace_num) << "sex" << std::setw(blankspace_num) << "age"
 		<< std::setw(blankspace_num) << "application type" << '\n';
 	ListNode<student>* itor;
@@ -94,7 +94,7 @@ bool EMIS::seek() {
 	for (itor = _list.begin(); itor != _list.end(); itor = itor->next()) {
 		if (itor->data().number() == number) {
 			//std::cout.setf(std::ios::left);
-			std::cout << std::setw(blankspace_num) << "test number" << std::setw(blankspace_num) << "name"
+			std::cout << std::setiosflags(std::ios::left)<< std::setw(blankspace_num) << "test number" << std::setw(blankspace_num) << "name"
 				<< std::setw(blankspace_num) << "sex" << std::setw(blankspace_num) << "age"
 				<< std::setw(blankspace_num) << "application type" << '\n';
 			std::cout << itor->data();
