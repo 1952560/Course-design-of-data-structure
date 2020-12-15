@@ -32,7 +32,7 @@ void instructions(){
 	str[5]="**          4---shellsort                   **";
 	str[6]="**          5---quicksort                   **";
 	str[7]="**          6---heapsort                    **";
-	str[8]="**          7---mergesort                    **";
+	str[8]="**          7---mergesort                   **";
 	str[9]="**          8---radixsort                   **";
 	str[10]="**          9---quiting the system          **";
 	str[11]="==============================================";

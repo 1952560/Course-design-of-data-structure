@@ -11,7 +11,7 @@
 6.heapsort 7.mergesort 8 radixsort 9 exit
 */
 
-int times;
+long long times;
 
 template<typename T>
 void swap(T& a, T& b) {
@@ -107,9 +107,9 @@ void insertionSort(Vector<T>& v) {
 
 //shell_sort(4)
 //data structure-------------Vector<int>
-//worst time complexity------O(ns)
+//worst time complexity------O(nlog2n)
 //optimal time complexity----O(n)
-//average time complexity----O(nlogn)
+//average time complexity----O(nlog2n)
 //required auxiliary space---O(1)
 //stability------------------unstable
 template<typename T>
@@ -161,6 +161,12 @@ void quickSort(Vector<T>& v, int start, int end) {
 }
 
 //heap_sort(6)
+//data structure-------------Vector<int>
+//worst time complexity------O(nlogn)
+//optimal time complexity----O(nlogn)
+//average time complexity----O(nlogn)
+//required auxiliary space---O(1)
+//stability------------------unstable
 template<typename T>
 void fitdown(int ind, Vector<T>& v, int end) {
 	if ((ind << 1) + 1 >= end)
@@ -187,12 +193,7 @@ void fitdown(int ind, Vector<T>& v, int end) {
 		}
 	}
 }
-//data structure-------------Vector<int>
-//worst time complexity------O(nlogn)
-//optimal time complexity----O(nlogn)
-//average time complexity----O(nlogn)
-//required auxiliary space---O(1)
-//stability------------------unstable
+
 template<typename T>
 void heapSort(Vector<T>& v) {
 	for (int i = (v.size() >> 1) - 1; i >= 0; i--) {
