@@ -31,7 +31,7 @@ private:
 std::istream& operator>>(std::istream& is, student& student) {
 	is >> student._number >> student._name >> student._sex >> student._age >> student._type;
 	if (is.fail()) {
-		std::cout << "Input errors,please re-enter！" << '\n';
+		std::cout << "Input errors,please re-enter!" << '\n';
 		return is;
 	}
 	return is;
@@ -73,13 +73,13 @@ void EMIS::print() const {
 
 bool EMIS::insert() {
 	int place = -1;
-	std::cout << "Please enter the position of the candidate you want to insert：";
+	std::cout << "Please enter the position of the candidate you want to insert:";
 	std::cin >> place;
 	while (place <= 0 || place > this->_list.size() + 1) {
-		std::cout << "Insertion failed, please re-enter：";
+		std::cout << "Insertion failed, please re-enter:";
 		std::cin >> place;
 	}
-	std::cout << "Please input the candidate number, name, gender, age and application type of the candidate to be inserted in sequence!" << '\n';
+	std::cout << "Please input the candidate number,name,gender,age and application type of the candidate to be inserted in sequence!" << '\n';
 	student stu;
 	std::cin >> stu;
 	this->_list.insert(stu, place);
@@ -109,14 +109,14 @@ bool EMIS::seek() {
 }
 
 bool EMIS::del() {
-	std::cout << "Please enter the candidate number of the candidate to be deleted：";
+	std::cout << "Please enter the candidate number of the candidate to be deleted:";
 	int number = -1;
 	std::cin >> number;
 	ListNode<student>* itor;
 	for (itor = _list.begin(); itor != _list.end(); itor = itor->next()) {
 		if (itor->data().number() == number) {
 			student s = itor->data();
-			std::cout << "The candidate information you deleted is：" << s;
+			std::cout << "The candidate information you deleted is:" << s;
 			_list.erase(itor);
 			return true;
 		}
@@ -133,13 +133,13 @@ void EMIS::statistics()const {
 }
 
 bool EMIS::revise() {
-	std::cout << "Please enter the candidate number of the candidate to be modified：";
+	std::cout << "Please enter the candidate number of the candidate to be modified:";
 	int number = 0;
 	std::cin >> number;
 	ListNode<student>* itor;
 	for (itor = _list.begin(); itor != _list.end(); itor = itor->next()) {
 		if (itor->data().number() == number) {
-			std::cout << "Please enter the name, gender, age and application type of the candidate to be modified！" << '\n';
+			std::cout << "Please enter the name,gender,age and application type of the candidate to be modified!" << '\n';
 			student a;
 			std::cin >> a._name >> a._sex >> a._age >> a._type;
 			a._number = number;
@@ -148,7 +148,7 @@ bool EMIS::revise() {
 		}
 	}
 	if (itor == _list.end()) {
-		std::cout << "The candidate information system does not have the candidate information" << '\n';
+		std::cout << "The candidate information system does not have the candidate information!" << '\n';
 		return false;
 	}
 	return false;
@@ -156,15 +156,15 @@ bool EMIS::revise() {
 
 void solve() {
 	EMIS stus;
-	std::cout << "First, please establish a candidate information system！" << '\n';
+	std::cout << "First, please establish a candidate information system!" << '\n';
 	int num = 0;
 	std::cout << "Please enter the number of candidates:";
 	std::cin >> num;
 	while (num < 0) {
-		std::cout << "Please enter a natural number：";
+		std::cout << "Please enter a natural number:";
 		std::cin >> num;
 	}
-	std::cout << "Please enter the candidate’s exam number, name, gender, age and application type in turn！" << '\n';
+	std::cout << "Please enter the candidate's exam number,name,gender,age and application type in turn!" << '\n';
 	for (int i = 1; i <= num;) {
 		student stu;
 		std::cin >> stu;
@@ -178,7 +178,7 @@ void solve() {
 	}
 	std::cout << '\n';
 	stus.print();
-	std::cout << "Please select the operation you want to perform (1 means insert, 2 means delete, 3 means search, 4 means modify, 5 means statistics, 0 means cancel operation)" << '\n' << '\n';
+	std::cout << "Please select the operation you want to perform (1 means insert,2 means delete,3 means search,4 means modify,5 means statistics,0 means cancel operation)" << '\n' << '\n';
 	while (true)
 	{
 		if (std::cin.fail()) {
@@ -186,7 +186,7 @@ void solve() {
 			std::cin.ignore(100, '\n');
 		}
 		int order = 6;
-		std::cout << "Please choose what you want to do：";
+		std::cout << "Please choose what you want to do:";
 		std::cin >> order;
 		if (order < 0 || order>5) {
 			std::cout << "Input errors, please re-enter" << '\n';

@@ -71,7 +71,7 @@ void System::initializeVertex() {
 	_exist=false;
 	_vertex.clear();//清空顶点
 	_map.clear();//清空映射
-	std::cout << "Please enter the number of vertices：";
+	std::cout << "Please enter the number of vertices:";
 	int num;
 	std::string str;
 	std::cin >> num;
@@ -81,7 +81,7 @@ void System::initializeVertex() {
 		std::cin>>num;
 	}
 	_size=num;
-	std::cout << "Please enter the name of each vertex in turn：" << '\n';
+	std::cout << "Please enter the name of each vertex in turn:" << '\n';
 	for (int i = 0; i < num; i++) {
 		std::cin >> str;
 		while(!cinClear())
@@ -99,7 +99,7 @@ void System::initializeVertex() {
 void System::addEdge() {
 	edge e;
 	while (true) {
-		std::cout << "Please enter two vertices and edges：";
+		std::cout << "Please enter two vertices and edges:";
 		std::cin >> e.from >> e.to >> e.dist;
 		if (e.from == "?" && e.to == "?" && e.dist == 0)
 			break;
@@ -155,7 +155,7 @@ void System::print() {
 		std::cout<<"No minimum spanning tree!"<<'\n';
 		return;
 	}
-	std::cout << "The vertices and edges of the minimum spanning tree are：" << '\n' << '\n';
+	std::cout << "The vertices and edges of the minimum spanning tree are:" << '\n' << '\n';
 	for (int i = 0; i < _path.size(); i++) {
 		std::cout << _path[i].from << "-<" << _path[i].dist << ">->" << _path[i].to;
 		std::cout << "     ";
@@ -188,7 +188,7 @@ void solve() {
 			sys.addEdge();
 		}
 		else if (num == "C") {
-			std::cout << "Please enter the starting vertex：";
+			std::cout << "Please enter the starting vertex:";
 			std::string str;
 			std::cin >> str;
 			while(!sys.exist(str)){
@@ -196,7 +196,7 @@ void solve() {
 				std::cin>>str;
 			}
 			sys.prim(str);
-			std::cout << "Generate Prim minimum spanning tree！" << '\n' << '\n';
+			std::cout << "Generate Prim minimum spanning tree!" << '\n' << '\n';
 		}
 		else if (num == "D") {
 			sys.print();
