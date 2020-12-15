@@ -54,12 +54,12 @@ int main() {
 		Vector<int> v_copy=v;
 		clock_t start,end;
 		double cost;
-		for(int i=0;i<v_copy.size();i++){
-			if(v_copy[i]>v_copy[i+1]){
-				std::cout<<'\n'<<"the vector has not sorted!"<<'\n';
-				break;
-			}
-		}
+		// for(int i=0;i<v_copy.size();i++){
+		// 	if(v_copy[i]>v_copy[i+1]){
+		// 		std::cout<<'\n'<<"the vector has not sorted!"<<'\n';
+		// 		break;
+		// 	}
+		// }
 		std::cout<<std::setw(15)<<"please select the sorting algorithm:";
 		std::cin>>order;
 		while(!checkCin()||order<1||order>9){
@@ -72,7 +72,7 @@ int main() {
 			bubbleSort(v_copy);
 			end=clock();
 			cost=end-start;
-			checkSort(v_copy);
+			//checkSort(v_copy);
 			std::cout<<std::setw(15)<<"bubblesort takes time:"<<cost<<" ms"<<'\n'<<'\n';
 			break;
 		case 2:
@@ -80,7 +80,7 @@ int main() {
 			selectionSort(v_copy);
 			end=clock();
 			cost=end-start;
-			checkSort(v_copy);
+			//checkSort(v_copy);
 			std::cout<<std::setw(15)<<"selectionsort takes time:"<<cost<<" ms"<<'\n'<<'\n';
 			break;		
 		case 3:
@@ -88,7 +88,7 @@ int main() {
 			insertionSort(v_copy);
 			end=clock();
 			cost=end-start;
-			checkSort(v_copy);
+			//checkSort(v_copy);
 			std::cout<<std::setw(15)<<"insertionsort takes time:"<<cost<<" ms"<<'\n'<<'\n';
 			break;
 		case 4:
@@ -96,7 +96,7 @@ int main() {
 			shellSort(v_copy);
 			end=clock();
 			cost=end-start;     
-			checkSort(v_copy);                                                                                                                                                                                                                          
+			//checkSort(v_copy);                                                                                                                                                                                                                          
 			std::cout<<std::setw(15)<<"shellsort takes time:"<<cost<<" ms"<<'\n'<<'\n';                                                                                                                                                                                                                                                                                                                                                                                       
 			break;
 		case 5:
@@ -104,7 +104,7 @@ int main() {
 			quickSort(v_copy,0,v_copy.size()-1);
 			end=clock();
 			cost=end-start;
-			checkSort(v_copy);
+			//checkSort(v_copy);
 			std::cout<<std::setw(15)<<"quicksort takes time:"<<cost<<" ms"<<'\n'<<'\n';
 			break;         
 		case 6:
@@ -112,7 +112,7 @@ int main() {
 			heapSort(v_copy);
 			end=clock();
 			cost=end-start;
-			checkSort(v_copy);
+			//checkSort(v_copy);
 			std::cout<<std::setw(15)<<"heapsort takes time:"<<cost<<" ms"<<'\n'<<'\n';
 			break;
 		case 7:
@@ -120,7 +120,7 @@ int main() {
 			mergeSort(v_copy,0,v_copy.size()-1);
 			end=clock();
 			cost=end-start;
-			checkSort(v_copy);
+			//checkSort(v_copy);
 			std::cout<<std::setw(15)<<"mergesort takes time:"<<cost<<" ms"<<'\n'<<'\n';
 			break;
 		case 8:
@@ -128,7 +128,7 @@ int main() {
 			radixSort(v_copy);
 			end=clock();
 			cost=end-start;
-			checkSort(v_copy);
+			//checkSort(v_copy);
 			std::cout<<std::setw(15)<<"radixsort takes time:"<<cost<<" ms"<<'\n'<<'\n';
 			break;
 		case 9:
