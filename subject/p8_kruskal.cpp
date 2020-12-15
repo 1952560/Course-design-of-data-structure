@@ -60,13 +60,13 @@ void System::initializeVertex() {
 	_vertex.clear();
 	_edge.clear();
 	_par.clear();
-	std::cout << "Please enter the number of vertices：";
+	std::cout << "Please enter the number of vertices:";
 	int num;
 	std::string str;
 	std::cin >> num;
 	while(!cinClear())
 	    std::cin>>num;
-	std::cout << "Please enter the name of each vertex in turn：" << '\n';
+	std::cout << "Please enter the name of each vertex in turn:" << '\n';
 	while (num--) {
 		std::cin >> str;
 		while(!cinClear())
@@ -80,7 +80,7 @@ void System::initializeVertex() {
 void System::addEdge() {
 	edge e;
 	while (true) {
-		std::cout << "Please enter two vertices and edges：";
+		std::cout << "Please enter two vertices and edges:";
 		std::cin >> e.from >> e.to >> e.dist;
 		if (e.from == "?" && e.to == "?" && e.dist == 0)
 			break;
@@ -91,7 +91,7 @@ void System::addEdge() {
 
 void System::print() {
 	if(!_flag){
-		std::cout<<"Please run operation C to generate a minimum spanning tree！"<<'\n';
+		std::cout<<"Please run operation C to generate a minimum spanning tree:"<<'\n';
 		return;
 	}
 	for(int i=0;i<_vertex.size()-1;i++){
@@ -100,7 +100,7 @@ void System::print() {
 			return;
 		}
 	}
-	std::cout << "The vertices and edges of the minimum spanning tree are：" << '\n' << '\n';
+	std::cout << "The vertices and edges of the minimum spanning tree are:" << '\n' << '\n';
 	for (int i = 0; i < _path.size(); i++) {
 		std::cout << _path[i].from << "-<" << _path[i].dist << ">->" << _path[i].to;
 		std::cout << "     ";
@@ -138,7 +138,7 @@ void solve() {
 	System sys;
 	std::string num;
 	while (true) {
-		std::cout << "Please enter operation：";
+		std::cout << "Please enter operation:";
 		std::cin >> num;
 		while(!cinClear()){
 			std::cin>>num;
@@ -152,7 +152,7 @@ void solve() {
 			sys.addEdge();
 		}
 		else if (num == "C") {
-			std::cout << "Please enter the starting vertex：";
+			std::cout << "Please enter the starting vertex:";
 			std::string str;
 			std::cin >> str;
 			while(!sys.exist(str)){
@@ -160,7 +160,7 @@ void solve() {
 				std::cin>>str;
 			}
 			sys.mintree();
-			std::cout << "Generate Prim minimum spanning tree！" << '\n' << '\n';
+			std::cout << "Generate Prim minimum spanning tree!" << '\n' << '\n';
 		}
 		else if (num == "D") {
 			sys.print();

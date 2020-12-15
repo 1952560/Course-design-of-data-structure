@@ -53,7 +53,7 @@ bool maze::setEntrance() {
 
 bool maze::setExit() {
 	int row = -1, col = -1;
-	std::cout << "Please enter the exit of the maze：";
+	std::cout << "Please enter the exit of the maze:";
 	std::cin >> row >> col;
 	std::cout << '\n';
 	if (row < 0 || row >= _row || col < 0 || col >= _col)
@@ -64,11 +64,11 @@ bool maze::setExit() {
 
 void maze::setMaze() {
 	if (_row == 0 || _col == 0) {
-		std::cout << "Please enter the rows and columns of the maze：";
+		std::cout << "Please enter the rows and columns of the maze:";
 		std::cin >> _row >> _col;
 	}
 	std::cout << '\n';
-	std::cout << "Please enter the structure of the maze：" << '\n';
+	std::cout << "Please enter the structure of the maze:" << '\n';
 	for (int i = 0; i < _row; i++)
 		for (int j = 0; j < _col; j++) {
 			char ch;
@@ -115,7 +115,7 @@ void maze::dfs(int x, int y) {
 }
 
 void maze::mapPrintf() {
-	std::cout << "Maze map：" << '\n' << '\n';
+	std::cout << "Maze map:" << '\n' << '\n';
 	std::cout << "    ";
 	for (int i = 0; i < _col; i++) {
 		std::cout << i << "Column" << "  ";
@@ -137,7 +137,7 @@ void maze::pathPrint() {
 		std::cout << "No path!" << '\n';
 		return;
 	}
-	std::cout << "Maze path：" << '\n' << '\n';
+	std::cout << "Maze path:" << '\n' << '\n';
 	for (int i = 0; i < _pathnum; i++) {
 		std::cout << "Path " << i + 1 << "：" << '\n';
 		for (int j = 0; j < _path[i].size() - 1; j++) {

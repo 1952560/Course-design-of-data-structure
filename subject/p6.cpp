@@ -86,7 +86,7 @@ void tree::change() {
 		std::cin >> str;
 	node* r = find(root, str);
 	if (!r) {
-		std::cout << "No such person in the family tree！" << '\n' << '\n';
+		std::cout << "No such person in the family tree!" << '\n' << '\n';
 		return;
 	}
 	std::cout << "Please enter the changed name:";
@@ -99,7 +99,7 @@ void tree::change() {
 }
 
 void tree::erase() {
-	std::cout << "Please enter the name of the person in the family to be dissolved：";
+	std::cout << "Please enter the name of the person in the family to be dissolved:";
 	std::string str;
 	std::cin >> str;
 	while (!cin_check()) {
@@ -107,7 +107,7 @@ void tree::erase() {
 	}
 	node* r = this->find(root, str);
 	if (!r) {
-		std::cout << "No such person in the family tree！" << '\n' << '\n';
+		std::cout << "No such person in the family tree!" << '\n' << '\n';
 		return;
 	}
 	node* p, * q;
@@ -132,7 +132,7 @@ void tree::add() {
 		std::cin >> str;
 	node* r = find(root, str);
 	if (!r) {
-		std::cout << "No such person in the family tree！" << '\n' << '\n';
+		std::cout << "No such person in the family tree!" << '\n' << '\n';
 		return;
 	}
 	std::cout << "Please enter the name of" << str << " the newly added son (or daughter):";
@@ -195,7 +195,7 @@ node* tree::find(node* r, std::string str) {
 }
 
 void tree::init() {
-	std::cout << "First build a family tree！" << '\n';
+	std::cout << "First build a family tree!" << '\n';
 	std::cout << "Please enter the name of the ancestor:";
 	std::string str;
 	std::cin >> str;
@@ -213,7 +213,7 @@ void tree::complete() {
 		std::cin >> str;
 	node* r = this->find(this->root, str);
 	if (!r) {
-		std::cout << "The person's name is not in the family tree！" << '\n' << '\n';
+		std::cout << "The person's name is not in the family tree!" << '\n' << '\n';
 		return;
 	}
 	int num = 0;

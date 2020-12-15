@@ -238,10 +238,10 @@ int main() {
 	std::string str;
 	std::string ch;
 	while (true) {
-		std::cout << "Please input expression：" << '\n';
+		std::cout << "Please input expression:" << '\n';
 		std::cin >> str;
 		if (str[str.size() - 1] != '=') {
-			std::cout << "The expression is missing ‘=’, please re-enter！" << '\n' << '\n';
+			std::cout << "The expression is missing ‘=’, please re-enter!" << '\n' << '\n';
 			continue;
 		}
 		std::string str_copy;
@@ -269,7 +269,7 @@ int main() {
 		//std::cout<<str<<'\n';
 		str.pop_back();
 		std::cout << eval(str);
-		std::cout << "Whether to continue（y,n）？";
+		std::cout << "Whether to continue（y,n）?";
 		std::cin >> ch;
 		while (std::cin.fail() || (ch != "n" && ch != "y")) {
 			if (std::cin.fail()) {
