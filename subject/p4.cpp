@@ -266,7 +266,7 @@ int main() {
 			}
 		}
 		str=str_copy;
-		std::cout<<str<<'\n';
+		//std::cout<<str<<'\n';
 		str.pop_back();
 		std::cout << eval(str);
 		std::cout << "是否继续（y,n）？";
