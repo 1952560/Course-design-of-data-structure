@@ -1,2 +1,3 @@
 *.zip
 subject/*.exe
+subject/*.out
